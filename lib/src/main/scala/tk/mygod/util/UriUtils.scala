@@ -1,10 +1,12 @@
-package tk.mygod.net
+package tk.mygod.util
 
 import android.net.Uri
+
+import scala.language.implicitConversions
 
 /**
  * @author Mygod
  */
-object Utils {
+object UriUtils {
   implicit def parseUri(uriString: String): Uri = Uri.parse(uriString)
 }
