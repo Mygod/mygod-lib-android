@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto" tools:context="tk.mygod.app.SaveFileActivity">
+    <item android:id="@+id/action_create_dir" android:icon="@drawable/ic_menu_new_folder_am_alpha"
+          android:title="@string/action_create_dir" app:showAsAction="always"
+          android:alphabeticShortcut="d" android:numericShortcut="0"/>
+</menu>
