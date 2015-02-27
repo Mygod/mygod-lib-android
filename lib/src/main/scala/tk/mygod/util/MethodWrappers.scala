@@ -3,6 +3,7 @@ package tk.mygod.util
 import android.content.DialogInterface
 import android.preference.Preference
 import android.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
+import android.text.{InputFilter, Spanned}
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
@@ -33,5 +34,11 @@ object MethodWrappers {
   implicit def onPreferenceChangeListener(func: (Preference, Any) => Boolean): OnPreferenceChangeListener =
     new OnPreferenceChangeListener {
       override def onPreferenceChange(preference: Preference, newValue: scala.Any): Boolean = func(preference, newValue)
+    }
+
+  implicit def inputFilter(func: (CharSequence, Int, Int, Spanned, Int, Int) => CharSequence): InputFilter =
+    new InputFilter {
+      override def filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int,
+                          dend: Int): CharSequence = func(source, start, end, dest, dstart, dend)
     }
 }

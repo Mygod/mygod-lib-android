@@ -63,7 +63,7 @@ final class SaveFileActivity extends ToolbarActivity {
       })
     if (currentDirectory.getParent != null) directoryList.append(new File(".."))
     directoryList.appendAll(files)
-    directoryView.setAdapter(new DirectoryDisplay(this, directoryList));
+    directoryView.setAdapter(new DirectoryDisplay(this, directoryList))
   }
 
   def submit(view: View) {
@@ -110,7 +110,7 @@ final class SaveFileActivity extends ToolbarActivity {
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     if (item.getItemId != R.id.action_create_dir) return super.onOptionsItemSelected(item)
-    val text = new EditText(this);
+    val text = new EditText(this)
     new AlertDialog.Builder(this).setTitle(R.string.dialog_create_dir_title).setView(text)
       .setPositiveButton(android.R.string.ok, (dialog: DialogInterface, which: Int) =>
         if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory(null))

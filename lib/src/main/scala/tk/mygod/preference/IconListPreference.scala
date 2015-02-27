@@ -16,8 +16,7 @@ import tk.mygod.util.MethodWrappers._
 /**
  * @author Mygod
  */
-class IconListPreference(context: Context, attrs: AttributeSet, defStyle: Int = 0)
-  extends ListPreference(context, attrs) {
+class IconListPreference(context: Context, attrs: AttributeSet = null) extends ListPreference(context, attrs) {
   private var mEntryIcons: Array[Drawable] = null
   private var selectedEntry: Int = -1
 
@@ -32,7 +31,7 @@ class IconListPreference(context: Context, attrs: AttributeSet, defStyle: Int = 
     }
   })
 
-  val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconListPreference, defStyle, 0)
+  val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconListPreference)
   val entryIconsResId: Int = a.getResourceId(R.styleable.IconListPreference_entryIcons, -1)
   if (entryIconsResId != -1) setEntryIcons(entryIconsResId)
   a.recycle
