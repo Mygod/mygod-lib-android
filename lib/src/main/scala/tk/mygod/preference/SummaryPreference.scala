@@ -21,7 +21,7 @@ trait SummaryPreference extends Preference {
     a.recycle
   }
 
-  protected def getSummaryValue: CharSequence
+  protected def getSummaryValue: AnyRef
 
   /**
    * Returns the summary of this ListPreference. If the summary

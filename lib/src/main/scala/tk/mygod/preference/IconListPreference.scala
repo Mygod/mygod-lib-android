@@ -31,10 +31,12 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
     }
   })
 
-  val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconListPreference)
-  val entryIconsResId: Int = a.getResourceId(R.styleable.IconListPreference_entryIcons, -1)
-  if (entryIconsResId != -1) setEntryIcons(entryIconsResId)
-  a.recycle
+  {
+    val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconListPreference)
+    val entryIconsResId: Int = a.getResourceId(R.styleable.IconListPreference_entryIcons, -1)
+    if (entryIconsResId != -1) setEntryIcons(entryIconsResId)
+    a.recycle
+  }
 
   def getEntryIcon = mEntryIcons(selectedEntry)
   def getEntryIcons = mEntryIcons

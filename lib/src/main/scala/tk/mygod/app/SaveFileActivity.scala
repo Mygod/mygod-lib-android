@@ -57,7 +57,7 @@ final class SaveFileActivity extends ToolbarActivity {
       .getFileExtensionFromUrl(file.getAbsolutePath)))).sortWith((lhs, rhs) => {
         var result = lhs.isFile.compareTo(rhs.isFile)
         if (result != 0) result < 0 else {
-          result = lhs.getName.toLowerCase.compareTo(rhs.getName.toLowerCase)
+          result = lhs.getName.compareToIgnoreCase(rhs.getName)
           if (result == 0) lhs.getName < rhs.getName else result < 0
         }
       })

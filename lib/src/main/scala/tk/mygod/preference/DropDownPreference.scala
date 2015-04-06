@@ -45,7 +45,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   mEntryValues = a.getTextArray(R.styleable.DropDownPreference_entryValues)
   a.recycle
 
-  protected override def getSummaryValue: CharSequence = getEntry
+  protected override def getSummaryValue = getEntry
 
   /**
    * Sets the human-readable entries to be shown in the list. This will be

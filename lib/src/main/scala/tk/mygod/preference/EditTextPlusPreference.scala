@@ -12,5 +12,5 @@ class EditTextPlusPreference(context: Context, attrs: AttributeSet = null) exten
   with SummaryPreference {
   initSummary(context, attrs)
 
-  protected override def getSummaryValue: CharSequence = getText
+  protected override def getSummaryValue = getText
 }
