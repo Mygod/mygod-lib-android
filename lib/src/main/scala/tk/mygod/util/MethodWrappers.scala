@@ -15,30 +15,26 @@ import scala.language.implicitConversions
  */
 object MethodWrappers {
   implicit def viewOnClickListener(func: View => Any): View.OnClickListener =
-    new View.OnClickListener { override def onClick(v: View) = func(v) }
-
+    new View.OnClickListener { def onClick(v: View) = func(v) }
   implicit def dialogInterfaceOnClickListener(func: (DialogInterface, Int) => Any): DialogInterface.OnClickListener =
-    new DialogInterface.OnClickListener {
-      override def onClick(dialog: DialogInterface, which: Int) = func(dialog, which)
-    }
+    new DialogInterface.OnClickListener { def onClick(dialog: DialogInterface, which: Int) = func(dialog, which) }
 
   implicit def onItemClickListener(func: (AdapterView[_], View, Int, Long) => Any): OnItemClickListener =
     new OnItemClickListener {
-      override def onItemClick(parent: AdapterView[_], view: View, position: Int, id: Long) =
-        func(parent, view, position, id)
+      def onItemClick(parent: AdapterView[_], view: View, position: Int, id: Long) = func(parent, view, position, id)
     }
 
   implicit def onPreferenceClickListener(func: Preference => Boolean): OnPreferenceClickListener =
-    new OnPreferenceClickListener { override def onPreferenceClick(preference: Preference) = func(preference) }
+    new OnPreferenceClickListener { def onPreferenceClick(preference: Preference) = func(preference) }
 
   implicit def onPreferenceChangeListener(func: (Preference, Any) => Boolean): OnPreferenceChangeListener =
     new OnPreferenceChangeListener {
-      override def onPreferenceChange(preference: Preference, newValue: scala.Any): Boolean = func(preference, newValue)
+      def onPreferenceChange(preference: Preference, newValue: Any) = func(preference, newValue)
     }
 
   implicit def inputFilter(func: (CharSequence, Int, Int, Spanned, Int, Int) => CharSequence): InputFilter =
     new InputFilter {
-      override def filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int,
-                          dend: Int): CharSequence = func(source, start, end, dest, dstart, dend)
+      def filter(source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int) =
+        func(source, start, end, dest, dstart, dend)
     }
 }
