@@ -5,10 +5,8 @@ import android.animation.Animator.AnimatorListener
 import android.os.Build
 import android.support.v7.widget.Toolbar
 import android.view.View.OnLayoutChangeListener
-import android.view.{ViewAnimationUtils, View}
-import tk.mygod.R
+import android.view.{View, ViewAnimationUtils}
 import tk.mygod.view.LocationObserver
-import tk.mygod.util.MethodWrappers._
 
 /**
  * Based on: https://github.com/ferdy182/Android-CircularRevealFragment/blob/master/app/src/main/java/com/fernandofgallego/circularrevealfragment/sample/MainActivity.java
@@ -19,15 +17,11 @@ object CircularRevealFragment {
   navButtonField.setAccessible(true)
 }
 
-abstract class CircularRevealFragment extends StoppableFragment {
-  var toolbar: Toolbar = null
+abstract class CircularRevealFragment extends ToolbarFragment {
   private var spawnLocation: (Float, Float) = _
   def setSpawnLocation(location: (Float, Float)) = spawnLocation = location
   private val stoppingAnimatorListener = new AnimatorListener {
-    def onAnimationEnd(animation: Animator) {
-      getFragmentManager.beginTransaction.remove(CircularRevealFragment.this).commit
-      getFragmentManager.executePendingTransactions
-    }
+    def onAnimationEnd(animation: Animator) = CircularRevealFragment.super.stop()
     def onAnimationRepeat(animation: Animator) = ()
     def onAnimationStart(animation: Animator) = ()
     def onAnimationCancel(animation: Animator) = ()
@@ -36,25 +30,21 @@ abstract class CircularRevealFragment extends StoppableFragment {
   private def getEnclosingCircleRadius(view: View, x: Float, y: Float) =
     math.hypot(math.max(x, view.getWidth - x), math.max(y, view.getHeight - y)).toFloat
 
-  protected def configureToolbar(view: View, title: CharSequence, navigationIcon: Int = -1) {
-    toolbar = view.findViewById(R.id.toolbar).asInstanceOf[Toolbar]
-    toolbar.setTitle(title)
-    if (navigationIcon != -1) {
-      toolbar.setNavigationIcon(if (navigationIcon == 0) R.drawable.abc_ic_ab_back_mtrl_am_alpha else navigationIcon)
-      toolbar.setNavigationOnClickListener((v: View) => exit(v))
-      CircularRevealFragment.navButtonField.get(toolbar).asInstanceOf[View].setOnTouchListener(LocationObserver)
-      if (Build.VERSION.SDK_INT >= 21) view.addOnLayoutChangeListener(new OnLayoutChangeListener {
-        def onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-                           oldRight: Int, oldBottom: Int) {
-          v.removeOnLayoutChangeListener(this)
-          val (x, y) = LocationObserver.getRelatedTo(spawnLocation, v)
-          ViewAnimationUtils.createCircularReveal(v, x.toInt, y.toInt, 0, getEnclosingCircleRadius(v, x, y)).start
-        }
-      })
-    }
+  override protected def configureToolbar(view: View, title: CharSequence, navigationIcon: Int = -1) {
+    super.configureToolbar(view, title, navigationIcon)
+    if (navigationIcon == -1) return
+    CircularRevealFragment.navButtonField.get(toolbar).asInstanceOf[View].setOnTouchListener(LocationObserver)
+    if (Build.VERSION.SDK_INT >= 21) view.addOnLayoutChangeListener(new OnLayoutChangeListener {
+      def onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
+                         oldRight: Int, oldBottom: Int) {
+        v.removeOnLayoutChangeListener(this)
+        val (x, y) = LocationObserver.getRelatedTo(spawnLocation, v)
+        ViewAnimationUtils.createCircularReveal(v, x.toInt, y.toInt, 0, getEnclosingCircleRadius(v, x, y)).start
+      }
+    })
   }
 
-  def stop(sender: View = null) {
+  override def stop(sender: View = null) {
     if (Build.VERSION.SDK_INT >= 21) {
       val view = getView
       val (x, y) = if (sender == null) (view.getWidth / 2F, view.getHeight.toFloat)
@@ -63,6 +53,6 @@ abstract class CircularRevealFragment extends StoppableFragment {
         getEnclosingCircleRadius(view, x, y), 0)
       animator.addListener(stoppingAnimatorListener)
       animator.start
-    } else stoppingAnimatorListener.onAnimationEnd(null)
+    } else super.stop(sender)
   }
 }

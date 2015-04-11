@@ -1,8 +1,12 @@
 package tk.mygod.content
 
-import android.app.{PendingIntent, Activity}
-import android.content.{Intent, Context}
+import android.app.{Activity, PendingIntent}
+import android.content.{Context, Intent}
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import tk.mygod.util.UriUtils._
 
 import scala.language.implicitConversions
 import scala.reflect.ClassTag
@@ -11,7 +15,9 @@ import scala.reflect.ClassTag
  * @author Mygod
  */
 trait ContextPlus extends Context {
-  implicit def getStringImplicit(resourceId : Int): String = getString(resourceId)
+  implicit def getStringImplicit(id : Int): String = getString(id)
+  implicit def getDrawableImplicit(id : Int): Drawable = ContextCompat.getDrawable(this, id)
+  implicit def getUri(id : Int): Uri = getString(id)
 
   def intentActivity[A <: Activity](implicit ct: ClassTag[A]) = new Intent(this, ct.runtimeClass)
   def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) =

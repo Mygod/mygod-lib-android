@@ -14,5 +14,8 @@ trait StoppableFragment extends FragmentPlus {
    * animation, etc.
    * @param sender The View that user might have pressed, etc. which starts the stopping request. Can be null.
    */
-  def stop(sender: View = null)
+  def stop(sender: View = null) {
+    getFragmentManager.beginTransaction.remove(this).commit
+    getFragmentManager.executePendingTransactions
+  }
 }
