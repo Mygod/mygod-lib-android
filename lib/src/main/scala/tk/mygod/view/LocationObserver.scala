@@ -6,11 +6,11 @@ import android.view.View.OnTouchListener
 import scala.collection.mutable
 
 /**
- * Usage; Set it as OnTouchListener and invoke get!
+ * Usage; Set it as OnTouchListener and invoke get! No memory leaks!
  * @author Mygod
  */
 object LocationObserver extends OnTouchListener {
-  private val coordinates = new mutable.HashMap[View, (Float, Float)]
+  private val coordinates = new mutable.WeakHashMap[View, (Float, Float)]
 
   override def onTouch(v: View, event: MotionEvent) = {
     coordinates(v) = (event.getX, event.getY)

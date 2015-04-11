@@ -4,8 +4,9 @@ import android.content.DialogInterface
 import android.preference.Preference
 import android.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
 import android.text.{InputFilter, Spanned}
-import android.view.View
-import android.widget.AdapterView
+import android.view.{KeyEvent, View}
+import android.widget.TextView.OnEditorActionListener
+import android.widget.{TextView, AdapterView}
 import android.widget.AdapterView.OnItemClickListener
 
 import scala.language.implicitConversions
@@ -18,6 +19,11 @@ object MethodWrappers {
     new View.OnClickListener { def onClick(v: View) = func(v) }
   implicit def dialogInterfaceOnClickListener(func: (DialogInterface, Int) => Any): DialogInterface.OnClickListener =
     new DialogInterface.OnClickListener { def onClick(dialog: DialogInterface, which: Int) = func(dialog, which) }
+
+  implicit def onEditorAction(func: (TextView, Int, KeyEvent) => Boolean): OnEditorActionListener =
+    new OnEditorActionListener {
+      override def onEditorAction(v: TextView, actionId: Int, event: KeyEvent) = func(v, actionId, event)
+    }
 
   implicit def onItemClickListener(func: (AdapterView[_], View, Int, Long) => Any): OnItemClickListener =
     new OnItemClickListener {
