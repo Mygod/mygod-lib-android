@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              tools:context="tk.mygod.app.SaveFileActivity" android:orientation="vertical"
-              android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:background="?android:attr/windowBackground">
     <include layout="@layout/toolbar_light_dark" />
     <ListView android:id="@+id/directory_view" android:layout_width="match_parent" android:layout_height="0dp"
               android:layout_weight="1"/>
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-        <EditText android:id="@+id/file_name" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <EditText android:id="@+id/file_name" android:layout_width="0dp" android:layout_height="wrap_content"
                   android:hint="@string/file_save_file_name_hint" android:gravity="start|left"
                   android:inputType="textNoSuggestions" android:layout_weight="1"/>
         <Button android:id="@+id/ok" android:text="@android:string/ok" android:onClick="submit"
