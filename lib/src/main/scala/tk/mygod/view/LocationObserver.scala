@@ -22,7 +22,7 @@ object LocationObserver extends OnTouchListener {
     val option = coordinates.get(v)
     if (option.isEmpty) (v.getWidth / 2F, v.getHeight / 2F) else option.get
   }
-  def get(a: LocationObservedActivity) = get(a.getWindow.getDecorView)
+  def get(a: LocationObservedActivity): (Float, Float) = get(a.getWindow.getDecorView)
   def getOnScreen(v: View) = {
     val (x, y) = get(v)
     val location = new Array[Int](2)

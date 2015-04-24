@@ -9,7 +9,7 @@
         <EditText android:id="@+id/file_name" android:layout_width="0dp" android:layout_height="wrap_content"
                   android:hint="@string/file_save_file_name_hint" android:gravity="start|left"
                   android:inputType="textNoSuggestions" android:layout_weight="1"/>
-        <Button android:id="@+id/ok" android:text="@android:string/ok" android:onClick="submit"
+        <Button android:id="@+id/ok" android:text="@android:string/ok"
                 style="?android:attr/borderlessButtonStyle" android:textColor="@color/flatButtonText"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"/>
     </LinearLayout>

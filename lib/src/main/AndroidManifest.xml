@@ -1,6 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="tk.mygod">
-    <application android:allowBackup="true" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="tk.mygod.app.SaveFileActivity" android:label="@string/title_activity_save_file"
-                  android:icon="@drawable/ic_doc_generic_am_alpha" android:exported="false"/>
-    </application>
+    <application android:allowBackup="true" />
 </manifest>
