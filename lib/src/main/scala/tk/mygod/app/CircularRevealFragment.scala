@@ -2,13 +2,15 @@ package tk.mygod.app
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
-import android.os.Build
+import android.os.{Bundle, Build}
 import android.support.v7.widget.Toolbar
 import android.view.View.OnLayoutChangeListener
-import android.view.{View, ViewAnimationUtils}
+import android.view.{ViewGroup, LayoutInflater, View, ViewAnimationUtils}
 import tk.mygod.view.LocationObserver
+import tk.mygod.widget.InterceptableFrameLayout
 
 /**
+ * Make sure to override onCreateSubView instead of onCreateView.
  * Based on: https://github.com/ferdy182/Android-CircularRevealFragment/blob/master/app/src/main/java/com/fernandofgallego/circularrevealfragment/sample/MainActivity.java
  * @author Mygod
  */
@@ -18,14 +20,34 @@ object CircularRevealFragment {
 }
 
 abstract class CircularRevealFragment extends ToolbarFragment {
+  private var view: InterceptableFrameLayout = _
+
+  private var stopping = false
+  def isStopping = stopping
+  private def setStopping(value: Boolean) {
+    stopping = value
+    view.intercept = value
+  }
+
   private var spawnLocation: (Float, Float) = _
   def setSpawnLocation(location: (Float, Float)) = spawnLocation = location
   private val stoppingAnimatorListener = new AnimatorListener {
-    def onAnimationEnd(animation: Animator) = CircularRevealFragment.super.stop()
+    def onAnimationEnd(animation: Animator) = {
+      CircularRevealFragment.super.stop()
+      setStopping(false)
+    }
     def onAnimationRepeat(animation: Animator) = ()
     def onAnimationStart(animation: Animator) = ()
     def onAnimationCancel(animation: Animator) = ()
   }
+
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
+    view = new InterceptableFrameLayout(getActivity)
+    view.addView(onCreateSubView(inflater, view, savedInstanceState))
+    view
+  }
+  def onCreateSubView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) =
+    super.onCreateView(inflater, container, savedInstanceState)
 
   private def getEnclosingCircleRadius(view: View, x: Float, y: Float) =
     math.hypot(math.max(x, view.getWidth - x), math.max(y, view.getHeight - y)).toFloat
@@ -46,6 +68,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
 
   override def stop(sender: View = null) {
     if (Build.VERSION.SDK_INT >= 21) {
+      setStopping(true)
       val view = getView
       val (x, y) = if (sender == null) (view.getWidth / 2F, view.getHeight.toFloat)
       else LocationObserver.getRelatedTo(sender, view)

@@ -4,7 +4,8 @@ import android.content.DialogInterface
 import android.preference.Preference
 import android.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
 import android.text.{InputFilter, Spanned}
-import android.view.{KeyEvent, View}
+import android.view.View.OnTouchListener
+import android.view.{MotionEvent, KeyEvent, View}
 import android.widget.TextView.OnEditorActionListener
 import android.widget.{TextView, AdapterView}
 import android.widget.AdapterView.OnItemClickListener
@@ -37,6 +38,10 @@ object MethodWrappers {
     new OnPreferenceChangeListener {
       def onPreferenceChange(preference: Preference, newValue: Any) = func(preference, newValue)
     }
+
+  implicit def onTouchListener(func: (View, MotionEvent) => Boolean): OnTouchListener = new OnTouchListener {
+    override def onTouch(v: View, event: MotionEvent): Boolean = func(v, event)
+  }
 
   implicit def inputFilter(func: (CharSequence, Int, Int, Spanned, Int, Int) => CharSequence): InputFilter =
     new InputFilter {

@@ -38,7 +38,8 @@ abstract class FragmentStackActivity extends ActivityPlus {
     getFragmentManager.beginTransaction.add(R.id.container, fragment).commit
     stack.push(fragment)
   }
-  def pop(sender: View = null) = {
+  def pop(sender: View = null) = if (stack.length <= 1) super.onBackPressed else {
+    hideInput
     val fragment = stack.pop
     fragment match {
       case stoppable: StoppableFragment => stoppable.stop(sender)
@@ -48,6 +49,5 @@ abstract class FragmentStackActivity extends ActivityPlus {
     }
     fragment
   }
-
-  override def onBackPressed = if (stack.length <= 1) super.onBackPressed else pop()
+  override def onBackPressed = pop()
 }
