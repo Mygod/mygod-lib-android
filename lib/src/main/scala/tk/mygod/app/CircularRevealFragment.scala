@@ -41,7 +41,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
     def onAnimationCancel(animation: Animator) = ()
   }
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
+  override final def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     view = new InterceptableFrameLayout(getActivity)
     view.addView(onCreateSubView(inflater, view, savedInstanceState))
     view
