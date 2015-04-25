@@ -1,15 +1,16 @@
 package tk.mygod.preference
 
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.res.TypedArray
 import android.os.Build
-import android.support.annotation.NonNull
-import android.util.AttributeSet
-import android.view.{ViewGroup, View}
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.{AdapterView, ArrayAdapter, Spinner}
-import android.content.Context
 import android.preference.Preference
+import android.support.annotation.NonNull
+import android.support.v7.widget.AppCompatSpinner
+import android.util.AttributeSet
+import android.view.{View, ViewGroup}
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.{AdapterView, ArrayAdapter}
 import tk.mygod.R
 import tk.mygod.util.MethodWrappers._
 
@@ -23,7 +24,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   extends Preference(mContext, attrs) with SummaryPreference {
   private val mAdapter: ArrayAdapter[String] =
     new ArrayAdapter[String](mContext, android.R.layout.simple_spinner_dropdown_item)
-  private val mSpinner: Spinner = new Spinner(mContext)
+  private val mSpinner: AppCompatSpinner = new AppCompatSpinner(mContext)
   private var mEntries: Array[CharSequence] = null
   private var mEntryValues: Array[CharSequence] = null
   private var mSelectedIndex: Int = 0

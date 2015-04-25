@@ -1,11 +1,11 @@
 package tk.mygod.app
 
-import android.app.Activity
+import android.support.v7.app.AppCompatActivity
 import tk.mygod.content.ContextPlus
 
 /**
  * @author Mygod
  */
-trait ActivityPlus extends Activity with ContextPlus {
+trait ActivityPlus extends AppCompatActivity with ContextPlus {
   def runOnUiThread(f: => Unit): Unit = runOnUiThread(new Runnable() { def run() = f })
 }

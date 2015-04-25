@@ -2,9 +2,10 @@ package tk.mygod.app
 
 import java.io.File
 
-import android.app.AlertDialog
 import android.content.{Context, DialogInterface}
 import android.os.{Bundle, Environment}
+import android.support.v7.app.AlertDialog
+import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener
 import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
@@ -45,7 +46,7 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
   extends CircularRevealFragment with OnMenuItemClickListener {
   private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
   private val directoryList = new mutable.ArrayBuffer[File]
-  private var fileName: EditText = null
+  private var fileName: AppCompatEditText = null
   private var directoryView: ListView = null
 
   private def setCurrentDirectory(directory: File) {
@@ -89,7 +90,7 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
     configureToolbar(result, R.string.title_fragment_save_file, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
-    fileName = result.findViewById(R.id.file_name).asInstanceOf[EditText]
+    fileName = result.findViewById(R.id.file_name).asInstanceOf[AppCompatEditText]
     if (defaultFileName != null) fileName.setText(defaultFileName)
     directoryView = result.findViewById(R.id.directory_view).asInstanceOf[ListView]
     directoryView.setOnItemClickListener((parent: AdapterView[_], view: View, position: Int, id: Long) =>
