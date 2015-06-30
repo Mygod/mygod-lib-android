@@ -33,10 +33,12 @@ abstract class FragmentStackActivity extends ActivityPlus {
 
   protected override def onNewIntent(intent: Intent) = while (stack.length > 1) pop()
 
-  def push(fragment: Fragment) {
+  def push(fragment: Fragment): Boolean = {
+    if (fragment.isAdded) return true
     hideInput
     getFragmentManager.beginTransaction.add(R.id.container, fragment).commit
     stack.push(fragment)
+    false
   }
   def pop(sender: View = null) = if (stack.length <= 1) super.onBackPressed else {
     hideInput
