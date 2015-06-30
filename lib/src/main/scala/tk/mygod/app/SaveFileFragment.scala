@@ -85,7 +85,7 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
     exit(v)
   }
 
-  override def onCreateSubView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     val result = inflater.inflate(R.layout.fragment_save_file, container, false)
     configureToolbar(result, R.string.title_fragment_save_file, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)

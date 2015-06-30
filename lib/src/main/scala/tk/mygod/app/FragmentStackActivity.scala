@@ -5,8 +5,8 @@ import android.content.{Intent, Context}
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import tk.mygod.R
+import tk.mygod.widget.InterceptableFrameLayout
 
 import scala.collection.mutable
 
@@ -15,7 +15,7 @@ import scala.collection.mutable
  * @author Mygod
  */
 abstract class FragmentStackActivity extends ActivityPlus {
-  private var container: FrameLayout = _
+  private[app] var container: InterceptableFrameLayout = _
   private val stack = new mutable.Stack[Fragment]
 
   protected lazy val inputMethodManager =
@@ -28,7 +28,7 @@ abstract class FragmentStackActivity extends ActivityPlus {
   protected override def onCreate(bundle: Bundle) {
     super.onCreate(bundle)
     setContentView(R.layout.activity_fragment_stack)
-    container = findViewById(R.id.container).asInstanceOf[FrameLayout]
+    container = findViewById(R.id.container).asInstanceOf[InterceptableFrameLayout]
   }
 
   protected override def onNewIntent(intent: Intent) = while (stack.length > 1) pop()

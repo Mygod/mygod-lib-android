@@ -20,13 +20,14 @@ object CircularRevealFragment {
 }
 
 abstract class CircularRevealFragment extends ToolbarFragment {
-  private var view: InterceptableFrameLayout = _
-
   private var stopping = false
+  private var cached: FragmentStackActivity = _
   def isStopping = stopping
   private def setStopping(value: Boolean) {
     stopping = value
-    view.intercept = value
+    var tmp = getActivity.asInstanceOf[FragmentStackActivity]
+    if (tmp == null) tmp = cached else cached = tmp
+    tmp.container.intercept = value
   }
 
   private var spawnLocation: (Float, Float) = _
@@ -40,14 +41,6 @@ abstract class CircularRevealFragment extends ToolbarFragment {
     def onAnimationStart(animation: Animator) = ()
     def onAnimationCancel(animation: Animator) = ()
   }
-
-  override final def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
-    view = new InterceptableFrameLayout(getActivity)
-    view.addView(onCreateSubView(inflater, view, savedInstanceState))
-    view
-  }
-  def onCreateSubView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) =
-    super.onCreateView(inflater, container, savedInstanceState)
 
   private def getEnclosingCircleRadius(view: View, x: Float, y: Float) =
     math.hypot(math.max(x, view.getWidth - x), math.max(y, view.getHeight - y)).toFloat
