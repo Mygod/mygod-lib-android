@@ -67,10 +67,10 @@ abstract class CircularRevealFragment extends ToolbarFragment {
       })
   }
 
-  override def stop(sender: View = null) {
-    if (Build.VERSION.SDK_INT >= 21) {
+  override def stop(sender: View = null) = {
+    val view = getView
+    if (Build.VERSION.SDK_INT >= 21 && view != null) {
       setStopping(true)
-      val view = getView
       val (x, y) = if (sender == null) (view.getWidth / 2F, view.getHeight.toFloat)
       else LocationObserver.getRelatedTo(sender, view)
       val animator = ViewAnimationUtils.createCircularReveal(view, x.toInt, y.toInt,
