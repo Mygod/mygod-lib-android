@@ -56,14 +56,15 @@ abstract class CircularRevealFragment extends ToolbarFragment {
     super.configureToolbar(view, title, navigationIcon)
     if (navigationIcon == -1) return
     CircularRevealFragment.navButtonField.get(toolbar).asInstanceOf[View].setOnTouchListener(LocationObserver)
-    if (Build.VERSION.SDK_INT >= 21) view.addOnLayoutChangeListener(new OnLayoutChangeListener {
-      def onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-                         oldRight: Int, oldBottom: Int) {
-        v.removeOnLayoutChangeListener(this)
-        val (x, y) = LocationObserver.getRelatedTo(spawnLocation, v)
-        ViewAnimationUtils.createCircularReveal(v, x.toInt, y.toInt, 0, getEnclosingCircleRadius(v, x, y)).start
-      }
-    })
+    if (Build.VERSION.SDK_INT >= 21 && spawnLocation != null)
+      view.addOnLayoutChangeListener(new OnLayoutChangeListener {
+        def onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
+                           oldRight: Int, oldBottom: Int) {
+          v.removeOnLayoutChangeListener(this)
+          val (x, y) = LocationObserver.getRelatedTo(spawnLocation, v)
+          ViewAnimationUtils.createCircularReveal(v, x.toInt, y.toInt, 0, getEnclosingCircleRadius(v, x, y)).start
+        }
+      })
   }
 
   override def stop(sender: View = null) {
