@@ -20,11 +20,9 @@ object CircularRevealFragment {
 }
 
 abstract class CircularRevealFragment extends ToolbarFragment {
-  private var stopping = false
   private var cached: FragmentStackActivity = _
-  def isStopping = stopping
   private def setStopping(value: Boolean) {
-    stopping = value
+    _stopping = value
     var tmp = getActivity.asInstanceOf[FragmentStackActivity]
     if (tmp == null) tmp = cached else cached = tmp
     tmp.container.intercept = value
@@ -61,6 +59,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
   }
 
   override def stop(sender: View = null) = {
+    _stopping = true
     val view = getView
     if (Build.VERSION.SDK_INT >= 21 && view != null) {
       setStopping(true)

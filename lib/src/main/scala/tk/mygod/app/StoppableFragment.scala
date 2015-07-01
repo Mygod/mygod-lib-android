@@ -7,6 +7,9 @@ import android.view.View
  * @author Mygod
  */
 trait StoppableFragment extends FragmentPlus {
+  protected var _stopping: Boolean = _
+  def stopping = _stopping
+
   def exit(sender: View) = getActivity.asInstanceOf[FragmentStackActivity].pop(sender)
 
   /**
@@ -17,7 +20,9 @@ trait StoppableFragment extends FragmentPlus {
    * @param sender The View that user might have pressed, etc. which starts the stopping request. Can be null.
    */
   def stop(sender: View = null) {
+    _stopping = true
     val act = getActivity.asInstanceOf[FragmentStackActivity]
     if (act != null) act.popBackStack
+    _stopping = false
   }
 }

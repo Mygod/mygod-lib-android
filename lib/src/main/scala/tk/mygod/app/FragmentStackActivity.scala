@@ -49,20 +49,24 @@ abstract class FragmentStackActivity extends ActivityPlus {
   private[app] def popBackStack = if (!getFragmentManager.popBackStackImmediate) super.onBackPressed
     // fix for support lib since I didn't really use those APIs :/
   def pop(sender: View = null): Fragment = {
+    hideInput
     val manager = getFragmentManager
-    val count = manager.getBackStackEntryCount
-    if (count <= 1) {
-      super.onBackPressed
-      null
-    } else {
-      hideInput
-      val fragment = manager.findFragmentByTag(manager.getBackStackEntryAt(count - 1).getName)
+    var i = manager.getBackStackEntryCount - 1
+    while (i > 0) {
+      val fragment = manager.findFragmentByTag(manager.getBackStackEntryAt(i).getName)
       fragment match {
-        case stoppable: StoppableFragment => stoppable.stop(sender)
-        case _ => popBackStack
+        case stoppable: StoppableFragment => if (!stoppable.stopping) {
+          stoppable.stop(sender)
+          return stoppable
+        }
+        case _ =>
+          popBackStack
+          return fragment
       }
-      fragment
+      i = i - 1
     }
+    super.onBackPressed
+    null
   }
   override def onBackPressed = pop()
 }
