@@ -16,5 +16,8 @@ trait StoppableFragment extends FragmentPlus {
    * The super method shall be called no matter what or else shall hell released upon you. >:-D
    * @param sender The View that user might have pressed, etc. which starts the stopping request. Can be null.
    */
-  def stop(sender: View = null) = getActivity.asInstanceOf[FragmentStackActivity].popBackStack
+  def stop(sender: View = null) {
+    val act = getActivity.asInstanceOf[FragmentStackActivity]
+    if (act != null) act.popBackStack
+  }
 }
