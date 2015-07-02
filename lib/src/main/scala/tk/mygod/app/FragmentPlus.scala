@@ -15,6 +15,23 @@ import scala.reflect.ClassTag
  * @author Mygod
  */
 trait FragmentPlus extends Fragment {
+  def isFullscreen = false
+  override def onStart {
+    super.onStart
+    if (isFullscreen) {
+      val view = getView
+      if (!view.requestFocus) {
+        val focusable = view.isFocusable
+        val focusableInTouchMode = view.isFocusableInTouchMode
+        view.setFocusable(true)
+        view.setFocusableInTouchMode(true)
+        view.requestFocus
+        view.setFocusable(focusable)
+        view.setFocusableInTouchMode(focusableInTouchMode)
+      }
+    }
+  }
+
   implicit def getStringImplicit(id : Int): String = getString(id)
   implicit def getDrawableImplicit(id : Int): Drawable = ContextCompat.getDrawable(getActivity, id)
   implicit def getUri(id : Int): Uri = getString(id)
