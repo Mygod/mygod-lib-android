@@ -1,4 +1,4 @@
-package tk.mygod.animation
+package tk.mygod.view
 
 import android.animation.{Animator, AnimatorListenerAdapter}
 import android.content.Context

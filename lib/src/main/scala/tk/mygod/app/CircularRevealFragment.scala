@@ -2,12 +2,11 @@ package tk.mygod.app
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
-import android.os.{Bundle, Build}
+import android.os.Build
 import android.support.v7.widget.Toolbar
 import android.view.View.OnLayoutChangeListener
-import android.view.{ViewGroup, LayoutInflater, View, ViewAnimationUtils}
+import android.view.{View, ViewAnimationUtils}
 import tk.mygod.view.LocationObserver
-import tk.mygod.widget.InterceptableFrameLayout
 
 /**
  * Make sure to override onCreateSubView instead of onCreateView.
