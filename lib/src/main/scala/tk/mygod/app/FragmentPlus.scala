@@ -4,7 +4,9 @@ import android.app.{Activity, Fragment, PendingIntent}
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.view.View
 import android.widget.Toast
 import tk.mygod.util.UriUtils._
 
@@ -40,6 +42,8 @@ trait FragmentPlus extends Fragment {
 
   def showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
     Toast.makeText(getActivity, text, duration).show
+  def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
+    getActivity.getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
   def runOnUiThread(f: => Unit): Unit = getActivity.runOnUiThread(new Runnable() { def run() = f })
 }
