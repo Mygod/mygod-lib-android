@@ -21,13 +21,9 @@ trait FragmentPlus extends Fragment {
     if (isFullscreen) {
       val view = getView
       if (!view.requestFocus) {
-        val focusable = view.isFocusable
-        val focusableInTouchMode = view.isFocusableInTouchMode
         view.setFocusable(true)
         view.setFocusableInTouchMode(true)
         view.requestFocus
-        view.setFocusable(focusable)
-        view.setFocusableInTouchMode(focusableInTouchMode)
       }
     }
   }
