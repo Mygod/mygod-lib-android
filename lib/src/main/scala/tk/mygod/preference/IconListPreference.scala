@@ -98,7 +98,10 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
   private class CheckedListAdapter extends BaseAdapter {
     lazy val name = "select_dialog_singlechoice_" + (if (Build.VERSION.SDK_INT >= 21) "material" else "holo")
 
-    def getCount = getEntries.length
+    def getCount = {
+      val entries = getEntries
+      if (entries == null) 0 else entries.length
+    }
     def getItem(position: Int) = getEntries()(position)
     def getItemId(position: Int) = position
 
