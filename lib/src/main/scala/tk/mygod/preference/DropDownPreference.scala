@@ -49,14 +49,12 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   protected override def getSummaryValue = getEntry
 
   /**
-   * Sets the human-readable entries to be shown in the list. This will be
-   * shown in subsequent dialogs.
-   * <p>
-   * Each entry must have a corresponding index in
-   * {@link #setEntryValues(CharSequence[])}.
+   * Sets the human-readable entries to be shown in the list. This will be shown in subsequent dialogs.
+   *
+   * Each entry must have a corresponding index in [[setEntryValues(CharSequence[])]].
    *
    * @param entries The entries.
-   * @see #setEntryValues(CharSequence[])
+   * @see [[setEntryValues(CharSequence[])]]
    */
   def setEntries(entries: Array[CharSequence]) {
     mEntries = entries
@@ -97,8 +95,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   def getEntryValues: Array[CharSequence] = mEntryValues
 
   /**
-   * Sets the value of the key. This should be one of the entries in
-   * {@link #getEntryValues()}.
+   * Sets the value of the key. This should be one of the entries in [[getEntryValues]].
    *
    * @param value The value to set for the key.
    */
@@ -128,8 +125,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   }
 
   /**
-   * Returns the value of the key. This should be one of the entries in
-   * {@link #getEntryValues()}.
+   * Returns the value of the key. This should be one of the entries in [[getEntryValues]].
    *
    * @return The value of the key.
    */

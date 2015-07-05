@@ -24,10 +24,8 @@ trait SummaryPreference extends Preference {
   protected def getSummaryValue: AnyRef
 
   /**
-   * Returns the summary of this ListPreference. If the summary
-   * has a {@linkplain String#format String formatting}
-   * marker in it (i.e. "%s" or "%1$s"), then the current entry
-   * value will be substituted in its place.
+   * Returns the summary of this SummaryPreference. If the summary has a String formatting marker in it
+   * (i.e. "%s" or "%1$s"), then the current entry value will be substituted in its place.
    *
    * @return the summary with appropriate string substitution
    */
@@ -36,11 +34,8 @@ trait SummaryPreference extends Preference {
     if (mSummary == null || entry == null) super.getSummary else String.format(mSummary, entry)
   }
   /**
-   * Sets the summary for this Preference with a CharSequence.
-   * If the summary has a
-   * {@linkplain String#format String formatting}
-   * marker in it (i.e. "%s" or "%1$s"), then the current entry
-   * value will be substituted in its place when it's retrieved.
+   * Sets the summary for this Preference with a CharSequence. If the summary has a String formatting marker in it
+   * (i.e. "%s" or "%1$s"), then the current entry value will be substituted in its place when it's retrieved.
    *
    * @param summary The summary for the preference.
    */
