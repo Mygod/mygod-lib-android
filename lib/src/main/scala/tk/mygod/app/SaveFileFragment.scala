@@ -2,8 +2,13 @@ package tk.mygod.app
 
 import java.io.File
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.content.{Context, DialogInterface}
 import android.os.{Bundle, Environment}
+import android.support.v13.app.FragmentCompat
+import android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener
@@ -22,6 +27,8 @@ import scala.collection.mutable
  * @author Mygod
  */
 object SaveFileFragment {
+  private final val PERMISSION_REQUEST_STORAGE = 0
+
   private final class DirectoryDisplay(context: Context, private val content: mutable.ArrayBuffer[File])
     extends ArrayAdapter[File](context, android.R.layout.activity_list_item, android.R.id.text1, content) {
     override def getView(position: Int, convertView: View, parent: ViewGroup) = {
@@ -42,33 +49,38 @@ object SaveFileFragment {
 }
 
 final class SaveFileFragment(private val callback: (File) => Any, private var mimeType: String, path: String = null,
-                             private val defaultFileName: String = null)
-  extends CircularRevealFragment with OnMenuItemClickListener {
-  private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
-  private val directoryList = new mutable.ArrayBuffer[File]
-  private var fileName: AppCompatEditText = null
-  private var directoryView: ListView = null
+                             private val defaultFileName: String = null) extends CircularRevealFragment
+  with OnMenuItemClickListener with OnRequestPermissionsResultCallback {
+  def this() {
+    this(null, null, null)
+  }
 
-  private def setCurrentDirectory(directory: File) {
+  private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
+  private var directoryDisplay: DirectoryDisplay = _
+  private var fileName: AppCompatEditText = _
+  private var directoryView: ListView = _
+  private var storageGranted: Boolean = _
+
+  private def setCurrentDirectory(directory: File = null) {
     if (directory != null) {
       currentDirectory = directory
       var path = currentDirectory.getAbsolutePath
       if (currentDirectory.getParent != null) path += "/"
       toolbar.setSubtitle(path)
     }
-    directoryList.clear
-    val files = currentDirectory.listFiles().filter(file => file.isDirectory || file.isFile && mimeType
+    directoryDisplay.clear
+    if (!storageGranted) return
+    if (currentDirectory.getParent != null) directoryDisplay.add(new File(".."))
+    val list = currentDirectory.listFiles()
+    if (list != null) directoryDisplay.addAll(list.toSeq.filter(file => file.isDirectory || file.isFile && mimeType
       .equals(MimeTypeMap.getSingleton.getMimeTypeFromExtension(MimeTypeMap
-      .getFileExtensionFromUrl(file.getAbsolutePath)))).sortWith((lhs, rhs) => {
-        var result = lhs.isFile.compareTo(rhs.isFile)
-        if (result != 0) result < 0 else {
-          result = lhs.getName.compareToIgnoreCase(rhs.getName)
-          if (result == 0) lhs.getName < rhs.getName else result < 0
-        }
-      })
-    if (currentDirectory.getParent != null) directoryList.append(new File(".."))
-    directoryList.appendAll(files)
-    directoryView.setAdapter(new DirectoryDisplay(getActivity, directoryList))
+        .getFileExtensionFromUrl(file.getAbsolutePath)))).sortWith((lhs, rhs) => {
+      var result = lhs.isFile.compareTo(rhs.isFile)
+      if (result != 0) result < 0 else {
+        result = lhs.getName.compareToIgnoreCase(rhs.getName)
+        if (result == 0) lhs.getName < rhs.getName else result < 0
+      }
+    }))
   }
 
   private def submit(v: View) = if (new File(currentDirectory, fileName.getText.toString).exists) {
@@ -87,21 +99,28 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
 
   override def isFullscreen = true
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
+    storageGranted = ContextCompat.checkSelfPermission(getActivity, Manifest.permission.READ_EXTERNAL_STORAGE) ==
+      PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity,
+      Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    if (!storageGranted) FragmentCompat.requestPermissions(this, Array(Manifest.permission.READ_EXTERNAL_STORAGE,
+      Manifest.permission.WRITE_EXTERNAL_STORAGE), SaveFileFragment.PERMISSION_REQUEST_STORAGE)
     val result = inflater.inflate(R.layout.fragment_save_file, container, false)
     configureToolbar(result, R.string.title_fragment_save_file, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
     fileName = result.findViewById(R.id.file_name).asInstanceOf[AppCompatEditText]
     if (defaultFileName != null) fileName.setText(defaultFileName)
+    directoryDisplay = new DirectoryDisplay(getActivity, new mutable.ArrayBuffer[File])
     directoryView = result.findViewById(R.id.directory_view).asInstanceOf[ListView]
+    directoryView.setAdapter(directoryDisplay)
     directoryView.setOnItemClickListener((parent: AdapterView[_], view: View, position: Int, id: Long) =>
-      if (position >= 0 && position < directoryList.size) {
-        val file = directoryList.get(position)
+      if (position >= 0 && position < directoryDisplay.getCount) {
+        val file = directoryDisplay.getItem(position)
         if (file.isFile) {
           fileName.setText(file.getName)
           submit(view)
-        } else setCurrentDirectory(if ("..".equals(file.getName)) currentDirectory.getParentFile else file)
+        } else setCurrentDirectory(if (file.getName == "..") currentDirectory.getParentFile else file)
       })
     val ok = result.findViewById(R.id.ok)
     ok.setOnTouchListener(LocationObserver)
@@ -109,6 +128,15 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
     setCurrentDirectory(currentDirectory)
     result
   }
+
+  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]) =
+    requestCode match {
+      case SaveFileFragment.PERMISSION_REQUEST_STORAGE =>
+        storageGranted = grantResults(0) == PackageManager.PERMISSION_GRANTED &&
+          grantResults(1) == PackageManager.PERMISSION_GRANTED
+        if (storageGranted) setCurrentDirectory() else stop()
+      case _ => super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 
   def onMenuItemClick(item: MenuItem): Boolean = {
     if (item.getItemId != R.id.action_create_dir) return super.onOptionsItemSelected(item)
