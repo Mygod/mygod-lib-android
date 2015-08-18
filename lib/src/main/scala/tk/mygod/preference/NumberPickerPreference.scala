@@ -15,9 +15,9 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
 
   {
     val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference)
-    picker.setMinValue(a.getInt(R.styleable.NumberPickerPreference_min, 0))
+    setMin(a.getInt(R.styleable.NumberPickerPreference_min, 0))
     // TODO: https://code.google.com/p/android/issues/detail?id=183100
-    picker.setMaxValue(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue - 1))
+    setMax(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue - 1))
     a.recycle
   }
   initSummary(context, attrs)
@@ -26,9 +26,11 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
   def getMin = if (picker == null) 0 else picker.getMinValue
   def getMax = picker.getMaxValue
   def setValue(i: Int) {
+    if (i == picker.getValue || !callChangeListener(i)) return
     picker.setValue(i)
     value = picker.getValue
     persistInt(value)
+    notifyChanged
   }
   def setMin(value: Int) = picker.setMinValue(value)
   def setMax(value: Int) = picker.setMaxValue(value)
@@ -40,11 +42,7 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
   }
   override protected def onDialogClosed(positiveResult: Boolean) {
     super.onDialogClosed(positiveResult)  // forward compatibility
-    if (!positiveResult) return
-    val i = picker.getValue
-    if (i == value || !callChangeListener(i)) return
-    setValue(i)
-    notifyChanged
+    if (positiveResult) setValue(picker.getValue)
   }
   override protected def onGetDefaultValue(a: TypedArray, index: Int): AnyRef =
     a.getInt(index, getMin).asInstanceOf[AnyRef]

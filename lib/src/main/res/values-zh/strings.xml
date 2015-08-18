@@ -5,4 +5,5 @@
     <string name="action_create_dir">创建目录</string>
     <string name="dialog_overwrite_confirm_title">确定要覆盖此文件吗？</string>
     <string name="dialog_create_dir_title">请输入目录名：</string>
+    <string name="reset">重置</string>
 </resources>
