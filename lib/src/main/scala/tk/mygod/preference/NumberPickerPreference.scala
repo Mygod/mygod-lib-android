@@ -16,13 +16,14 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
   {
     val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference)
     picker.setMinValue(a.getInt(R.styleable.NumberPickerPreference_min, 0))
-    picker.setMaxValue(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue))
+    // TODO: https://code.google.com/p/android/issues/detail?id=183100
+    picker.setMaxValue(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue - 1))
     a.recycle
   }
   initSummary(context, attrs)
 
   def getValue = value
-  def getMin = picker.getMinValue
+  def getMin = if (picker == null) 0 else picker.getMinValue
   def getMax = picker.getMaxValue
   def setValue(i: Int) {
     picker.setValue(i)
