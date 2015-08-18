@@ -10,7 +10,7 @@ trait StoppableFragment extends FragmentPlus {
   protected var _stopping: Boolean = _
   def stopping = _stopping
 
-  def exit(sender: View) = getActivity.asInstanceOf[FragmentStackActivity].pop(sender)
+  def exit(sender: View = null) = getActivity.asInstanceOf[FragmentStackActivity].pop(sender)
 
   /**
    * Only for internal use. Please use exit instead.

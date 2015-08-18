@@ -112,7 +112,7 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     if (!storageGranted) FragmentCompat.requestPermissions(this, Array(Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_STORAGE)
     val result = inflater.inflate(R.layout.fragment_save_file, container, false)
-    configureToolbar(result, R.string.title_fragment_save_file, 0)
+    configureToolbar(result, R.string.fragment_save_file_title, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
     fileName = result.findViewById(R.id.file_name).asInstanceOf[AppCompatEditText]
@@ -140,7 +140,10 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
       case PERMISSION_REQUEST_STORAGE =>
         storageGranted = grantResults(0) == PackageManager.PERMISSION_GRANTED &&
           grantResults(1) == PackageManager.PERMISSION_GRANTED
-        if (storageGranted) setCurrentDirectory() else stop()
+        if (storageGranted) setCurrentDirectory() else {
+          showToast(R.string.fragment_save_file_storage_denied, Toast.LENGTH_LONG)
+          exit()
+        }
       case _ => super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
