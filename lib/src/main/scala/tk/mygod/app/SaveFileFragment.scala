@@ -16,7 +16,7 @@ import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
 import android.widget._
 import tk.mygod.R
-import tk.mygod.app.SaveFileFragment.DirectoryDisplay
+import tk.mygod.app.SaveFileFragment._
 import tk.mygod.util.MethodWrappers._
 import tk.mygod.view.LocationObserver
 
@@ -28,6 +28,9 @@ import scala.collection.mutable
  */
 object SaveFileFragment {
   private final val PERMISSION_REQUEST_STORAGE = 0
+  private final val REQUEST_CODE = "RequestCode"
+  private final val MIME_TYPE = "MimeType"
+  private final val CURRENT_DIRECTORY = "CurrentDirectory"
 
   private final class DirectoryDisplay(context: Context, private val content: mutable.ArrayBuffer[File])
     extends ArrayAdapter[File](context, android.R.layout.activity_list_item, android.R.id.text1, content) {
@@ -46,14 +49,16 @@ object SaveFileFragment {
       result
     }
   }
+
+  trait SaveFileCallback {
+    def saveFilePicked(file: File, requestCode: Int)
+  }
 }
 
-final class SaveFileFragment(private val callback: (File) => Any, private var mimeType: String, path: String = null,
-                             private val defaultFileName: String = null) extends CircularRevealFragment
+final class SaveFileFragment(private var requestCode: Int, private var mimeType: String, path: String = null,
+                             private var defaultFileName: String = null) extends CircularRevealFragment
   with OnMenuItemClickListener with OnRequestPermissionsResultCallback {
-  def this() {
-    this(null, null, null)
-  }
+  def this() = this(0, null, null, null)
 
   private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
   private var directoryDisplay: DirectoryDisplay = _
@@ -93,7 +98,8 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
     } else confirm(v)
 
   private def confirm(v: View) {
-    callback(new File(currentDirectory, fileName.getText.toString))
+    getActivity.asInstanceOf[SaveFileCallback]
+      .saveFilePicked(new File(currentDirectory, fileName.getText.toString), requestCode)
     exit(v)
   }
 
@@ -104,7 +110,7 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
       PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity,
       Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     if (!storageGranted) FragmentCompat.requestPermissions(this, Array(Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE), SaveFileFragment.PERMISSION_REQUEST_STORAGE)
+      Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_STORAGE)
     val result = inflater.inflate(R.layout.fragment_save_file, container, false)
     configureToolbar(result, R.string.title_fragment_save_file, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
@@ -131,7 +137,7 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
 
   override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]) =
     requestCode match {
-      case SaveFileFragment.PERMISSION_REQUEST_STORAGE =>
+      case PERMISSION_REQUEST_STORAGE =>
         storageGranted = grantResults(0) == PackageManager.PERMISSION_GRANTED &&
           grantResults(1) == PackageManager.PERMISSION_GRANTED
         if (storageGranted) setCurrentDirectory() else stop()
@@ -146,5 +152,20 @@ final class SaveFileFragment(private val callback: (File) => Any, private var mi
         if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory(null))
       .setNegativeButton(android.R.string.cancel, null).show
     true
+  }
+
+  override def onActivityCreated(savedInstanceState: Bundle) {
+    super.onActivityCreated(savedInstanceState)
+    if (savedInstanceState == null) return
+    requestCode = savedInstanceState.getInt(REQUEST_CODE)
+    mimeType = savedInstanceState.getString(MIME_TYPE)
+    setCurrentDirectory(new File(savedInstanceState.getString(CURRENT_DIRECTORY)))
+  }
+
+  override def onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    outState.putInt(REQUEST_CODE, requestCode)
+    outState.putString(MIME_TYPE, mimeType)
+    outState.putString(CURRENT_DIRECTORY, currentDirectory.getPath)
   }
 }
