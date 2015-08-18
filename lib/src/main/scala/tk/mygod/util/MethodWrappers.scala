@@ -4,7 +4,7 @@ import android.content.DialogInterface
 import android.preference.Preference
 import android.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
 import android.text.{InputFilter, Spanned}
-import android.view.View.OnTouchListener
+import android.view.View.{OnLongClickListener, OnTouchListener}
 import android.view.{MotionEvent, KeyEvent, View}
 import android.widget.TextView.OnEditorActionListener
 import android.widget.{TextView, AdapterView}
@@ -30,6 +30,10 @@ object MethodWrappers {
     new OnItemClickListener {
       def onItemClick(parent: AdapterView[_], view: View, position: Int, id: Long) = func(parent, view, position, id)
     }
+
+  implicit def onLongClickListener(func: View => Boolean): OnLongClickListener = new OnLongClickListener {
+    override def onLongClick(v: View) = func(v)
+  }
 
   implicit def onPreferenceClickListener(func: Preference => Boolean): OnPreferenceClickListener =
     new OnPreferenceClickListener { def onPreferenceClick(preference: Preference) = func(preference) }
