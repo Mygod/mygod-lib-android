@@ -1,15 +1,15 @@
 package tk.mygod.preference
 
 import android.app.AlertDialog
-import android.content.{Context, DialogInterface}
 import android.content.res.{Resources, TypedArray}
+import android.content.{Context, DialogInterface}
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.preference.{Preference, ListPreference}
+import android.preference.{ListPreference, Preference}
 import android.support.annotation.NonNull
 import android.util.AttributeSet
-import android.view.{ViewGroup, LayoutInflater, View}
-import android.widget.{CheckedTextView, BaseAdapter}
+import android.view.{LayoutInflater, View, ViewGroup}
+import android.widget.{BaseAdapter, CheckedTextView}
 import tk.mygod.R
 import tk.mygod.util.MethodWrappers._
 
