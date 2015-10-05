@@ -45,5 +45,5 @@ trait FragmentPlus extends Fragment {
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
     getActivity.getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
-  def runOnUiThread(f: => Unit): Unit = getActivity.runOnUiThread(new Runnable() { def run() = f })
+  def runOnUiThread[T](f: => T): Unit = getActivity.runOnUiThread(() => f)
 }

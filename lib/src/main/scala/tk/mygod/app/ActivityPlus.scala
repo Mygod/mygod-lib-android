@@ -14,8 +14,6 @@ import scala.language.implicitConversions
 trait ActivityPlus extends AppCompatActivity with ContextPlus {
   private var destroyed: Boolean = _
 
-  def runOnUiThread(f: => Unit): Unit = runOnUiThread(new Runnable() { def run() = f })
-
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
     getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
@@ -24,4 +22,6 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     destroyed = true
   }
   override def isDestroyed = if (Build.VERSION.SDK_INT >= 17) super.isDestroyed else destroyed
+
+  def runOnUiThread[T](f: => T): Unit = super.runOnUiThread(() => f)
 }

@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable
 import android.support.v7.preference.{ListPreference, Preference}
 import android.util.AttributeSet
 import tk.mygod.R
-import tk.mygod.util.MethodWrappers._
 
 /**
  * @author Mygod

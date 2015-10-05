@@ -8,7 +8,7 @@ import android.text.TextUtils
  * @author Mygod
  */
 object LocaleUtils {
-  private val localeMatcher = "^([^_]*)(_([^_]*)(_#(.*))?)?$".r
+  private val localeMatcher = "^([^_]*)(_([^_]*)(_#(.*))?)?$"r
 
   def parseLocale(value: String): Locale = {
     val o = localeMatcher.findFirstMatchIn(value.replace('-', '_'))

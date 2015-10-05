@@ -3,6 +3,7 @@ package tk.mygod.app
 import java.io.File
 
 import android.Manifest
+import android.content.DialogInterface.OnClickListener
 import android.content.pm.PackageManager
 import android.content.{Context, DialogInterface}
 import android.os.{Bundle, Environment}
@@ -17,7 +18,6 @@ import android.webkit.MimeTypeMap
 import android.widget._
 import tk.mygod.R
 import tk.mygod.app.SaveFileFragment._
-import tk.mygod.util.MethodWrappers._
 import tk.mygod.view.LocationObserver
 
 import scala.collection.JavaConversions._
@@ -92,7 +92,8 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
       var button: Button = null
       button = new AlertDialog.Builder(getActivity)
         .setTitle(R.string.dialog_overwrite_confirm_title)
-        .setPositiveButton(android.R.string.yes, (dialog: DialogInterface, which: Int) => confirm(button))
+        .setPositiveButton(android.R.string.yes,
+          ((dialog: DialogInterface, which: Int) => confirm(button)): OnClickListener)
         .setNegativeButton(android.R.string.no, null).show().getButton(DialogInterface.BUTTON_POSITIVE)
       button.setOnTouchListener(LocationObserver)
     } else confirm(v)
@@ -151,8 +152,8 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     if (item.getItemId != R.id.action_create_dir) return super.onOptionsItemSelected(item)
     val text = new EditText(getActivity)
     new AlertDialog.Builder(getActivity).setTitle(R.string.dialog_create_dir_title).setView(text)
-      .setPositiveButton(android.R.string.ok, (dialog: DialogInterface, which: Int) =>
-        if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory(null))
+      .setPositiveButton(android.R.string.ok, ((dialog: DialogInterface, which: Int) =>
+        if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory(null)): OnClickListener)
       .setNegativeButton(android.R.string.cancel, null).show
     true
   }

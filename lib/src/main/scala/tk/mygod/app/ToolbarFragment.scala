@@ -3,7 +3,6 @@ package tk.mygod.app
 import android.support.v7.widget.Toolbar
 import android.view.View
 import tk.mygod.R
-import tk.mygod.util.MethodWrappers._
 
 /**
  * @author Mygod
