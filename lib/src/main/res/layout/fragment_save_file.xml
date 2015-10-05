@@ -12,7 +12,7 @@
                                                      android:inputType="textNoSuggestions" android:layout_weight="1" />
         <android.support.v7.widget.AppCompatButton android:id="@+id/ok" android:text="@android:string/ok"
                                                    style="?android:attr/borderlessButtonStyle"
-                                                   android:textColor="@color/flatButtonText"
+                                                   android:textColor="@color/flat_button_text"
                                                    android:layout_width="wrap_content"
                                                    android:layout_height="wrap_content" />
     </LinearLayout>

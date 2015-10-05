@@ -31,8 +31,6 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   private var mSelectedIndex: Int = 0
   private var mValueSet: Boolean = false
 
-  mSpinner.setPadding(MetricsUtils.dp2px(getContext, 16), 0, 0, 0)
-  mSpinner.setDropDownVerticalOffset(MetricsUtils.sp2px(getContext, 22) + MetricsUtils.dp2px(getContext, 8))
   mSpinner.setVisibility(View.INVISIBLE)
   mSpinner.setAdapter(mAdapter)
   mSpinner.setOnItemSelectedListener(new OnItemSelectedListener {
@@ -40,6 +38,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
     def onItemSelected(parent: AdapterView[_], view: View, position: Int, id: Long) = setValueIndex(position)
   })
   setOnPreferenceClickListener((preference: Preference) => {
+    mSpinner.setDropDownVerticalOffset(MetricsUtils.dp2px(getContext, 8 - 48 * mSelectedIndex)) // TODO: scrolling?
     mSpinner.performClick
     true
   })
@@ -173,7 +172,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
 
   protected override def onBindViewHolder(holder: PreferenceViewHolder) {
     super.onBindViewHolder(holder)
-    if (holder == mSpinner.getParent) return
+    if (holder.itemView == mSpinner.getParent) return
     if (mSpinner.getParent != null) mSpinner.getParent.asInstanceOf[ViewGroup].removeView(mSpinner)
     holder.itemView.asInstanceOf[ViewGroup].addView(mSpinner, 0)
     val lp = mSpinner.getLayoutParams

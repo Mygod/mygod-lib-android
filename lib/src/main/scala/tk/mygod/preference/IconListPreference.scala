@@ -3,6 +3,7 @@ package tk.mygod.preference
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
+import android.support.v7.preference.Preference.OnPreferenceChangeListener
 import android.support.v7.preference.{ListPreference, Preference}
 import android.util.AttributeSet
 import tk.mygod.R
@@ -14,9 +15,9 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
   private var mEntryIcons: Array[Drawable] = null
   private[preference] var selectedEntry: Int = -1
 
-  private var listener: Preference.OnPreferenceChangeListener = null
+  private var listener: OnPreferenceChangeListener = null
   override def getOnPreferenceChangeListener = listener
-  override def setOnPreferenceChangeListener(listener: Preference.OnPreferenceChangeListener) = this.listener = listener
+  override def setOnPreferenceChangeListener(listener: OnPreferenceChangeListener) = this.listener = listener
   super.setOnPreferenceChangeListener((preference: Preference, newValue: Any) => {
     if (listener != null && !listener.onPreferenceChange(preference, newValue)) false else {
       setValue(newValue.toString)

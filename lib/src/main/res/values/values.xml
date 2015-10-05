@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="flatButtonText">@color/material_deep_teal_500</color>
+    <color name="material_blue_300">#64B5F6</color>
+    <color name="material_blue_500">#2196F3</color>
+    <color name="material_blue_700">#1976D2</color>
+    <color name="material_accent_300">@color/material_blue_300</color>
+    <color name="material_accent_500">@color/material_blue_500</color>
+    <color name="material_accent_700">@color/material_blue_700</color>
+    <color name="flat_button_text">@color/material_accent_500</color>
+    <style name="Theme.Material" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:activatedBackgroundIndicator">?android:attr/selectableItemBackground</item>
+        <item name="android:alertDialogTheme">@style/Theme.Material.Dialog.Alert</item>
+        <item name="android:dialogTheme">@style/Theme.Material.Dialog</item>
+        <item name="android:navigationBarColor">@color/material_accent_700</item>
+        <item name="colorAccent">@color/material_accent_300</item>
+        <item name="colorButtonNormal">@color/material_accent_500</item>
+        <item name="colorPrimary">@color/material_accent_500</item>
+        <item name="colorPrimaryDark">@color/material_accent_700</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+    <style name="Theme.Material.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/material_accent_300</item>
+        <item name="colorPrimary">@color/material_accent_500</item>
+        <item name="colorPrimaryDark">@color/material_accent_700</item>
+    </style>
+    <style name="Theme.Material.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/material_accent_300</item>
+        <item name="colorPrimary">@color/material_accent_500</item>
+        <item name="colorPrimaryDark">@color/material_accent_700</item>
+    </style>
+    <!-- Stupid preferences library fixes provided by: https://github.com/Gericop/Android-Support-Preference-V7-Fix -->
+    <color name="preference_fallback_accent_color">@color/material_accent_500</color>
+    <!-- This is needed because the default PreferenceCategory appearance uses italic style -->
+    <style name="Preference_TextAppearanceMaterialBody2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>
