@@ -4,15 +4,16 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.TypedArray
 import android.os.Build
-import android.preference.Preference
-import android.support.annotation.NonNull
+import android.support.v7.preference.{Preference, PreferenceViewHolder}
 import android.support.v7.widget.AppCompatSpinner
 import android.util.AttributeSet
 import android.view.{View, ViewGroup}
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.{AdapterView, ArrayAdapter}
 import tk.mygod.R
-import tk.mygod.util.MethodWrappers._
+import tk.mygod.util.MetricsUtils
+
+import scala.language.implicitConversions
 
 /**
  * Based on:
@@ -30,11 +31,13 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   private var mSelectedIndex: Int = 0
   private var mValueSet: Boolean = false
 
+  mSpinner.setPadding(MetricsUtils.dp2px(getContext, 16), 0, 0, 0)
+  mSpinner.setDropDownVerticalOffset(MetricsUtils.sp2px(getContext, 22) + MetricsUtils.dp2px(getContext, 8))
   mSpinner.setVisibility(View.INVISIBLE)
   mSpinner.setAdapter(mAdapter)
   mSpinner.setOnItemSelectedListener(new OnItemSelectedListener {
-    override def onNothingSelected(parent: AdapterView[_]) { }
-    override def onItemSelected(parent: AdapterView[_], view: View, position: Int, id: Long) = setValueIndex(position)
+    def onNothingSelected(parent: AdapterView[_]) = ()
+    def onItemSelected(parent: AdapterView[_], view: View, position: Int, id: Long) = setValueIndex(position)
   })
   setOnPreferenceClickListener((preference: Preference) => {
     mSpinner.performClick
@@ -168,11 +171,11 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   def setDropDownWidth(dimenResId: Int) =
     mSpinner.setDropDownWidth(mContext.getResources.getDimensionPixelSize(dimenResId))
 
-  protected override def onBindView(@NonNull view: View) {
-    super.onBindView(view)
-    if (view == mSpinner.getParent) return
+  protected override def onBindViewHolder(holder: PreferenceViewHolder) {
+    super.onBindViewHolder(holder)
+    if (holder == mSpinner.getParent) return
     if (mSpinner.getParent != null) mSpinner.getParent.asInstanceOf[ViewGroup].removeView(mSpinner)
-    view.asInstanceOf[ViewGroup].addView(mSpinner, 0)
+    holder.itemView.asInstanceOf[ViewGroup].addView(mSpinner, 0)
     val lp = mSpinner.getLayoutParams
     lp.width = 0
     mSpinner.setLayoutParams(lp)

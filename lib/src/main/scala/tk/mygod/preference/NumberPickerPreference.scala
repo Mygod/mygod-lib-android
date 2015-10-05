@@ -2,15 +2,14 @@ package tk.mygod.preference
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.preference.DialogPreference
+import android.support.v7.preference.DialogPreference
 import android.util.AttributeSet
-import android.view.ViewGroup
 import android.widget.NumberPicker
 import tk.mygod.R
 
 final class NumberPickerPreference(private val context: Context, attrs: AttributeSet = null)
   extends DialogPreference(context, attrs) with SummaryPreference {
-  private val picker = new NumberPicker(context)
+  private[preference] val picker = new NumberPicker(context)
   private var value: Int = _
 
   {
@@ -35,18 +34,9 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
   def setMin(value: Int) = picker.setMinValue(value)
   def setMax(value: Int) = picker.setMaxValue(value)
 
-  override protected def onCreateDialogView = {
-    val parent = picker.getParent.asInstanceOf[ViewGroup]
-    if (parent != null) parent.removeView(picker)
-    picker
-  }
-  override protected def onDialogClosed(positiveResult: Boolean) {
-    super.onDialogClosed(positiveResult)  // forward compatibility
-    if (positiveResult) setValue(picker.getValue)
-  }
   override protected def onGetDefaultValue(a: TypedArray, index: Int): AnyRef =
     a.getInt(index, getMin).asInstanceOf[AnyRef]
   override protected def onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) =
     setValue(if (restorePersistedValue) getPersistedInt(getMin) else defaultValue.asInstanceOf[Int])
-  override protected def getSummaryValue: AnyRef = getValue.asInstanceOf[AnyRef]
+  protected def getSummaryValue: AnyRef = getValue.asInstanceOf[AnyRef]
 }

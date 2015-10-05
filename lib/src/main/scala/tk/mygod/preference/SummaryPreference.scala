@@ -2,7 +2,7 @@ package tk.mygod.preference
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.preference.Preference
+import android.support.v7.preference.Preference
 import android.util.AttributeSet
 import tk.mygod.R
 

@@ -3,11 +3,11 @@
     <attr name="max" format="integer|float" />
     <attr name="min" format="integer|float" />
     <declare-styleable name="SummaryPreference">
-        <attr name="summary" format="string" />
+        <attr name="summary" />
     </declare-styleable>
     <declare-styleable name="DropDownPreference">
-        <attr name="entries" format="reference" />
-        <attr name="entryValues" format="reference" />
+        <attr name="entries" />
+        <attr name="entryValues" />
     </declare-styleable>
     <declare-styleable name="IconListPreference">
         <attr name="entryIcons" format="reference" />

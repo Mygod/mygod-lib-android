@@ -1,8 +1,8 @@
 package tk.mygod.util
 
 import android.content.DialogInterface
-import android.preference.Preference
-import android.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
+import android.support.v7.preference.Preference
+import android.support.v7.preference.Preference.{OnPreferenceChangeListener, OnPreferenceClickListener}
 import android.text.{InputFilter, Spanned}
 import android.view.View.{OnLongClickListener, OnTouchListener}
 import android.view.{MotionEvent, KeyEvent, View}
