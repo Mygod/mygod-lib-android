@@ -28,7 +28,7 @@ final class SeekBarPreference(private val context: Context, attrs: AttributeSet 
   }
   initSummary(context, attrs)
 
-  private def updateProgress {
+  private[preference] def updateProgress {
     val i = (value - min) / (max - min)
     seekBar.setProgress(if (i <= 0) 0 else if (i >= 1) Int.MaxValue else (i * Int.MaxValue).toInt)
   }
