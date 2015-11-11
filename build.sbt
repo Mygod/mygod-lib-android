@@ -1,6 +1,6 @@
 import android.Keys._
 
-android.Plugin.androidBuild
+android.Plugin.androidBuildApklib
 
 name := "mygod-lib-android"
 
@@ -9,6 +9,8 @@ version := "1.3.0"
 scalaVersion := "2.11.7"
 
 platformTarget in Android := "android-23"
+
+javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
 scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
 

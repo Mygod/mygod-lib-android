@@ -4,3 +4,10 @@ This is the library where I collect reusable codes from my Android projects and 
 I'd say they are pretty useful, aren't they?
 
 Issues/pull requests are welcome.
+
+## Dependencies
+* SBT (see `build.sbt` for version)
+* Android support libraries (use SDK manager to install)
+
+## Building
+    sbt android:packageAar
