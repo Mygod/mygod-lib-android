@@ -16,3 +16,6 @@ You should install the latest version unless this repo has been inactive for a l
 
 ## Building
     sbt android:packageAar
+
+## Known issues
+Whoever uses this library should include a bunch of code given in `build.sbt`.
