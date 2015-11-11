@@ -11,7 +11,6 @@ import android.view.{View, ViewGroup}
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.{AdapterView, ArrayAdapter}
 import tk.mygod.R
-import tk.mygod.util.MetricsUtils
 
 import scala.language.implicitConversions
 
@@ -38,7 +37,8 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
     def onItemSelected(parent: AdapterView[_], view: View, position: Int, id: Long) = setValueIndex(position)
   })
   setOnPreferenceClickListener((preference: Preference) => {
-    mSpinner.setDropDownVerticalOffset(MetricsUtils.dp2px(getContext, 8 - 48 * mSelectedIndex)) // TODO: scrolling?
+    // TODO: not working with scrolling
+    // mSpinner.setDropDownVerticalOffset(MetricsUtils.dp2px(getContext, 8 - 48 * mSelectedIndex))
     mSpinner.performClick
     true
   })
@@ -172,9 +172,11 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
 
   protected override def onBindViewHolder(holder: PreferenceViewHolder) {
     super.onBindViewHolder(holder)
-    if (holder.itemView == mSpinner.getParent) return
-    if (mSpinner.getParent != null) mSpinner.getParent.asInstanceOf[ViewGroup].removeView(mSpinner)
-    holder.itemView.asInstanceOf[ViewGroup].addView(mSpinner, 0)
+    val parent = mSpinner.getParent.asInstanceOf[ViewGroup]
+    val view = holder.itemView.asInstanceOf[ViewGroup]
+    if (view eq parent) return
+    parent.removeView(mSpinner)
+    view.addView(mSpinner, 0)
     val lp = mSpinner.getLayoutParams
     lp.width = 0
     mSpinner.setLayoutParams(lp)

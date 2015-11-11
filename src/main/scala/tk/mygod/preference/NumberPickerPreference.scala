@@ -15,7 +15,6 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
   {
     val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference)
     setMin(a.getInt(R.styleable.NumberPickerPreference_min, 0))
-    // TODO: https://code.google.com/p/android/issues/detail?id=183100
     setMax(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue - 1))
     a.recycle
   }
@@ -36,7 +35,9 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
 
   override protected def onGetDefaultValue(a: TypedArray, index: Int): AnyRef =
     a.getInt(index, getMin).asInstanceOf[AnyRef]
-  override protected def onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) =
-    setValue(if (restorePersistedValue) getPersistedInt(getMin) else defaultValue.asInstanceOf[Int])
+  override protected def onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) {
+    val default = defaultValue.asInstanceOf[Int]
+    setValue(if (restorePersistedValue) getPersistedInt(default) else default)
+  }
   protected def getSummaryValue: AnyRef = getValue.asInstanceOf[AnyRef]
 }
