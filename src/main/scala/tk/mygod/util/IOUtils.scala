@@ -1,7 +1,8 @@
 package tk.mygod.util
 
-import java.io.{InputStream, OutputStream}
+import java.io.{OutputStreamWriter, InputStream, OutputStream}
 import java.util.Scanner
+import tk.mygod.util.CloseUtils._
 
 /**
  * @author Mygod
@@ -22,7 +23,14 @@ object IOUtils {
   }
 
   def readAllText(stream: InputStream): String = {
-    val scanner: Scanner = new Scanner(stream).useDelimiter("\\a")
+    val scanner = new Scanner(stream).useDelimiter("\\a")
     if (scanner.hasNext) scanner.next else ""
   }
+
+  def writeAllText(stream: OutputStream, text: String, charsetName: String = "UTF-8") =
+    (() => new OutputStreamWriter(stream, charsetName)) closeAfter {
+      case writer =>
+        writer.write(text)
+        writer.flush
+    }
 }
