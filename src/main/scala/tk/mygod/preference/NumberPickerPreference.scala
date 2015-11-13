@@ -18,7 +18,6 @@ final class NumberPickerPreference(private val context: Context, attrs: Attribut
     setMax(a.getInt(R.styleable.NumberPickerPreference_max, Int.MaxValue - 1))
     a.recycle
   }
-  initSummary(context, attrs)
 
   def getValue = value
   def getMin = if (picker == null) 0 else picker.getMinValue

@@ -13,16 +13,17 @@ import android.util.AttributeSet
   */
 class EditTextPreference(context: Context, attrs: AttributeSet = null) extends Parent(context, attrs)
   with SummaryPreference {
-  initSummary(context, attrs)
-
   val editText = new AppCompatEditText(context, attrs)
   editText.setId(android.R.id.edit)
 
-  override protected def getSummaryValue = editText.getInputType match {
-    case InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_NUMBER_VARIATION_PASSWORD |
-         InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD =>
-      PasswordTransformationMethod.getInstance.getTransformation(getText, null)
-    case _ => getText
+  override protected def getSummaryValue = {
+    var text = getText
+    if (text == null) text = ""
+    val inputType = editText.getInputType
+    if (inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD) ||
+      inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) ||
+      inputType == (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD))
+      PasswordTransformationMethod.getInstance.getTransformation(getText, null).toString else getText
   }
 
   override def setText(text: String) = {

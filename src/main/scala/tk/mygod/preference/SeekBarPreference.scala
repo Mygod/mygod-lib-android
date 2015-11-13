@@ -26,7 +26,6 @@ final class SeekBarPreference(private val context: Context, attrs: AttributeSet 
     setReset(a.getFloat(R.styleable.SeekBarPreference_reset, Float.NaN))
     a.recycle
   }
-  initSummary(context, attrs)
 
   private[preference] def updateProgress {
     val i = (value - min) / (max - min)

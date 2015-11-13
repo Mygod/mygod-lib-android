@@ -3,7 +3,7 @@ package tk.mygod.preference
 import android.content.Context
 import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
-import android.view.ViewGroup
+import android.view.{View, ViewGroup}
 import android.view.inputmethod.InputMethodManager
 
 /**
@@ -24,6 +24,11 @@ final class NumberPickerPreferenceDialogFragment(key: String) extends Preference
     val parent = picker.getParent.asInstanceOf[ViewGroup]
     if (parent != null) parent.removeView(picker)
     picker
+  }
+
+  override protected def onBindDialogView(view: View) {
+    super.onBindDialogView(view)
+    picker.setValue(preference.getValue)
   }
 
   def onDialogClosed(positiveResult: Boolean) {
