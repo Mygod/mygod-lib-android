@@ -28,9 +28,8 @@ object IOUtils {
   }
 
   def writeAllText(stream: OutputStream, text: String, charsetName: String = "UTF-8") =
-    (() => new OutputStreamWriter(stream, charsetName)) closeAfter {
-      case writer =>
-        writer.write(text)
-        writer.flush
+    autoClose(new OutputStreamWriter(stream, charsetName)) { writer =>
+      writer.write(text)
+      writer.flush()
     }
 }

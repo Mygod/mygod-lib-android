@@ -8,4 +8,9 @@
     <string name="reset">Reset</string>
     <string name="fragment_save_file_storage_denied">Unable to save without Storage permission. Please grant the
         permission or disable old-timey save user interface.</string>
+    <string name="checking_for_updates">Checking for updates…</string>
+    <string name="no_updates_available">Congratulations! You have the latest version installed.</string>
+    <string name="update_available">New version available</string>
+    <string name="download">Download</string>
+    <string name="learn_more">Learn more</string>
 </resources>
