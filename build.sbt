@@ -4,6 +4,8 @@ android.Plugin.androidBuildAar
 
 name := "mygod-lib-android"
 
+organization := "tk.mygod"
+
 version := "1.3.0"
 
 scalaVersion := "2.11.7"
@@ -21,3 +23,25 @@ libraryDependencies ++= Seq(
   "com.android.support" % "preference-v14" % "23.1.0",
   "com.android.support" % "support-v13" % "23.1.0"
 )
+
+pomExtra in Global := {
+  <url>https://github.com/Mygod/mygod-lib-android</url>
+    <licenses>
+      <license>
+        <name>GPLv3</name>
+        <url>http://www.gnu.org/licenses/gpl-3.0.en.html</url>
+      </license>
+    </licenses>
+    <scm>
+      <connection>scm:git:github.com/Mygod/mygod-lib-android</connection>
+      <developerConnection>scm:git:git@github.com:mygod-lib-android</developerConnection>
+      <url>github.com/Mygod/mygod-lib-android.git</url>
+    </scm>
+    <developers>
+      <developer>
+        <id>Mygod</id>
+        <name>Mygod</name>
+        <url>https://mygod.tk</url>
+      </developer>
+    </developers>
+}
