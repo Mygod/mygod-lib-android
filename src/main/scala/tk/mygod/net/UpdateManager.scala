@@ -21,7 +21,7 @@ object UpdateManager {
   private def startUrl(context: Context, uri: String) =
     context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
   def check(context: Context, productUri: String, handler: Handler = null) = {
-    val dialog = ProgressDialog.show(context, "", context.getString(R.string.checking_for_updates), true)
+    val dialog = ProgressDialog.show(context, "", context.getString(R.string.checking_for_updates), true, true)
     val h = if (handler == null) new Handler else handler
     Future(try {
       val uri = autoClose(new URL("https://mygod.tk/product/update/%d/".format(context.getPackageManager

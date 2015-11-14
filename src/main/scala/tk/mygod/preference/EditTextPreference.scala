@@ -23,7 +23,7 @@ class EditTextPreference(context: Context, attrs: AttributeSet = null) extends P
     if (inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD) ||
       inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) ||
       inputType == (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD))
-      PasswordTransformationMethod.getInstance.getTransformation(text, null).toString else text
+      "\u2022" * text.length else text
   }
 
   override def setText(text: String) = {
