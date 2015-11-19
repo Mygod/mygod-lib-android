@@ -4,7 +4,6 @@ import android.content.Context
 import android.support.v7.preference.{EditTextPreference => Parent}
 import android.support.v7.widget.AppCompatEditText
 import android.text.InputType
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 
 /**

@@ -2,9 +2,6 @@
 <resources>
     <attr name="max" format="integer|float" />
     <attr name="min" format="integer|float" />
-    <declare-styleable name="SummaryPreference">
-        <attr name="summary" />
-    </declare-styleable>
     <declare-styleable name="DropDownPreference">
         <attr name="entries" />
         <attr name="entryValues" />
