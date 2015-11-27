@@ -8,8 +8,8 @@ You don't want to use the whole library? Use ProGuard and `shrinkResources` to s
 Issues/pull requests are welcome.
 
 ## Dependencies
+* Android Support Repository (use SDK manager to install)
 * SBT
-* Android support libraries (use SDK manager to install)
 
 You should install the latest version unless this repo has been inactive for a long time. In that case, go to
  `build.sbt` for version.

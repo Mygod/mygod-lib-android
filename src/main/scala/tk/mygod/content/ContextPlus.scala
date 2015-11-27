@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
+import tk.mygod.R
 import tk.mygod.util.UriUtils._
 
 import scala.language.implicitConversions
@@ -24,6 +25,12 @@ trait ContextPlus extends Context {
     PendingIntent.getActivity(this, 0, intentActivity[A], PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingIntentBroadcast(action: String) =
     PendingIntent.getBroadcast(this, 0, new Intent().setAction(action), PendingIntent.FLAG_UPDATE_CURRENT)
+
+  def share(text: String, subject: String = null) = {
+    val intent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
+    if (subject != null) intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+    startActivity(Intent.createChooser(intent, R.string.share_using))
+  }
   
   def showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration).show
 }
