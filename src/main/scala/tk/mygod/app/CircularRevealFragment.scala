@@ -2,10 +2,10 @@ package tk.mygod.app
 
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
-import android.os.Build
 import android.support.v7.widget.Toolbar
 import android.view.View.OnLayoutChangeListener
 import android.view.{View, ViewAnimationUtils}
+import tk.mygod.os.Build
 import tk.mygod.view.LocationObserver
 
 /**
@@ -47,7 +47,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
     if (navigationIcon == -1) return
     CircularRevealFragment.navButtonField.get(toolbar).asInstanceOf[View].setOnTouchListener(LocationObserver)
     //noinspection ConvertExpressionToSAM
-    if (Build.VERSION.SDK_INT >= 21 && spawnLocation != null)
+    if (Build.version >= 21 && spawnLocation != null)
       view.addOnLayoutChangeListener(new OnLayoutChangeListener {
         def onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
                            oldRight: Int, oldBottom: Int) {
@@ -61,7 +61,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
   override def stop(sender: View = null) = {
     _stopping = true
     val view = getView
-    if (Build.VERSION.SDK_INT >= 21 && view != null) {
+    if (Build.version >= 21 && view != null) {
       setStopping(true)
       val (x, y) = if (sender == null) (view.getWidth / 2F, view.getHeight.toFloat)
       else LocationObserver.getRelatedTo(sender, view)

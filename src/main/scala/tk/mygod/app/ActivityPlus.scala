@@ -1,10 +1,10 @@
 package tk.mygod.app
 
-import android.os.Build
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import tk.mygod.content.ContextPlus
+import tk.mygod.os.Build
 
 import scala.language.implicitConversions
 
@@ -21,7 +21,7 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     super.onDestroy
     destroyed = true
   }
-  override def isDestroyed = if (Build.VERSION.SDK_INT >= 17) super.isDestroyed else destroyed
+  override def isDestroyed = if (Build.version >= 17) super.isDestroyed else destroyed
 
   def runOnUiThread[T](f: => T): Unit = super.runOnUiThread(() => f)
 }

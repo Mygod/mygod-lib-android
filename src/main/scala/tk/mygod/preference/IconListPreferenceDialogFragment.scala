@@ -3,11 +3,12 @@ package tk.mygod.preference
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.Resources
-import android.os.{Build, Bundle}
+import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v14.preference.ListPreferenceDialogFragment
 import android.view.{LayoutInflater, ViewGroup, View}
 import android.widget.{CheckedTextView, BaseAdapter}
+import tk.mygod.os.Build
 
 /**
  * @author mygod
@@ -51,7 +52,7 @@ class IconListPreferenceDialogFragment(key: String) extends ListPreferenceDialog
   }
 
   private class CheckedListAdapter extends BaseAdapter {
-    private lazy val name = "select_dialog_singlechoice_" + (if (Build.VERSION.SDK_INT >= 21) "material" else "holo")
+    private lazy val name = "select_dialog_singlechoice_" + (if (Build.version >= 21) "material" else "holo")
 
     def getCount = {
       val entries = preference.getEntries
