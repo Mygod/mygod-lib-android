@@ -10,8 +10,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.{AdapterView, ArrayAdapter}
 import tk.mygod.R
 
-import scala.language.implicitConversions
-
 /**
  * Based on:
  * https://github.com/android/platform_frameworks_base/blob/master/core/java/android/preference/ListPreference.java

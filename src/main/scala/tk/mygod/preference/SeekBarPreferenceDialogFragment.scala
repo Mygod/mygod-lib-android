@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import tk.mygod.R
 import tk.mygod.app.FragmentPlus
 
-import scala.language.implicitConversions
-
 /**
  * @author mygod
  */
