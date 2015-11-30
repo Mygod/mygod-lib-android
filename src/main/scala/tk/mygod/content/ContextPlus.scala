@@ -87,7 +87,7 @@ trait ContextPlus extends Context {
     systemService[ClipboardManager].setPrimaryClip(ClipData.newPlainText(subject, Logcat.fetch)) else {
     val intent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
     if (subject != null) intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-    startActivity(Intent.createChooser(intent, R.string.share_using))
+    startActivity(Intent.createChooser(intent, R.string.abc_shareactionprovider_share_with))
   }
 
   def showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration).show
