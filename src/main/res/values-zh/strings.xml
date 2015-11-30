@@ -6,7 +6,6 @@
     <string name="dialog_overwrite_confirm_title">确定要覆盖此文件吗？</string>
     <string name="dialog_create_dir_title">请输入目录名：</string>
     <string name="reset">重置</string>
-    <string name="fragment_save_file_storage_denied">无法在没有存储空间权限的情况下保存。请授权或禁用怀旧风格保存界面。</string>
     <string name="checking_for_updates">检查更新中……</string>
     <string name="no_updates_available">恭喜您！您安装的是最新版本。</string>
     <string name="update_available">新版本可供下载</string>

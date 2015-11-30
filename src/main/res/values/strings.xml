@@ -6,8 +6,6 @@
     <string name="dialog_overwrite_confirm_title">Are you sure you want to overwrite this file?</string>
     <string name="dialog_create_dir_title">Enter the directory name:</string>
     <string name="reset">Reset</string>
-    <string name="fragment_save_file_storage_denied">Unable to save without Storage permission. Please grant the
-        permission or disable old-timey save user interface.</string>
     <string name="checking_for_updates">Checking for updates…</string>
     <string name="no_updates_available">Congratulations! You have the latest version installed.</string>
     <string name="update_available">New version available</string>

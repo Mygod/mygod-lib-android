@@ -2,14 +2,9 @@ package tk.mygod.app
 
 import java.io.File
 
-import android.Manifest
 import android.content.DialogInterface.OnClickListener
-import android.content.pm.PackageManager
 import android.content.{Context, DialogInterface}
 import android.os.{Bundle, Environment}
-import android.support.v13.app.FragmentCompat
-import android.support.v13.app.FragmentCompat.OnRequestPermissionsResultCallback
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener
@@ -17,7 +12,6 @@ import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
 import android.widget._
 import tk.mygod.TypedResource._
-import tk.mygod.app.SaveFileFragment._
 import tk.mygod.os.Build
 import tk.mygod.view.LocationObserver
 import tk.mygod.{R, TR}
@@ -29,7 +23,6 @@ import scala.collection.mutable
  * @author Mygod
  */
 object SaveFileFragment {
-  private val PERMISSION_REQUEST_STORAGE = 0
   private val REQUEST_CODE = "RequestCode"
   private val MIME_TYPE = "MimeType"
   private val CURRENT_DIRECTORY = "CurrentDirectory"
@@ -59,14 +52,15 @@ object SaveFileFragment {
 
 final class SaveFileFragment(private var requestCode: Int, private var mimeType: String, path: String = null,
                              private var defaultFileName: String = null) extends CircularRevealFragment
-  with OnMenuItemClickListener with OnRequestPermissionsResultCallback {
+  with OnMenuItemClickListener {
+  import SaveFileFragment._
+  if (Build.version >= 19) throw new UnsupportedOperationException
   def this() = this(0, null, null, null)
 
   private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
   private var directoryDisplay: DirectoryDisplay = _
   private var fileName: AppCompatEditText = _
   private var directoryView: ListView = _
-  private var storageGranted: Boolean = _
 
   private def setCurrentDirectory(directory: File = null) {
     if (directory != null) {
@@ -76,7 +70,6 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
       toolbar.setSubtitle(path)
     }
     directoryDisplay.clear
-    if (!storageGranted) return
     if (currentDirectory.getParent != null) directoryDisplay.add(new File(".."))
     val list = currentDirectory.listFiles()
     if (list != null) directoryDisplay.addAll(list.toSeq.filter(file => file.isDirectory || file.isFile && mimeType
@@ -106,12 +99,7 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
 
   override def isFullscreen = true
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
-    storageGranted = ContextCompat.checkSelfPermission(getActivity, Manifest.permission.READ_EXTERNAL_STORAGE) ==
-      PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-    if (!storageGranted) FragmentCompat.requestPermissions(this, Array(Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_STORAGE)
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     val result = inflater.inflate(R.layout.fragment_save_file, container, false)
     configureToolbar(result, R.string.fragment_save_file_title, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
@@ -135,18 +123,6 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     setCurrentDirectory(currentDirectory)
     result
   }
-
-  override def onRequestPermissionsResult(requestCode: Int, permissions: Array[String], grantResults: Array[Int]) =
-    requestCode match {
-      case PERMISSION_REQUEST_STORAGE =>
-        storageGranted = grantResults(0) == PackageManager.PERMISSION_GRANTED &&
-          grantResults(1) == PackageManager.PERMISSION_GRANTED
-        if (storageGranted) setCurrentDirectory() else {
-          showToast(R.string.fragment_save_file_storage_denied)
-          exit()
-        }
-      case _ => if (Build.version >= 23) super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
 
   def onMenuItemClick(item: MenuItem): Boolean = {
     if (item.getItemId != R.id.action_create_dir) return super.onOptionsItemSelected(item)
