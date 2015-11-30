@@ -10,7 +10,10 @@ object CloseUtils {
     try {
       a = Some(x)
       block(a.get)
-    } finally if (a.nonEmpty) try a.get.close catch {
+    } finally if (a.nonEmpty) try {
+      val v = a.get
+      if (v ne null) v.close
+    } catch {
       case ignore: Exception =>
     }
   }
@@ -19,7 +22,10 @@ object CloseUtils {
     try {
       a = Some(x)
       block(a.get)
-    } finally if (a.nonEmpty) try a.get.disconnect catch {
+    } finally if (a.nonEmpty) try {
+      val v = a.get
+      if (v ne null) v.disconnect
+    } catch {
       case ignore: Exception =>
     }
   }
