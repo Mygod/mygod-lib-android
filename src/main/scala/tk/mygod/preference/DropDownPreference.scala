@@ -32,7 +32,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
     def onNothingSelected(parent: AdapterView[_]) = ()
     def onItemSelected(parent: AdapterView[_], view: View, position: Int, id: Long) = setValueIndex(position)
   })
-  setOnPreferenceClickListener((preference: Preference) => {
+  setOnPreferenceClickListener(_ => {
     // TODO: not working with scrolling
     // mSpinner.setDropDownVerticalOffset(MetricsUtils.dp2px(getContext, 8 - 48 * mSelectedIndex))
     mSpinner.performClick

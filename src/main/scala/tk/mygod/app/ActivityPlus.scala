@@ -28,6 +28,4 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     destroyed = true
   }
   override def isDestroyed = if (Build.version >= 17) super.isDestroyed else destroyed
-
-  def runOnUiThread[T](f: => T): Unit = super.runOnUiThread(() => f)
 }

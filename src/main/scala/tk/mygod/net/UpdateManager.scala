@@ -13,7 +13,7 @@ import tk.mygod.R
 import tk.mygod.app.ActivityPlus
 import tk.mygod.util.CloseUtils._
 import tk.mygod.util.IOUtils
-import tk.mygod.util.UriUtils._
+import tk.mygod.util.Conversions._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -27,18 +27,19 @@ object UpdateManager {
         .getPackageInfo(activity.getPackageName, 0).versionCode)).openStream())(stream => IOUtils.readAllText(stream))
       if (dialog.isShowing) {
         dialog.dismiss
-        h.post(() => if (TextUtils.isEmpty(uri)) activity.showToast(activity.getString(R.string.no_updates_available))
-        else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
-          .setPositiveButton(R.string.download,
-            ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
-          .setNegativeButton(R.string.learn_more, ((dialog, which) => activity.launchUrl(productUri)): OnClickListener)
-          .show)
+        h.post(if (TextUtils.isEmpty(uri)) activity.showToast(activity.getString(R.string.no_updates_available))
+          else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
+            .setPositiveButton(R.string.download,
+              ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
+            .setNegativeButton(R.string.learn_more,
+              ((dialog, which) => activity.launchUrl(productUri)): OnClickListener)
+            .show)
       }
     } catch {
       case e: Exception =>
         if (dialog.isShowing) {
           dialog.dismiss
-          h.post(() => activity.showToast(e.getMessage))
+          h.post(activity.showToast(e.getMessage))
         }
     })
   }

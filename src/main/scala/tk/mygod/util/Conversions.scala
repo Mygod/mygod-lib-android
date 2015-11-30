@@ -7,6 +7,7 @@ import scala.language.implicitConversions
 /**
  * @author Mygod
  */
-object UriUtils {
+object Conversions {
   implicit def parseUri(uri: CharSequence): Uri = Uri.parse(uri.toString)
+  implicit def toRunnable[T](f: => T): Runnable = () => f
 }

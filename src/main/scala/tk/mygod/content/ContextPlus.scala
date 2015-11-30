@@ -9,7 +9,7 @@ import android.widget.Toast
 import tk.mygod.R
 import tk.mygod.os.Build
 import tk.mygod.util.Logcat
-import tk.mygod.util.UriUtils._
+import tk.mygod.util.Conversions._
 
 import scala.language.implicitConversions
 import scala.reflect.ClassTag
@@ -67,7 +67,6 @@ trait ContextPlus extends Context {
       case "PrintManager" => Context.PRINT_SERVICE
       case "ConsumerIrManager" => Context.CONSUMER_IR_SERVICE
       case "MediaSessionManager" => Context.MEDIA_SESSION_SERVICE
-      case "AccessibilityManager" => Context.ACCESSIBILITY_SERVICE
       case "TvInputManager" => Context.TV_INPUT_SERVICE
       case "UsageStatsManager" => Context.USAGE_STATS_SERVICE
       case "JobScheduler" => Context.JOB_SCHEDULER_SERVICE

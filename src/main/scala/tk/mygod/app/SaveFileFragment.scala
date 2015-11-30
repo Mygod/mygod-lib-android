@@ -16,10 +16,10 @@ import android.support.v7.widget.Toolbar.OnMenuItemClickListener
 import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
 import android.widget._
-import tk.mygod.{TR, R}
 import tk.mygod.TypedResource._
 import tk.mygod.app.SaveFileFragment._
 import tk.mygod.view.LocationObserver
+import tk.mygod.{R, TR}
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable
@@ -91,11 +91,9 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
 
   private def submit(v: View) = if (new File(currentDirectory, fileName.getText.toString).exists) {
       var button: Button = null
-      button = new AlertDialog.Builder(getActivity)
-        .setTitle(R.string.dialog_overwrite_confirm_title)
-        .setPositiveButton(android.R.string.yes,
-          ((dialog: DialogInterface, which: Int) => confirm(button)): OnClickListener)
-        .setNegativeButton(android.R.string.no, null).show().getButton(DialogInterface.BUTTON_POSITIVE)
+      button = new AlertDialog.Builder(getActivity).setTitle(R.string.dialog_overwrite_confirm_title)
+        .setPositiveButton(android.R.string.yes, ((dialog, which) => confirm(button)): OnClickListener)
+        .setNegativeButton(android.R.string.no, null).show.getButton(DialogInterface.BUTTON_POSITIVE)
       button.setOnTouchListener(LocationObserver)
     } else confirm(v)
 
@@ -122,7 +120,7 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     directoryDisplay = new DirectoryDisplay(getActivity, new mutable.ArrayBuffer[File])
     directoryView = result.findView(TR.directory_view)
     directoryView.setAdapter(directoryDisplay)
-    directoryView.setOnItemClickListener((parent: AdapterView[_], view: View, position: Int, id: Long) =>
+    directoryView.setOnItemClickListener((parent, view, position, id) =>
       if (position >= 0 && position < directoryDisplay.getCount) {
         val file = directoryDisplay.getItem(position)
         if (file.isFile) {
@@ -132,7 +130,7 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
       })
     val ok = result.findViewById(R.id.ok)
     ok.setOnTouchListener(LocationObserver)
-    ok.setOnClickListener((v: View) => submit(v))
+    ok.setOnClickListener(submit)
     setCurrentDirectory(currentDirectory)
     result
   }
@@ -153,8 +151,8 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     if (item.getItemId != R.id.action_create_dir) return super.onOptionsItemSelected(item)
     val text = new EditText(getActivity)
     new AlertDialog.Builder(getActivity).setTitle(R.string.dialog_create_dir_title).setView(text)
-      .setPositiveButton(android.R.string.ok, ((dialog: DialogInterface, which: Int) =>
-        if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory(null)): OnClickListener)
+      .setPositiveButton(android.R.string.ok, ((dialog, which) =>
+        if (new File(currentDirectory, text.getText.toString).mkdirs) setCurrentDirectory()): OnClickListener)
       .setNegativeButton(android.R.string.cancel, null).show
     true
   }

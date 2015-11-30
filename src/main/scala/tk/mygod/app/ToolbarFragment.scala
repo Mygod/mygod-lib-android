@@ -16,7 +16,7 @@ trait ToolbarFragment extends StoppableFragment {
     toolbar.setTitle(title)
     if (navigationIcon != -1) {
       toolbar.setNavigationIcon(if (navigationIcon == 0) R.drawable.abc_ic_ab_back_mtrl_am_alpha else navigationIcon)
-      toolbar.setNavigationOnClickListener((v: View) => exit(v))
+      toolbar.setNavigationOnClickListener(exit)
     }
   }
 }

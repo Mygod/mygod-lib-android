@@ -1,8 +1,8 @@
 package tk.mygod.preference
 
 import android.app.AlertDialog.Builder
+import android.content.Context
 import android.content.DialogInterface.OnClickListener
-import android.content.{Context, DialogInterface}
 import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.ViewGroup
@@ -24,8 +24,8 @@ class SeekBarPreferenceDialogFragment(key: String) extends PreferenceDialogFragm
   override protected def onPrepareDialogBuilder(builder: Builder) {
     super.onPrepareDialogBuilder(builder) // forward compatibility
     val reset = preference.getReset
-    if (!reset.isNaN) builder.setNeutralButton(R.string.reset,
-      ((dialog: DialogInterface, which: Int) => preference.setValue(reset)): OnClickListener)
+    if (!reset.isNaN)
+      builder.setNeutralButton(R.string.reset, ((dialog, which) => preference.setValue(reset)): OnClickListener)
   }
   override protected def onCreateDialogView(context: Context) = {
     val parent = seekBar.getParent.asInstanceOf[ViewGroup]

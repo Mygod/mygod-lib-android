@@ -8,7 +8,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
-import tk.mygod.util.UriUtils._
+import tk.mygod.util.Conversions._
 
 import scala.language.implicitConversions
 import scala.reflect.ClassTag
@@ -45,5 +45,5 @@ trait FragmentPlus extends Fragment {
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
     getActivity.getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
-  def runOnUiThread[T](f: => T): Unit = getActivity.runOnUiThread(() => f)
+  def runOnUiThread[T](f: => T) = getActivity.runOnUiThread(f)
 }
