@@ -1,6 +1,6 @@
 package tk.mygod.content
 
-import android.app.{Activity, PendingIntent}
+import android.app.{Service, Activity, PendingIntent}
 import android.content.{ClipData, ClipboardManager, Context, Intent}
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -78,6 +78,7 @@ trait ContextPlus extends Context {
   }
 
   def intentActivity[A <: Activity](implicit ct: ClassTag[A]) = new Intent(this, ct.runtimeClass)
+  def intentService[S <: Service](implicit ct: ClassTag[S]) = new Intent(this, ct.runtimeClass)
   def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) =
     PendingIntent.getActivity(this, 0, intentActivity[A], PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingIntentBroadcast(action: String) =

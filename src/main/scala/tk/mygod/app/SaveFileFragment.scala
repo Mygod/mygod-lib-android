@@ -18,6 +18,7 @@ import android.webkit.MimeTypeMap
 import android.widget._
 import tk.mygod.TypedResource._
 import tk.mygod.app.SaveFileFragment._
+import tk.mygod.os.Build
 import tk.mygod.view.LocationObserver
 import tk.mygod.{R, TR}
 
@@ -28,10 +29,10 @@ import scala.collection.mutable
  * @author Mygod
  */
 object SaveFileFragment {
-  private final val PERMISSION_REQUEST_STORAGE = 0
-  private final val REQUEST_CODE = "RequestCode"
-  private final val MIME_TYPE = "MimeType"
-  private final val CURRENT_DIRECTORY = "CurrentDirectory"
+  private val PERMISSION_REQUEST_STORAGE = 0
+  private val REQUEST_CODE = "RequestCode"
+  private val MIME_TYPE = "MimeType"
+  private val CURRENT_DIRECTORY = "CurrentDirectory"
 
   private final class DirectoryDisplay(context: Context, private val content: mutable.ArrayBuffer[File])
     extends ArrayAdapter[File](context, android.R.layout.activity_list_item, android.R.id.text1, content) {
@@ -141,10 +142,10 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
         storageGranted = grantResults(0) == PackageManager.PERMISSION_GRANTED &&
           grantResults(1) == PackageManager.PERMISSION_GRANTED
         if (storageGranted) setCurrentDirectory() else {
-          showToast(R.string.fragment_save_file_storage_denied, Toast.LENGTH_LONG)
+          showToast(R.string.fragment_save_file_storage_denied)
           exit()
         }
-      case _ => super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+      case _ => if (Build.version >= 23) super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
   def onMenuItemClick(item: MenuItem): Boolean = {
