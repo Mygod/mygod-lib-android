@@ -169,7 +169,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
     val parent = mSpinner.getParent.asInstanceOf[ViewGroup]
     val view = holder.itemView.asInstanceOf[ViewGroup]
     if (view eq parent) return
-    parent.removeView(mSpinner)
+    if (parent != null) parent.removeView(mSpinner)
     view.addView(mSpinner, 0)
     val lp = mSpinner.getLayoutParams
     lp.width = 0
