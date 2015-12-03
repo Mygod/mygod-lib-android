@@ -31,6 +31,8 @@ final class NumberPickerPreferenceDialogFragment(key: String) extends Preference
     picker.setValue(preference.getValue)
   }
 
+  override protected def needInputMethod = true
+
   def onDialogClosed(positiveResult: Boolean) {
     picker.clearFocus // commit changes
     if (positiveResult) preference.setValue(picker.getValue)

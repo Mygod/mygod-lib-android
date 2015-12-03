@@ -6,7 +6,7 @@ name := "mygod-lib-android"
 
 organization := "tk.mygod"
 
-version := "1.3.3"
+version := "1.3.4"
 
 scalaVersion := "2.11.7"
 

@@ -20,7 +20,7 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
   private lazy val customTabsIntent = new CustomTabsIntent.Builder()
-    .setToolbarColor(ContextCompat.getColor(this, R.color.material_accent_500)).build
+    .setToolbarColor(ContextCompat.getColor(this, R.color.material_primary_500)).build
   def launchUrl(uri: Uri) = customTabsIntent.launchUrl(this, uri)
 
   override protected def onDestroy = {
