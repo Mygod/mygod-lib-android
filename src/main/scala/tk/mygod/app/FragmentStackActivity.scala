@@ -3,7 +3,7 @@ package tk.mygod.app
 import android.app.Fragment
 import android.content.{Context, Intent}
 import android.os.Bundle
-import android.view.View
+import android.view.{KeyEvent, View}
 import android.view.inputmethod.InputMethodManager
 import tk.mygod.widget.InterceptableFrameLayout
 import tk.mygod.{R, TR, TypedFindView}
@@ -14,6 +14,7 @@ import tk.mygod.{R, TR, TypedFindView}
  */
 abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
   private[app] var container: InterceptableFrameLayout = _
+  private lazy val manager = getFragmentManager
 
   protected lazy val inputMethodManager =
     getSystemService(Context.INPUT_METHOD_SERVICE).asInstanceOf[InputMethodManager]
@@ -40,7 +41,6 @@ abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
   def push(fragment: Fragment): Boolean = {
     if (fragment.isAdded) return true
     hideInput
-    val manager = getFragmentManager
     val id = manager.getBackStackEntryCount.toString
     manager.beginTransaction.add(R.id.container, fragment, id).addToBackStack(id).commit
     false
@@ -50,7 +50,6 @@ abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
     // fix for support lib since I didn't really use those APIs :/
   def pop(sender: View = null): Fragment = {
     hideInput
-    val manager = getFragmentManager
     var i = manager.getBackStackEntryCount - 1
     while (i > 0) {
       val fragment = manager.findFragmentByTag(manager.getBackStackEntryAt(i).getName)
@@ -69,4 +68,33 @@ abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
     null
   }
   override def onBackPressed = pop()
+
+  override def onKeyUp(keyCode: Int, event: KeyEvent): Boolean = {
+    for (i <- manager.getBackStackEntryCount - 1 to 0) manager.findFragmentByTag(i.toString) match {
+      case callback: KeyEvent.Callback => if (callback.onKeyUp(keyCode, event)) return true
+      case _ =>
+    }
+    super.onKeyUp(keyCode, event)
+  }
+  override def onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean = {
+    for (i <- manager.getBackStackEntryCount - 1 to 0) manager.findFragmentByTag(i.toString) match {
+      case callback: KeyEvent.Callback => if (callback.onKeyLongPress(keyCode, event)) return true
+      case _ =>
+    }
+    super.onKeyLongPress(keyCode, event)
+  }
+  override def onKeyDown(keyCode: Int, event: KeyEvent): Boolean = {
+    for (i <- manager.getBackStackEntryCount - 1 to 0) manager.findFragmentByTag(i.toString) match {
+      case callback: KeyEvent.Callback => if (callback.onKeyDown(keyCode, event)) return true
+      case _ =>
+    }
+    super.onKeyDown(keyCode, event)
+  }
+  override def onKeyMultiple(keyCode: Int, count: Int, event: KeyEvent): Boolean = {
+    for (i <- manager.getBackStackEntryCount - 1 to 0) manager.findFragmentByTag(i.toString) match {
+      case callback: KeyEvent.Callback => if (callback.onKeyMultiple(keyCode, count, event)) return true
+      case _ =>
+    }
+    super.onKeyMultiple(keyCode, count, event)
+  }
 }

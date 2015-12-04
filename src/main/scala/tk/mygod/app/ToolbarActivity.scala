@@ -1,6 +1,7 @@
 package tk.mygod.app
 
 import android.support.v7.widget.Toolbar
+import android.view.KeyEvent
 import tk.mygod.{R, TR, TypedFindView}
 
 /**
@@ -19,5 +20,11 @@ trait ToolbarActivity extends ActivityPlus with TypedFindView {
         if (intent == null) finish else navigateUpTo(intent)
       })
     }
+  }
+
+  override def onKeyUp(keyCode: Int, event: KeyEvent) = keyCode match {
+    case KeyEvent.KEYCODE_MENU =>
+      if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu
+    case _ => super.onKeyUp(keyCode, event)
   }
 }
