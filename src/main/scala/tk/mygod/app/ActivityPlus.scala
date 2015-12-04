@@ -34,7 +34,7 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
   override def isDestroyed = if (Build.version >= 17) super.isDestroyed else destroyed
 
   // Based on: http://stackoverflow.com/a/21026866/2245107
-  def positionToast(toast: Toast, view: View, offsetX: Int = 0, offsetY: Int = 0) = {
+  def positionToast(toast: Toast, view: View, offsetX: Int = 0, offsetY: Int = 0, above: Boolean = false) = {
     val window: Window = getWindow
     val rect = new Rect
     window.getDecorView.getWindowVisibleDisplayFrame(rect)
@@ -45,9 +45,10 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     val toastView = toast.getView
     toastView.measure(MeasureSpec.makeMeasureSpec(metrics.widthPixels, MeasureSpec.UNSPECIFIED),
       MeasureSpec.makeMeasureSpec(metrics.heightPixels, MeasureSpec.UNSPECIFIED))
+    val y = viewLocation(1) - rect.top + offsetY
     toast.setGravity(Gravity.LEFT | Gravity.TOP,
-      viewLocation(0) - rect.left + (view.getWidth - toast.getView.getMeasuredWidth) / 2 + offsetX,
-      viewLocation(1) - rect.top + view.getHeight + offsetY)
+      viewLocation(0) - rect.left + (view.getWidth - toastView.getMeasuredWidth) / 2 + offsetX,
+      if (above) y - view.getHeight else y + view.getHeight)
     toast
   }
 }
