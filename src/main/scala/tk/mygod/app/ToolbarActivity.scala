@@ -2,16 +2,16 @@ package tk.mygod.app
 
 import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
-import tk.mygod.{R, TR, TypedFindView}
+import tk.mygod.R
 
 /**
  * @author Mygod
  */
-trait ToolbarActivity extends ActivityPlus with TypedFindView {
+trait ToolbarActivity extends ActivityPlus {
   var toolbar: Toolbar = null
 
   protected def configureToolbar(navigationIcon: Int = -1) {
-    toolbar = findView(TR.toolbar)
+    toolbar = findViewById(R.id.toolbar).asInstanceOf[Toolbar]
     toolbar.setTitle(getTitle)
     if (navigationIcon != -1) {
       toolbar.setNavigationIcon(if (navigationIcon == 0) R.drawable.abc_ic_ab_back_mtrl_am_alpha else navigationIcon)

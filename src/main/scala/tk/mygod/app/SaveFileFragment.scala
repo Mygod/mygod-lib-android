@@ -11,10 +11,9 @@ import android.support.v7.widget.Toolbar.OnMenuItemClickListener
 import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
 import android.widget._
-import tk.mygod.TypedResource._
+import tk.mygod.R
 import tk.mygod.os.Build
 import tk.mygod.view.LocationObserver
-import tk.mygod.{R, TR}
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable
@@ -104,10 +103,10 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
     configureToolbar(result, R.string.fragment_save_file_title, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
-    fileName = result.findView(TR.file_name)
+    fileName = result.findViewById(R.id.file_name).asInstanceOf[AppCompatEditText]
     if (defaultFileName != null) fileName.setText(defaultFileName)
     directoryDisplay = new DirectoryDisplay(getActivity, new mutable.ArrayBuffer[File])
-    directoryView = result.findView(TR.directory_view)
+    directoryView = result.findViewById(R.id.directory_view).asInstanceOf[ListView]
     directoryView.setAdapter(directoryDisplay)
     directoryView.setOnItemClickListener((parent, view, position, id) =>
       if (position >= 0 && position < directoryDisplay.getCount) {
