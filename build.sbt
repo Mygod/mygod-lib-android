@@ -11,7 +11,6 @@ version := "1.3.6-SNAPSHOT"
 scalaVersion := "2.11.7"
 
 platformTarget in Android := "android-23"
-typedResources in Android := false
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
