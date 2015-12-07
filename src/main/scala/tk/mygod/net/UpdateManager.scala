@@ -28,7 +28,7 @@ object UpdateManager {
       if (dialog.isShowing) {
         dialog.dismiss
         h.post(() => if (TextUtils.isEmpty(uri))
-          activity.makeToast(activity.getString(R.string.no_updates_available).show)
+          activity.makeToast(activity.getString(R.string.no_updates_available)).show
         else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
           .setPositiveButton(R.string.download,
             ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
