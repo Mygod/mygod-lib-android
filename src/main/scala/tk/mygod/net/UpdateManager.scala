@@ -27,19 +27,20 @@ object UpdateManager {
         .getPackageInfo(activity.getPackageName, 0).versionCode)).openStream())(stream => IOUtils.readAllText(stream))
       if (dialog.isShowing) {
         dialog.dismiss
-        h.post(if (TextUtils.isEmpty(uri)) activity.showToast(activity.getString(R.string.no_updates_available))
-          else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
-            .setPositiveButton(R.string.download,
-              ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
-            .setNegativeButton(R.string.learn_more,
-              ((dialog, which) => activity.launchUrl(productUri)): OnClickListener)
-            .show)
+        h.post(() => if (TextUtils.isEmpty(uri))
+          activity.makeToast(activity.getString(R.string.no_updates_available).show)
+        else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
+          .setPositiveButton(R.string.download,
+            ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
+          .setNegativeButton(R.string.learn_more,
+            ((dialog, which) => activity.launchUrl(productUri)): OnClickListener)
+          .show)
       }
     } catch {
       case e: Exception =>
         if (dialog.isShowing) {
           dialog.dismiss
-          h.post(activity.showToast(e.getMessage))
+          h.post(() => activity.makeToast(e.getMessage).show)
         }
     })
   }

@@ -40,8 +40,7 @@ trait FragmentPlus extends Fragment {
   def pendingIntentBroadcast(action: String) =
     PendingIntent.getBroadcast(getActivity, 0, new Intent().setAction(action), PendingIntent.FLAG_UPDATE_CURRENT)
 
-  def showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) =
-    Toast.makeText(getActivity, text, duration).show
+  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(getActivity, text, duration)
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
     getActivity.getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
 
