@@ -90,5 +90,5 @@ trait ContextPlus extends Context {
     startActivity(Intent.createChooser(intent, R.string.abc_shareactionprovider_share_with))
   }
 
-  def showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration).show
+  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration)
 }
