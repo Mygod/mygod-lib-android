@@ -9,7 +9,6 @@ import tk.mygod.os.Build
 import tk.mygod.view.LocationObserver
 
 /**
- * Make sure to override onCreateSubView instead of onCreateView.
  * Based on: https://github.com/ferdy182/Android-CircularRevealFragment/blob/master/app/src/main/java/com/fernandofgallego/circularrevealfragment/sample/MainActivity.java
  * @author Mygod
  */
@@ -18,7 +17,7 @@ object CircularRevealFragment {
   navButtonField.setAccessible(true)
 }
 
-abstract class CircularRevealFragment extends ToolbarFragment {
+trait CircularRevealFragment extends ToolbarFragment {
   private var cached: FragmentStackActivity = _
   private def setStopping(value: Boolean) {
     _stopping = value
@@ -58,7 +57,7 @@ abstract class CircularRevealFragment extends ToolbarFragment {
       })
   }
 
-  override def stop(sender: View = null) = {
+  override def stop(sender: View = null) {
     _stopping = true
     val view = getView
     if (Build.version >= 21 && view != null) {
