@@ -29,7 +29,7 @@ trait CircularRevealFragment extends ToolbarFragment {
   private var spawnLocation: (Float, Float) = _
   def setSpawnLocation(location: (Float, Float)) = spawnLocation = location
   private val stoppingAnimatorListener = new AnimatorListener {
-    def onAnimationEnd(animation: Animator) = {
+    def onAnimationEnd(animation: Animator) {
       CircularRevealFragment.super.stop()
       setStopping(false)
     }
