@@ -81,7 +81,7 @@ trait ContextPlus extends Context {
   def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) =
     PendingIntent.getActivity(this, 0, intent[A], PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingBroadcast(intent: Intent) = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-  def pendingBroadcast(action: String): Unit = pendingBroadcast(new Intent(action))
+  def pendingBroadcast(action: String): PendingIntent = pendingBroadcast(new Intent(action))
 
   def share(text: String, subject: String = null) = if (Build.isChromeOS)
     systemService[ClipboardManager].setPrimaryClip(ClipData.newPlainText(subject, Logcat.fetch)) else {
