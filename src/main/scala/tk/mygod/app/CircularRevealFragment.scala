@@ -17,7 +17,7 @@ object CircularRevealFragment {
   navButtonField.setAccessible(true)
 }
 
-trait CircularRevealFragment extends ToolbarFragment {
+trait CircularRevealFragment extends ToolbarFragment with StoppableFragment {
   private var cached: FragmentStackActivity = _
   private def setStopping(value: Boolean) {
     _stopping = value
