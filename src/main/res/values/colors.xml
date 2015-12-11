@@ -5,7 +5,6 @@
     <color name="material_primary_500">@color/material_blue_500</color>
     <color name="material_primary_700">@color/material_blue_700</color>
     <color name="material_accent_500">@color/material_primary_500</color>
-    <color name="flat_button_text">@color/material_accent_500</color>
     <!-- Stupid preferences library fixes provided by: https://github.com/Gericop/Android-Support-Preference-V7-Fix -->
     <color name="preference_fallback_accent_color">@color/material_accent_500</color>
 </resources>
