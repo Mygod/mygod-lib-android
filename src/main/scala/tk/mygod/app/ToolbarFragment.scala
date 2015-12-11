@@ -9,7 +9,7 @@ import tk.mygod.{R, TR}
 /**
  * @author Mygod
  */
-trait ToolbarFragment extends FragmentPlus with SimpleKeyEventCallback {
+trait ToolbarFragment extends StoppableFragment with SimpleKeyEventCallback {
   var toolbar: Toolbar = _
 
   protected def configureToolbar(view: View, title: CharSequence, navigationIcon: Int = -1) {

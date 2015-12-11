@@ -18,7 +18,7 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
     result
   }
 
-  protected def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
+  protected final def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
     fragment.setTargetFragment(this, 0)
     fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")
   }
