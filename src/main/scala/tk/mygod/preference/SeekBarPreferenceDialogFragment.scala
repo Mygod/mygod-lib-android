@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.ViewGroup
 import tk.mygod.R
-import tk.mygod.app.FragmentPlus
 
 /**
  * @author mygod
  */
-class SeekBarPreferenceDialogFragment(key: String) extends PreferenceDialogFragment with FragmentPlus {
+class SeekBarPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {
   {
     val bundle = new Bundle(1)
     bundle.putString("key", key)

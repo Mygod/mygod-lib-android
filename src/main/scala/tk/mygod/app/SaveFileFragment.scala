@@ -8,7 +8,7 @@ import android.os.{Bundle, Environment}
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener
-import android.view.{LayoutInflater, MenuItem, View, ViewGroup}
+import android.view.{MenuItem, View, ViewGroup}
 import android.webkit.MimeTypeMap
 import android.widget._
 import tk.mygod.TypedResource._
@@ -23,9 +23,9 @@ import scala.collection.mutable
  * @author Mygod
  */
 object SaveFileFragment {
-  private val REQUEST_CODE = "RequestCode"
-  private val MIME_TYPE = "MimeType"
-  private val CURRENT_DIRECTORY = "CurrentDirectory"
+  private final val REQUEST_CODE = "requestCode"
+  private final val MIME_TYPE = "mimeType"
+  private final val CURRENT_DIRECTORY = "currentDirectory"
 
   private final class DirectoryDisplay(context: Context, private val content: mutable.ArrayBuffer[File])
     extends ArrayAdapter[File](context, android.R.layout.activity_list_item, android.R.id.text1, content) {
@@ -99,15 +99,16 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
 
   override def isFullscreen = true
 
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
-    val result = inflater.inflate(R.layout.fragment_save_file, container, false)
-    configureToolbar(result, R.string.fragment_save_file_title, 0)
+  def layout = R.layout.fragment_save_file
+  override def onViewCreated(view: View, savedInstanceState: Bundle) {
+    super.onViewCreated(view, savedInstanceState)
+    configureToolbar(view, R.string.fragment_save_file_title, 0)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
-    fileName = result.findView(TR.file_name)
+    fileName = view.findView(TR.file_name)
     if (defaultFileName != null) fileName.setText(defaultFileName)
     directoryDisplay = new DirectoryDisplay(getActivity, new mutable.ArrayBuffer[File])
-    directoryView = result.findView(TR.directory_view)
+    directoryView = view.findView(TR.directory_view)
     directoryView.setAdapter(directoryDisplay)
     directoryView.setOnItemClickListener((parent, view, position, id) =>
       if (position >= 0 && position < directoryDisplay.getCount) {
@@ -117,11 +118,10 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
           submit(view)
         } else setCurrentDirectory(if (file.getName == "..") currentDirectory.getParentFile else file)
       })
-    val ok = result.findViewById(R.id.ok)
+    val ok = view.findViewById(R.id.ok)
     ok.setOnTouchListener(LocationObserver)
     ok.setOnClickListener(submit)
     setCurrentDirectory(currentDirectory)
-    result
   }
 
   def onMenuItemClick(item: MenuItem): Boolean = {
