@@ -22,7 +22,7 @@ trait ToolbarFragment extends StoppableFragment with SimpleKeyEventCallback {
     toolbar.setTitle(title)
   }
 
-  protected def setNavigationIcon(@DrawableRes navigationIcon: Int) = {
+  protected def setNavigationIcon(@DrawableRes navigationIcon: Int) {
     toolbar.setNavigationIcon(navigationIcon)
     toolbar.setNavigationOnClickListener(exit)
   }

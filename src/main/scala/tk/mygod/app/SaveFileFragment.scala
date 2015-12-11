@@ -55,7 +55,7 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
   with OnMenuItemClickListener {
   import SaveFileFragment._
   if (Build.version >= 19) throw new UnsupportedOperationException
-  def this() = this(0, null, null, null)
+  def this() = this(0, null)
 
   private var currentDirectory = if (path == null) Environment.getExternalStorageDirectory else new File(path)
   private var directoryDisplay: DirectoryDisplay = _
@@ -102,7 +102,8 @@ final class SaveFileFragment(private var requestCode: Int, private var mimeType:
   def layout = R.layout.fragment_save_file
   override def onViewCreated(view: View, savedInstanceState: Bundle) {
     super.onViewCreated(view, savedInstanceState)
-    configureToolbar(view, R.string.fragment_save_file_title, 0)
+    configureToolbar(view, R.string.fragment_save_file_title)
+    setNavigationIcon(ToolbarFragment.BACK)
     toolbar.inflateMenu(R.menu.save_file_actions)
     toolbar.setOnMenuItemClickListener(this)
     fileName = view.findView(TR.file_name)
