@@ -2,7 +2,6 @@ package tk.mygod.preference
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v14.preference.PreferenceDialogFragment
 import android.view.{View, ViewGroup}
 
 class EditTextPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {

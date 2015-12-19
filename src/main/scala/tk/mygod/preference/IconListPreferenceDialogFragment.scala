@@ -11,7 +11,7 @@ import android.widget.{CheckedTextView, BaseAdapter}
 import tk.mygod.os.Build
 
 /**
- * @author mygod
+ * @author Mygod
  */
 class IconListPreferenceDialogFragment(key: String) extends ListPreferenceDialogFragment {
   {
