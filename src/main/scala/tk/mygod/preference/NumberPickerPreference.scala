@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.widget.NumberPicker
 import tk.mygod.R
 
-final class NumberPickerPreference(private val context: Context, attrs: AttributeSet = null)
+class NumberPickerPreference(private val context: Context, attrs: AttributeSet = null)
   extends DialogPreference(context, attrs) with SummaryPreference {
   private[preference] val picker = new NumberPicker(context)
   private var value: Int = _
