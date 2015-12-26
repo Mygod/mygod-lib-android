@@ -1,11 +1,14 @@
 package tk.mygod.util
 
 object CloseUtils {
+  type Closeable = {  // Use AutoCloseable in API 19+
+    def close()
+  }
   type Disconnectable = {
     def disconnect()
   }
 
-  def autoClose[A <: AutoCloseable, B](x: => A)(block: A => B): B = {
+  def autoClose[A <: Closeable, B](x: => A)(block: A => B): B = {
     var a: Option[A] = None
     try {
       a = Some(x)

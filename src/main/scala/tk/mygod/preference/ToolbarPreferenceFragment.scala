@@ -32,7 +32,7 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
     paint.setStyle(Paint.Style.FILL_AND_STROKE)
     paint.setColor(0x66CCCCCC)
     val divider = {
-      val ta = getContext.obtainStyledAttributes(Array(android.R.attr.listDivider))
+      val ta = getActivity.obtainStyledAttributes(Array(android.R.attr.listDivider))
       try ta.getDrawable(0) finally ta.recycle
     }
     val dividerHeight = if (divider == null) 2 else divider.getIntrinsicHeight
