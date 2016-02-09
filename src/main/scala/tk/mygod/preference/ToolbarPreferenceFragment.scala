@@ -2,9 +2,9 @@ package tk.mygod.preference
 
 import android.graphics.{Canvas, Paint, Rect}
 import android.os.Bundle
-import android.support.v14.preference.PreferenceFragment
+import android.support.v14.preference.{PreferenceDialogFragment => Base, PreferenceFragment}
 import android.support.v7.preference.{PreferenceCategory, PreferenceGroupAdapter}
-import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
+import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view.{LayoutInflater, View, ViewGroup}
 import tk.mygod.R
 import tk.mygod.app.CircularRevealFragment
@@ -28,7 +28,7 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
     result
   }
 
-  protected final def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
+  protected final def displayPreferenceDialog(fragment: Base) {
     fragment.setTargetFragment(this, 0)
     fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")
   }
