@@ -62,7 +62,7 @@ trait CircularRevealFragment extends ToolbarFragment {
   override def stop(sender: View = null) {
     _stopping = true
     val view = getView
-    if (Build.version >= 21 && view != null) {
+    if (Build.version >= 21 && view != null && view.isAttachedToWindow) {
       setStopping(true)
       val (x, y) = if (sender == null) (view.getWidth / 2F, view.getHeight.toFloat)
       else LocationObserver.getRelatedTo(sender, view)

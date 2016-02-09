@@ -2,7 +2,8 @@ package tk.mygod.preference
 
 import android.graphics.{Canvas, Paint, Rect}
 import android.os.Bundle
-import android.support.v14.preference.PreferenceFragment
+import android.support.v14.preference.{PreferenceDialogFragment => Base, PreferenceFragment}
+import android.support.v7.preference.{PreferenceCategory, PreferenceGroupAdapter}
 import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view.{LayoutInflater, View, ViewGroup}
 import tk.mygod.R
@@ -11,7 +12,14 @@ import tk.mygod.app.CircularRevealFragment
 /**
   * @author Mygod
   */
+object ToolbarPreferenceFragment {
+  private val awakenScrollBars = classOf[View].getDeclaredMethod("awakenScrollBars")
+  awakenScrollBars.setAccessible(true)
+}
+
 abstract class ToolbarPreferenceFragment extends PreferenceFragment with CircularRevealFragment {
+  import ToolbarPreferenceFragment._
+
   override def layout = R.layout.fragment_preference_toolbar
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     val result = super[CircularRevealFragment].onCreateView(inflater, container, savedInstanceState)
@@ -20,7 +28,7 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
     result
   }
 
-  protected final def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
+  protected final def displayPreferenceDialog(fragment: Base) {
     fragment.setTargetFragment(this, 0)
     fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")
   }
@@ -39,13 +47,13 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
 
     override def onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) = {
       val lm = parent.getLayoutManager.asInstanceOf[LinearLayoutManager]
-      val adapter = parent.getAdapter
+      val adapter = parent.getAdapter.asInstanceOf[PreferenceGroupAdapter]
       val left = parent.getPaddingLeft
       val right = parent.getWidth - parent.getPaddingRight
       var i = lm.findFirstVisibleItemPosition
       val end = Math.min(lm.findLastVisibleItemPosition, adapter.getItemCount - 2)
-      while (i <= end) if (adapter.getItemViewType(i + 1) == 0) i += 2 else {
-        if (adapter.getItemViewType(i) != 0) {
+      while (i <= end) if (adapter.getItem(i + 1).isInstanceOf[PreferenceCategory]) i += 2 else {
+        if (!adapter.getItem(i).isInstanceOf[PreferenceCategory]) {
           val view = lm.findViewByPosition(i)
           val top = view.getBottom + view.getPaddingBottom
           if (divider == null) c.drawRect(left, top, right, top + dividerHeight, paint) else {
@@ -63,5 +71,10 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
   override def onViewCreated(view: View, savedInstanceState: Bundle) {
     super.onViewCreated(view, savedInstanceState)
     if (dividersEnabled) getListView.addItemDecoration(dividers)
+  }
+
+  override def onResume {
+    super.onResume
+    awakenScrollBars.invoke(getListView)
   }
 }

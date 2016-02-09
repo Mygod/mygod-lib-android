@@ -17,5 +17,8 @@ trait SummaryPreference extends Preference {
    *
    * @return the summary with appropriate string substitution
    */
-  override def getSummary = String.format(super.getSummary.toString, getSummaryValue)
+  override def getSummary = {
+    val summary = super.getSummary
+    if (summary == null) null else String.format(summary.toString, getSummaryValue)
+  }
 }
