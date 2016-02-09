@@ -3,7 +3,7 @@ package tk.mygod.preference
 import android.graphics.{Canvas, Paint, Rect}
 import android.os.Bundle
 import android.support.v14.preference.PreferenceFragment
-import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
+import android.support.v7.widget.{RecyclerView, LinearLayoutManager}
 import android.view.{LayoutInflater, View, ViewGroup}
 import tk.mygod.R
 import tk.mygod.app.CircularRevealFragment
@@ -11,7 +11,14 @@ import tk.mygod.app.CircularRevealFragment
 /**
   * @author Mygod
   */
+object ToolbarPreferenceFragment {
+  private val awakenScrollBars = classOf[View].getDeclaredMethod("awakenScrollBars")
+  awakenScrollBars.setAccessible(true)
+}
+
 abstract class ToolbarPreferenceFragment extends PreferenceFragment with CircularRevealFragment {
+  import ToolbarPreferenceFragment._
+
   override def layout = R.layout.fragment_preference_toolbar
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) = {
     val result = super[CircularRevealFragment].onCreateView(inflater, container, savedInstanceState)
@@ -63,5 +70,10 @@ abstract class ToolbarPreferenceFragment extends PreferenceFragment with Circula
   override def onViewCreated(view: View, savedInstanceState: Bundle) {
     super.onViewCreated(view, savedInstanceState)
     if (dividersEnabled) getListView.addItemDecoration(dividers)
+  }
+
+  override def onResume {
+    super.onResume
+    awakenScrollBars.invoke(getListView)
   }
 }

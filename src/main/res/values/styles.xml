@@ -8,7 +8,7 @@
         <item name="colorButtonNormal">@color/material_accent_500</item>
         <item name="colorPrimary">@color/material_primary_500</item>
         <item name="colorPrimaryDark">@color/material_primary_700</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="preferenceTheme">@style/Theme.Material.PreferenceThemeOverlay</item>
     </style>
     <style name="Theme.Material.DialogBase" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/material_accent_500</item>
@@ -34,5 +34,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="Theme.Material.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceFragmentListStyle">@style/Theme.Material.PreferenceFragmentList</item>
+    </style>
+    <style name="Theme.Material.PreferenceFragmentList" parent="@style/PreferenceFragmentList.Material">
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:scrollbars">vertical</item>
     </style>
 </resources>
