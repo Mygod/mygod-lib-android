@@ -2,6 +2,7 @@ package tk.mygod.concurrent
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.Failure
 
 abstract class StoppableFuture[T](finished: T => Unit = null) {
   private var stopped: Boolean = _
@@ -13,8 +14,9 @@ abstract class StoppableFuture[T](finished: T => Unit = null) {
   Future {
     val result = work
     if (finished != null) finished(result)
-  } onFailure {
-    case exc: Exception => onFailure(exc)
-    case throwable => throw throwable
+  } onComplete {
+    case Failure(exc: Exception) => onFailure(exc)
+    case Failure(throwable) => throw throwable
+    case _ =>
   }
 }

@@ -1,5 +1,10 @@
 package tk.mygod
 
+import scala.util.Failure
+
 package object concurrent {
-  val FailureHandler: PartialFunction[Throwable, Unit] = { case exc => throw exc }
+  val FailureHandler = {
+    case Failure(throwable) => throw throwable
+    case _ =>
+  }
 }
