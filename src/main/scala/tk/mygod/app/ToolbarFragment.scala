@@ -21,5 +21,8 @@ trait ToolbarFragment extends StoppableFragment with SimpleKeyEventCallback {
     toolbar.setNavigationOnClickListener(exit)
   }
 
-  override def onKeyUp(keyCode: Int, event: KeyEvent) = toolbarView.onKeyUp(keyCode, event)
+  override def onKeyUp(keyCode: Int, event: KeyEvent) = keyCode match {
+    case KeyEvent.KEYCODE_MENU => toolbarView.toggleOverflowMenu
+    case _ => super.onKeyUp(keyCode, event)
+  }
 }
