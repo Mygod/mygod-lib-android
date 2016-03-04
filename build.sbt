@@ -17,9 +17,9 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
 
 libraryDependencies ++= Seq(
-  "com.android.support" % "customtabs" % "23.1.1",
-  "com.android.support" % "design" % "23.1.1",
-  "com.android.support" % "preference-v14" % "23.1.1"
+  "com.android.support" % "customtabs" % "23.2.0",
+  "com.android.support" % "design" % "23.2.0",
+  "com.android.support" % "preference-v14" % "23.2.0"
 )
 
 pomExtra in Global := {
