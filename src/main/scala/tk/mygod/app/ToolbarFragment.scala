@@ -1,35 +1,25 @@
 package tk.mygod.app
 
 import android.support.annotation.DrawableRes
-import android.support.v7.widget.Toolbar
-import android.view.{KeyEvent, View}
-import tk.mygod.TypedResource._
+import android.view.KeyEvent
 import tk.mygod.view.SimpleKeyEventCallback
-import tk.mygod.{R, TR}
 
 /**
  * @author Mygod
  */
-object ToolbarFragment {
-  final val BACK = R.drawable.abc_ic_ab_back_material
-}
-
 trait ToolbarFragment extends StoppableFragment with SimpleKeyEventCallback {
-  var toolbar: Toolbar = _
-
-  protected def configureToolbar(view: View, title: CharSequence) {
-    toolbar = view.findView(TR.toolbar)
-    toolbar.setTitle(title)
+  final class ToolbarTypedView extends ToolbarTypedFindView {
+    protected def findViewById(id: Int) = getView.findViewById(id)
   }
+  private val toolbarView = new ToolbarTypedView
+  def toolbar = toolbarView.toolbar
+
+  protected def configureToolbar(title: CharSequence) = toolbarView.configureToolbar(title)
 
   protected def setNavigationIcon(@DrawableRes navigationIcon: Int) {
-    toolbar.setNavigationIcon(navigationIcon)
+    toolbarView.setNavigationIcon(navigationIcon)
     toolbar.setNavigationOnClickListener(exit)
   }
 
-  override def onKeyUp(keyCode: Int, event: KeyEvent) = keyCode match {
-    case KeyEvent.KEYCODE_MENU =>
-      if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu
-    case _ => super.onKeyUp(keyCode, event)
-  }
+  override def onKeyUp(keyCode: Int, event: KeyEvent) = toolbarView.onKeyUp(keyCode, event)
 }
