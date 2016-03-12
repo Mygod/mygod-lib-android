@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.{View, ViewGroup}
 
-class EditTextPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {
-  {
+class EditTextPreferenceDialogFragment extends PreferenceDialogFragment {
+  def this(key: String) {
+    this
     val bundle = new Bundle(1)
     bundle.putString("key", key)
     setArguments(bundle)

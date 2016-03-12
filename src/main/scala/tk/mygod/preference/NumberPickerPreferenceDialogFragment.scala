@@ -9,8 +9,9 @@ import android.view.{View, ViewGroup}
 /**
  * @author Mygod
  */
-class NumberPickerPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {
-  {
+class NumberPickerPreferenceDialogFragment extends PreferenceDialogFragment {
+  def this(key: String) {
+    this
     val bundle = new Bundle(1)
     bundle.putString("key", key)
     setArguments(bundle)

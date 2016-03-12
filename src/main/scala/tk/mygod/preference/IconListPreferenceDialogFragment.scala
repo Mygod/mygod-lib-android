@@ -13,8 +13,9 @@ import tk.mygod.os.Build
 /**
  * @author Mygod
  */
-class IconListPreferenceDialogFragment(key: String) extends ListPreferenceDialogFragment {
-  {
+class IconListPreferenceDialogFragment extends ListPreferenceDialogFragment {
+  def this(key: String) {
+    this
     val bundle = new Bundle(1)
     bundle.putString("key", key)
     setArguments(bundle)
