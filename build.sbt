@@ -8,7 +8,7 @@ organization := "tk.mygod"
 
 version := "1.3.11-SNAPSHOT"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 platformTarget in Android := "android-23"
 
@@ -17,9 +17,9 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
 
 libraryDependencies ++= Seq(
-  "com.android.support" % "customtabs" % "23.2.0",
-  "com.android.support" % "design" % "23.2.0",
-  "com.android.support" % "preference-v14" % "23.2.0"
+  "com.android.support" % "customtabs" % "23.2.1",
+  "com.android.support" % "design" % "23.2.1",
+  "com.android.support" % "preference-v14" % "23.2.1"
 )
 
 pomExtra in Global := {
