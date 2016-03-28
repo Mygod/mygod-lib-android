@@ -2,14 +2,16 @@ package tk.mygod.preference
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v14.preference.PreferenceDialogFragment
 import android.view.inputmethod.InputMethodManager
 import android.view.{View, ViewGroup}
 
 /**
  * @author Mygod
  */
-class NumberPickerPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {
-  {
+class NumberPickerPreferenceDialogFragment extends PreferenceDialogFragment {
+  def this(key: String) {
+    this
     val bundle = new Bundle(1)
     bundle.putString("key", key)
     setArguments(bundle)

@@ -4,14 +4,16 @@ import android.app.AlertDialog.Builder
 import android.content.Context
 import android.content.DialogInterface.OnClickListener
 import android.os.Bundle
+import android.support.v14.preference.PreferenceDialogFragment
 import android.view.ViewGroup
 import tk.mygod.R
 
 /**
  * @author Mygod
  */
-class SeekBarPreferenceDialogFragment(key: String) extends PreferenceDialogFragment {
-  {
+class SeekBarPreferenceDialogFragment extends PreferenceDialogFragment {
+  def this(key: String) {
+    this
     val bundle = new Bundle(1)
     bundle.putString("key", key)
     setArguments(bundle)
