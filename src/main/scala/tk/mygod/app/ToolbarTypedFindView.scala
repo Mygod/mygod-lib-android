@@ -2,7 +2,8 @@ package tk.mygod.app
 
 import android.support.annotation.DrawableRes
 import android.support.v7.widget.Toolbar
-import tk.mygod.{R, TR, TypedFindView}
+import android.view.View
+import tk.mygod.R
 
 /**
   * @author Mygod
@@ -11,11 +12,12 @@ object ToolbarTypedFindView {
   final val BACK = R.drawable.abc_ic_ab_back_mtrl_am_alpha
 }
 
-trait ToolbarTypedFindView extends TypedFindView {
+trait ToolbarTypedFindView {
   var toolbar: Toolbar = _
 
+  protected def findViewById(id: Int): View
   def configureToolbar(title: CharSequence) {
-    toolbar = findView(TR.toolbar)
+    toolbar = findViewById(R.id.toolbar).asInstanceOf[Toolbar]
     toolbar.setTitle(title)
   }
 

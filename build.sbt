@@ -16,6 +16,8 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
 scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
 
+typedResources in Android := false
+
 libraryDependencies ++= Seq(
   "com.android.support" % "customtabs" % "23.3.0",
   "com.android.support" % "design" % "23.3.0",
