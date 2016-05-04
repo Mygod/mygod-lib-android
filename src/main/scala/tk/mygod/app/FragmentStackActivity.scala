@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.{KeyEvent, View}
 import android.view.inputmethod.InputMethodManager
 import tk.mygod.widget.InterceptableFrameLayout
-import tk.mygod.{R, TR, TypedFindView}
+import tk.mygod.R
 
 /**
  * Use fragments as activities in one activity. StoppableFragments are acceptable for animations.
  * @author Mygod
  */
-abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
+abstract class FragmentStackActivity extends ActivityPlus {
   private[app] var container: InterceptableFrameLayout = _
   private lazy val manager = getFragmentManager
 
@@ -26,7 +26,7 @@ abstract class FragmentStackActivity extends ActivityPlus with TypedFindView {
   protected override def onCreate(bundle: Bundle) {
     super.onCreate(bundle)
     setContentView(R.layout.activity_fragment_stack)
-    container = findView(TR.container)
+    container = findViewById(R.id.container).asInstanceOf[InterceptableFrameLayout]
   }
 
   protected override def onNewIntent(intent: Intent) {
