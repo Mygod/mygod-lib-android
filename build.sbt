@@ -6,7 +6,7 @@ name := "mygod-lib-android"
 
 organization := "tk.mygod"
 
-version := "1.4.0-SNAPSHOT"
+version := "1.4.1-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -18,10 +18,12 @@ scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
 
 typedResources in Android := false
 
+proguardVersion in Android := "5.2.1"
+
 libraryDependencies ++= Seq(
-  "com.android.support" % "customtabs" % "23.3.0",
-  "com.android.support" % "design" % "23.3.0",
-  "com.android.support" % "preference-v14" % "23.3.0"
+  "com.android.support" % "customtabs" % "23.4.0",
+  "com.android.support" % "design" % "23.4.0",
+  "com.android.support" % "preference-v14" % "23.4.0"
 )
 
 pomExtra in Global := {
