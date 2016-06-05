@@ -12,8 +12,9 @@ trait ToolbarFragment extends StoppableFragment with SimpleKeyEventCallback {
     protected def findViewById(id: Int) = getView.findViewById(id)
   }
   private val toolbarView = new ToolbarTypedView
-  def toolbar = toolbarView.toolbar
+  protected def toolbar = toolbarView.toolbar
 
+  protected def configureToolbar: Unit = configureToolbar(getActivity.getTitle)
   protected def configureToolbar(title: CharSequence) = toolbarView.configureToolbar(title)
 
   protected def setNavigationIcon(@DrawableRes navigationIcon: Int) {

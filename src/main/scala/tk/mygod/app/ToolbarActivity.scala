@@ -7,6 +7,8 @@ import android.view.KeyEvent
  * @author Mygod
  */
 trait ToolbarActivity extends ActivityPlus with ToolbarTypedFindView {
+  protected def configureToolbar: Unit = configureToolbar(getTitle)
+
   override def setNavigationIcon(@DrawableRes navigationIcon: Int) {
     super.setNavigationIcon(navigationIcon)
     toolbar.setNavigationOnClickListener(_ => {
