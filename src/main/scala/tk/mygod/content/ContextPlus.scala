@@ -78,8 +78,9 @@ trait ContextPlus extends Context {
   }
 
   def intent[T](implicit ct: ClassTag[T]) = new Intent(this, ct.runtimeClass)
-  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) =
-    PendingIntent.getActivity(this, 0, intent[A], PendingIntent.FLAG_UPDATE_CURRENT)
+  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) = pendingActivity(intent[A])
+
+  def pendingActivity(intent: Intent) = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingBroadcast(intent: Intent) = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingBroadcast(action: String): PendingIntent = pendingBroadcast(new Intent(action))
 
