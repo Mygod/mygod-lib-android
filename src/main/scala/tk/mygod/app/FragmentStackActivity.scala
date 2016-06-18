@@ -38,15 +38,15 @@ abstract class FragmentStackActivity extends ActivityPlus {
     }
   }
 
-  def push(fragment: Fragment): Boolean = {
-    if (fragment.isAdded) return true
+  def push(fragment: Fragment) = if (fragment.isAdded) true else {
     hideInput
     val id = manager.getBackStackEntryCount.toString
     manager.beginTransaction.add(R.id.container, fragment, id).addToBackStack(id).commit
     false
   }
 
-  private[app] def popBackStack = if (!getFragmentManager.popBackStackImmediate) super.onBackPressed
+  private[app] def popBackStack =
+    if (!manager.popBackStackImmediate || manager.getBackStackEntryCount <= 0) super.onBackPressed
     // fix for support lib since I didn't really use those APIs :/
   def pop(sender: View = null): Fragment = {
     hideInput
