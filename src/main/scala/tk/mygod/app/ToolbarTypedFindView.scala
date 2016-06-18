@@ -9,7 +9,7 @@ import tk.mygod.R
   * @author Mygod
   */
 object ToolbarTypedFindView {
-  final val BACK = R.drawable.abc_ic_ab_back_mtrl_am_alpha
+  final val BACK = R.drawable.abc_ic_ab_back_material
 }
 
 trait ToolbarTypedFindView {
