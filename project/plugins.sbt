@@ -1,6 +1,8 @@
-addSbtPlugin("org.scala-android" % "sbt-android" % "1.6.4")
+addSbtPlugin("org.scala-android" % "sbt-android" % "1.6.5")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.10")
+
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")
 
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "1.0")
 
