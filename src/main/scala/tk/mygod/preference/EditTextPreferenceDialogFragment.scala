@@ -1,17 +1,10 @@
 package tk.mygod.preference
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.{View, ViewGroup}
 
 class EditTextPreferenceDialogFragment extends PreferenceDialogFragment {
-  def this(key: String) {
-    this
-    val bundle = new Bundle(1)
-    bundle.putString("key", key)
-    setArguments(bundle)
-  }
   private lazy val preference = getPreference.asInstanceOf[EditTextPreference]
   private lazy val editText = preference.editText
 

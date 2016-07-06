@@ -14,7 +14,10 @@ abstract class PreferenceFragmentPlus extends PreferenceFragment with FragmentPl
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) =
     super[PreferenceFragment].onCreateView(inflater, container, savedInstanceState)
 
-  protected final def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
+  protected final def displayPreferenceDialog(key: String, fragment: PreferenceDialogFragment) {
+    val bundle = new Bundle(1)
+    bundle.putString("key", key)
+    fragment.setArguments(bundle)
     fragment.setTargetFragment(this, 0)
     fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")
   }

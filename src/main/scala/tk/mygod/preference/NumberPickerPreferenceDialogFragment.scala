@@ -1,7 +1,6 @@
 package tk.mygod.preference
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.inputmethod.InputMethodManager
 import android.view.{View, ViewGroup}
@@ -10,12 +9,6 @@ import android.view.{View, ViewGroup}
  * @author Mygod
  */
 class NumberPickerPreferenceDialogFragment extends PreferenceDialogFragment {
-  def this(key: String) {
-    this
-    val bundle = new Bundle(1)
-    bundle.putString("key", key)
-    setArguments(bundle)
-  }
   private lazy val preference = getPreference.asInstanceOf[NumberPickerPreference]
   private lazy val picker = preference.picker
   private lazy val inputMethodManager =
