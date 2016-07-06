@@ -1,12 +1,19 @@
 package tk.mygod.preference
 
-import android.support.v14.preference.{PreferenceDialogFragment, PreferenceFragment => Base}
+import android.os.Bundle
+import android.support.v14.preference.{PreferenceDialogFragment, PreferenceFragment}
 import android.support.v7.preference.PreferenceScreen
+import android.view.{LayoutInflater, ViewGroup}
+import tk.mygod.app.FragmentPlus
 
 /**
   * @author Mygod
   */
-abstract class PreferenceFragment extends Base {
+abstract class PreferenceFragmentPlus extends PreferenceFragment with FragmentPlus {
+  override def layout = 0  // not applicable
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) =
+    super[PreferenceFragment].onCreateView(inflater, container, savedInstanceState)
+
   protected final def displayPreferenceDialog(fragment: PreferenceDialogFragment) {
     fragment.setTargetFragment(this, 0)
     fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")

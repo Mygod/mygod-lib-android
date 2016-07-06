@@ -19,7 +19,7 @@ object PreferenceGroupAdapter {
   private var preferenceLayoutsField: Field = _
   private var fieldResId: Field = _
   private var fieldWidgetResId: Field = _
-  private val preferenceViewHolderConstructor = classOf[PreferenceViewHolder].getConstructor(classOf[View])
+  private val preferenceViewHolderConstructor = classOf[PreferenceViewHolder].getDeclaredConstructor(classOf[View])
 
   {
     val oldClass = classOf[Old]
