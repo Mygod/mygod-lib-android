@@ -1,5 +1,8 @@
 package tk.mygod.preference
 
+import java.lang.reflect.Field
+import java.util.List
+
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.preference.{PreferenceGroup, PreferenceViewHolder, PreferenceGroupAdapter => Old}
@@ -13,26 +16,33 @@ import tk.mygod.os.Build
   * @author Mygod
   */
 object PreferenceGroupAdapter {
-  private val oldClass = classOf[Old]
-  private val preferenceLayoutsField = oldClass.getDeclaredField("mPreferenceLayouts")
-  preferenceLayoutsField.setAccessible(true)
-  private val (fieldResId, fieldWidgetResId) = {
+  private var preferenceLayoutsField: Field = _
+  private var fieldResId: Field = _
+  private var fieldWidgetResId: Field = _
+  private val preferenceViewHolderConstructor = classOf[PreferenceViewHolder].getConstructor(classOf[View])
+
+  {
+    val oldClass = classOf[Old]
+    preferenceLayoutsField = oldClass.getDeclaredField("mPreferenceLayouts")
+    preferenceLayoutsField.setAccessible(true)
     val c = oldClass.getDeclaredClasses.filter(c => c.getSimpleName == "PreferenceLayout").head
-    (c.getDeclaredField("resId"), c.getDeclaredField("widgetResId"))
+    fieldResId = c.getDeclaredField("resId")
+    fieldResId.setAccessible(true)
+    fieldWidgetResId = c.getDeclaredField("widgetResId")
+    fieldWidgetResId.setAccessible(true)
+    preferenceViewHolderConstructor.setAccessible(true)
   }
-  fieldResId.setAccessible(true)
-  fieldWidgetResId.setAccessible(true)
 }
 
 class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
   import PreferenceGroupAdapter._
 
-  protected val preferenceLayouts = preferenceLayoutsField.get(this).asInstanceOf[List]
+  protected val preferenceLayouts = preferenceLayoutsField.get(this).asInstanceOf[List[AnyRef]]
 
   override def onCreateViewHolder(parent: ViewGroup, viewType: Int) = if (Build.version < 21) {
     val context = parent.getContext
     val inflater = LayoutInflater.from(context)
-    val pl = preferenceLayouts(viewType)
+    val pl = preferenceLayouts.get(viewType)
     val view = inflater.inflate(fieldResId.get(pl).asInstanceOf[Int], parent, false)
     val array = context.obtainStyledAttributes(null, R.styleable.BackgroundStyle)
     var background = array.getDrawable(R.styleable.BackgroundStyle_android_selectableItemBackground)
@@ -46,6 +56,6 @@ class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
       val widgetResId = fieldWidgetResId.get(pl).asInstanceOf[Int]
       if (widgetResId != 0) inflater.inflate(widgetResId, widgetFrame) else widgetFrame.setVisibility(View.GONE)
     }
-    new PreferenceViewHolder(view)
+    preferenceViewHolderConstructor.newInstance(view)
   } else super.onCreateViewHolder(parent, viewType)
 }

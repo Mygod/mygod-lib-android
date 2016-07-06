@@ -1,21 +1,40 @@
 package tk.mygod.app
 
 import android.support.annotation.DrawableRes
+import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
+import tk.mygod.R
 
 /**
  * @author Mygod
  */
-trait ToolbarActivity extends ActivityPlus with ToolbarTypedFindView {
+object ToolbarActivity {
+  final val BACK = R.drawable.abc_ic_ab_back_material
+}
+
+trait ToolbarActivity extends LocationObservedActivity {
+  var toolbar: Toolbar = _
+  def configureToolbar(title: CharSequence) {
+    toolbar = findViewById(R.id.toolbar).asInstanceOf[Toolbar]
+    toolbar.setTitle(title)
+  }
+
   protected def configureToolbar: Unit = configureToolbar(getTitle)
 
-  override def setNavigationIcon(@DrawableRes navigationIcon: Int) {
-    super.setNavigationIcon(navigationIcon)
-    toolbar.setNavigationOnClickListener(_ => {
+  def setNavigationIcon(@DrawableRes navigationIcon: Int = ToolbarActivity.BACK) {
+    toolbar.setNavigationIcon(navigationIcon)
+    toolbar.setNavigationOnClickListener(stopper => {
+      this match {
+        case cra: CircularRevealActivity => cra.circularRevealTransition.stopper = stopper
+        case _ =>
+      }
       val intent = getParentActivityIntent
-      if (intent == null) finish else navigateUpTo(intent)
+      if (intent == null) supportFinishAfterTransition
+      else navigateUpTo(CircularRevealActivity.putLocation(intent, getLocationOnScreen))
     })
   }
+
+  def toggleOverflowMenu = if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu
 
   override def onKeyUp(keyCode: Int, event: KeyEvent) = keyCode match {
     case KeyEvent.KEYCODE_MENU => toggleOverflowMenu
