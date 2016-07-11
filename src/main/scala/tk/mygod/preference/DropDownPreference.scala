@@ -43,7 +43,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
   })
   val a: TypedArray = mContext.obtainStyledAttributes(attrs, R.styleable.DropDownPreference)
   setEntries(a.getTextArray(R.styleable.DropDownPreference_android_entries))
-  mEntryValues = a.getTextArray(R.styleable.DropDownPreference_android_entryValues)
+  setEntryValues(a.getTextArray(R.styleable.DropDownPreference_android_entryValues))
   a.recycle
 
   protected override def getSummaryValue = getEntry
@@ -100,7 +100,7 @@ final class DropDownPreference(private val mContext: Context, attrs: AttributeSe
    *
    * @param value The value to set for the key.
    */
-  def setValue(value: String) = setValue(findIndexOfValue(value), value)
+  def setValue(value: String): Unit = setValue(findIndexOfValue(value), value)
 
   /**
    * Sets the value to the given index from the entry values.
