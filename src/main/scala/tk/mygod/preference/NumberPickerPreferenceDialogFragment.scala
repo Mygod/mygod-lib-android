@@ -29,7 +29,10 @@ class NumberPickerPreferenceDialogFragment extends PreferenceDialogFragment {
 
   def onDialogClosed(positiveResult: Boolean) {
     picker.clearFocus // commit changes
-    if (positiveResult) preference.setValue(picker.getValue)
+    if (positiveResult) {
+      val value = picker.getValue
+      if (preference.callChangeListener(value)) preference.setValue(value)
+    }
     inputMethodManager.hideSoftInputFromWindow(getActivity.getCurrentFocus.getWindowToken,
       InputMethodManager.HIDE_NOT_ALWAYS)
   }

@@ -37,7 +37,7 @@ final class SeekBarPreference(private val context: Context, attrs: AttributeSet 
   def getMax = max
   def getReset = reset
   def setValue(i: Float) {
-    if (value == i || !callChangeListener(i)) return
+    if (value == i) return
     value = i
     updateProgress
     persistFloat(value)

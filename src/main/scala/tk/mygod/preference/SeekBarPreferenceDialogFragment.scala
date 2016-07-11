@@ -27,7 +27,9 @@ class SeekBarPreferenceDialogFragment extends PreferenceDialogFragment {
   }
   protected def onDialogClosed(positiveResult: Boolean) {
     val min = preference.getMin
-    if (positiveResult) preference.setValue(seekBar.getProgress * (preference.getMax - min) / Int.MaxValue + min)
-    else preference.updateProgress  // reset the progress
+    if (positiveResult) {
+      val value = seekBar.getProgress * (preference.getMax - min) / Int.MaxValue + min
+      if (preference.callChangeListener(value)) preference.setValue(value)
+    } else preference.updateProgress  // reset the progress
   }
 }

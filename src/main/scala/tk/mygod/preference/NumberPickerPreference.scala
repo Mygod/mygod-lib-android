@@ -23,7 +23,7 @@ class NumberPickerPreference(private val context: Context, attrs: AttributeSet =
   def getMin = if (picker == null) 0 else picker.getMinValue
   def getMax = picker.getMaxValue
   def setValue(i: Int) {
-    if (i == value || !callChangeListener(i)) return
+    if (i == value) return
     picker.setValue(i)
     value = picker.getValue
     persistInt(value)
