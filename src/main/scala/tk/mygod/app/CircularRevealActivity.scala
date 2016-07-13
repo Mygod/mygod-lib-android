@@ -3,7 +3,7 @@ package tk.mygod.app
 import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
+import android.view.{View, ViewGroup}
 import tk.mygod.os.Build
 import tk.mygod.transition.CircularReveal
 
@@ -45,5 +45,10 @@ trait CircularRevealActivity extends ActivityPlus with LocationObservedActivity 
         }
       }
     }
+  }
+
+  def finish(stopper: View) {
+    if (Build.version >= 21) circularRevealTransition.stopper = stopper
+    supportFinishAfterTransition()
   }
 }
