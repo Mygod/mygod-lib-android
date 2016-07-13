@@ -3,6 +3,7 @@ package tk.mygod.preference
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
+import android.support.annotation.ArrayRes
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.Preference.OnPreferenceChangeListener
 import android.util.AttributeSet
@@ -12,10 +13,10 @@ import tk.mygod.R
  * @author Mygod
  */
 class IconListPreference(context: Context, attrs: AttributeSet = null) extends ListPreference(context, attrs) {
-  private var mEntryIcons: Array[Drawable] = null
-  private[preference] var selectedEntry: Int = -1
+  private var mEntryIcons: Array[Drawable] = _
+  def selectedEntry = getEntryValues.indexOf(getValue)
 
-  private var listener: OnPreferenceChangeListener = null
+  private var listener: OnPreferenceChangeListener = _
   override def getOnPreferenceChangeListener = listener
   override def setOnPreferenceChangeListener(listener: OnPreferenceChangeListener) = this.listener = listener
   super.setOnPreferenceChangeListener((preference, newValue) => {
@@ -37,14 +38,10 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
   def getEntryIcons = mEntryIcons
   def setEntryIcons(entryIcons: Array[Drawable]) = mEntryIcons = entryIcons
 
-  def setEntryIcons(entryIconsResId: Int) {
+  def setEntryIcons(@ArrayRes entryIconsResId: Int) {
     val icons_array = getContext.getResources.obtainTypedArray(entryIconsResId)
     val icon_ids_array = new Array[Drawable](icons_array.length)
-    var i = 0
-    while (i < icons_array.length) {
-      icon_ids_array(i) = icons_array.getDrawable(i)
-      i += 1
-    }
+    for (i <- 0 until icons_array.length) icon_ids_array(i) = icons_array.getDrawable(i)
     setEntryIcons(icon_ids_array)
     icons_array.recycle
   }
@@ -52,7 +49,6 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
   def init {
     val entryValues = getEntryValues
     if (entryValues == null) return
-    selectedEntry = entryValues.indexOf(getValue)
     if (mEntryIcons != null) setIcon(getEntryIcon)
   }
 

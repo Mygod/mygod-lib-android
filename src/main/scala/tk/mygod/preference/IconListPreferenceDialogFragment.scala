@@ -30,15 +30,11 @@ class IconListPreferenceDialogFragment extends ListPreferenceDialogFragment {
       .setAdapter(adapter, this).setPositiveButton(null, null)
   }
 
-  protected override def onDialogClosed(positiveResult: Boolean) {
-    if (!positiveResult || preference.selectedEntry < 0) return
-    val value = preference.getEntryValues()(preference.selectedEntry).toString
-    if (preference.callChangeListener(value)) preference.setValue(value)
-  }
-
+  protected override def onDialogClosed(positiveResult: Boolean) = ()
   override def onClick(dialog: DialogInterface, which: Int) {
     if (which >= 0) {
-      preference.selectedEntry = which
+      val value = preference.getEntryValues()(which).toString
+      if (preference.callChangeListener(value)) preference.setValue(value)
       super.onClick(dialog, DialogInterface.BUTTON_POSITIVE)
     }
     else super.onClick(dialog, which)
