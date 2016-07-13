@@ -1,5 +1,5 @@
 # Mygod Library for Android
-This is the library where I collect reusable codes from my Android projects and reuse them for infinity times.
+The super-powered Android support library written in Scala where it's basically me collecting reusable codes from my Android projects and reuse them for infinity times.
 
 I'd say they are pretty useful, aren't they?
 
@@ -12,7 +12,7 @@ Issues/PRs are extremely welcome.
 * SBT
 
 ## Building
-    sbt clean android:packageAar
+    sbt android:packageAar
 
 ## License
 GPLv3
