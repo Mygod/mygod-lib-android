@@ -3,8 +3,8 @@
     <attr name="max" format="integer|float" />
     <attr name="min" format="integer|float" />
     <declare-styleable name="DropDownPreference">
-        <attr name="entries" />
-        <attr name="entryValues" />
+        <attr name="android:entries" />
+        <attr name="android:entryValues" />
     </declare-styleable>
     <declare-styleable name="IconListPreference">
         <attr name="entryIcons" format="reference" />

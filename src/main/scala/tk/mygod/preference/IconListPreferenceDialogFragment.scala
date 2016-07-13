@@ -3,23 +3,16 @@ package tk.mygod.preference
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.Resources
-import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v14.preference.ListPreferenceDialogFragment
-import android.view.{LayoutInflater, ViewGroup, View}
-import android.widget.{CheckedTextView, BaseAdapter}
+import android.view.{LayoutInflater, View, ViewGroup}
+import android.widget.{BaseAdapter, CheckedTextView}
 import tk.mygod.os.Build
 
 /**
  * @author Mygod
  */
 class IconListPreferenceDialogFragment extends ListPreferenceDialogFragment {
-  def this(key: String) {
-    this
-    val bundle = new Bundle(1)
-    bundle.putString("key", key)
-    setArguments(bundle)
-  }
   private lazy val preference = getPreference.asInstanceOf[IconListPreference]
 
   protected override def onPrepareDialogBuilder(@NonNull builder: AlertDialog.Builder) {

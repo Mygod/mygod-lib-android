@@ -8,6 +8,6 @@ import tk.mygod.os.BinderPlus
 /**
   * @author Mygod
   */
-abstract class ServicePlus extends Service with ContextPlus {
+trait ServicePlus extends Service with ContextPlus {
   override def onBind(intent: Intent) = new BinderPlus(this)
 }
