@@ -37,7 +37,7 @@ object PreferenceGroupAdapter {
 class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
   import PreferenceGroupAdapter._
 
-  protected val preferenceLayouts = preferenceLayoutsField.get(this).asInstanceOf[List[AnyRef]]
+  protected lazy val preferenceLayouts = preferenceLayoutsField.get(this).asInstanceOf[List[AnyRef]]
 
   override def onCreateViewHolder(parent: ViewGroup, viewType: Int) = if (Build.version < 21) {
     val context = parent.getContext
@@ -48,9 +48,10 @@ class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
     var background = array.getDrawable(R.styleable.BackgroundStyle_android_selectableItemBackground)
     if (background == null) background = ContextCompat.getDrawable(context, android.R.drawable.list_selector_background)
     array.recycle
+    val (s, t, e, b) = (ViewCompat.getPaddingStart(view), view.getPaddingTop,
+     ViewCompat.getPaddingEnd(view), view.getPaddingBottom)
     view.setBackground(background)
-    ViewCompat.setPaddingRelative(view, ViewCompat.getPaddingStart(view), view.getPaddingTop,
-      ViewCompat.getPaddingEnd(view), view.getPaddingBottom)
+    ViewCompat.setPaddingRelative(view, s, t, e, b)
     val widgetFrame = view.findViewById(android.R.id.widget_frame).asInstanceOf[ViewGroup]
     if (widgetFrame != null) {
       val widgetResId = fieldWidgetResId.get(pl).asInstanceOf[Int]
