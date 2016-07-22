@@ -17,15 +17,16 @@ class CircularReveal(context: Context, attrs: AttributeSet = null) extends Visib
   var stopper: View = _
   private val metrics = new DisplayMetrics
   private lazy val wm = context.getSystemService(Context.WINDOW_SERVICE).asInstanceOf[WindowManager]
-  private def getEnclosingCircleRadius(x: Float, y: Float) =
-    math.hypot(math.max(x, metrics.widthPixels - x), math.max(y, metrics.widthPixels - y)).toFloat
+  private def getEnclosingCircleRadius =
+    math.hypot(math.max(spawnLocation._1, metrics.widthPixels - spawnLocation._1),
+    math.max(spawnLocation._2, metrics.widthPixels - spawnLocation._2)).toFloat
 
   override def onAppear(sceneRoot: ViewGroup, view: View,
                         startValues: TransitionValues, endValues: TransitionValues) = {
     wm.getDefaultDisplay.getMetrics(metrics)
     val (x, y) = LocationObserver.getRelatedTo(spawnLocation, view)
     new NoPauseAnimator(ViewAnimationUtils
-      .createCircularReveal(view, x.toInt, y.toInt, 0, getEnclosingCircleRadius(x, y)))
+      .createCircularReveal(view, x.toInt, y.toInt, 0, getEnclosingCircleRadius))
   }
   override def onDisappear(sceneRoot: ViewGroup, view: View,
                            startValues: TransitionValues, endValues: TransitionValues) = {
@@ -34,6 +35,6 @@ class CircularReveal(context: Context, attrs: AttributeSet = null) extends Visib
       LocationObserver.getRelatedTo((metrics.widthPixels * .5F, metrics.heightPixels.toFloat), view)
     else LocationObserver.getRelatedTo(stopper, view)
     new NoPauseAnimator(ViewAnimationUtils
-      .createCircularReveal(view, x.toInt, y.toInt, getEnclosingCircleRadius(x, y), 0))
+      .createCircularReveal(view, x.toInt, y.toInt, getEnclosingCircleRadius, 0))
   }
 }
