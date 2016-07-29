@@ -31,7 +31,7 @@ class CircularReveal(context: Context, attrs: AttributeSet = null) extends Visib
                            startValues: TransitionValues, endValues: TransitionValues) = {
     wm.getDefaultDisplay.getMetrics(metrics)
     val (x, y) = if (stopper == null)
-      LocationObserver.getRelatedTo((metrics.widthPixels * .5F, metrics.heightPixels), view)
+      LocationObserver.getRelatedTo((metrics.widthPixels * .5F, metrics.heightPixels.toFloat), view)
     else LocationObserver.getRelatedTo(stopper, view)
     new NoPauseAnimator(ViewAnimationUtils
       .createCircularReveal(view, x.toInt, y.toInt, getEnclosingCircleRadius, 0))
