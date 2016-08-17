@@ -12,9 +12,9 @@ scalaVersion := "2.11.8"
 
 platformTarget in Android := "android-24"
 
-javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
+javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
 
-scalacOptions ++= Seq("-target:jvm-1.6", "-Xexperimental")
+scalacOptions ++= Seq("-target:jvm-1.7", "-Xexperimental")
 
 typedResources in Android := false
 
