@@ -44,14 +44,17 @@ class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
     val inflater = LayoutInflater.from(context)
     val pl = preferenceLayouts.get(viewType)
     val view = inflater.inflate(fieldResId.get(pl).asInstanceOf[Int], parent, false)
-    val array = context.obtainStyledAttributes(null, R.styleable.BackgroundStyle)
-    var background = array.getDrawable(R.styleable.BackgroundStyle_android_selectableItemBackground)
-    if (background == null) background = ContextCompat.getDrawable(context, android.R.drawable.list_selector_background)
-    array.recycle
-    val (s, t, e, b) = (ViewCompat.getPaddingStart(view), view.getPaddingTop,
-     ViewCompat.getPaddingEnd(view), view.getPaddingBottom)
-    view.setBackground(background)
-    ViewCompat.setPaddingRelative(view, s, t, e, b)
+    if (view.getBackground == null) {
+      val array = context.obtainStyledAttributes(null, R.styleable.BackgroundStyle)
+      var background = array.getDrawable(R.styleable.BackgroundStyle_android_selectableItemBackground)
+      if (background == null)
+        background = ContextCompat.getDrawable(context, android.R.drawable.list_selector_background)
+      array.recycle
+      val (s, t, e, b) = (ViewCompat.getPaddingStart(view), view.getPaddingTop,
+        ViewCompat.getPaddingEnd(view), view.getPaddingBottom)
+      view.setBackground(background)
+      ViewCompat.setPaddingRelative(view, s, t, e, b)
+    }
     val widgetFrame = view.findViewById(android.R.id.widget_frame).asInstanceOf[ViewGroup]
     if (widgetFrame != null) {
       val widgetResId = fieldWidgetResId.get(pl).asInstanceOf[Int]

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Fix for wrong padding on v17-v20 based on: https://github.com/Gericop/Android-Support-Preference-V7-Fix/blob/edde218c5d51e34cbf24b4e8ce027810ec5e916c/app/src/main/res/values-v17/styles.xml -->
-    <style name="Theme.Material" parent="Theme.MaterialBase">
-        <item name="android:listPreferredItemPaddingStart">16dp</item>
-        <item name="android:listPreferredItemPaddingEnd">16dp</item>
-    </style>
-</resources>
