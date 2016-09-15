@@ -21,9 +21,9 @@ typedResources in Android := false
 proguardVersion in Android := "5.2.1"
 
 libraryDependencies ++= Seq(
-  "com.android.support" % "customtabs" % "24.2.0",
-  "com.android.support" % "design" % "24.2.0",
-  "com.android.support" % "preference-v14" % "24.2.0"
+  "com.android.support" % "customtabs" % "24.2.1",
+  "com.android.support" % "design" % "24.2.1",
+  "com.android.support" % "preference-v14" % "24.2.1"
 )
 
 pomExtra in Global := {
