@@ -4,7 +4,7 @@ android.Plugin.androidBuildAar
 
 name := "mygod-lib-android"
 
-organization := "tk.mygod"
+organization := "be.mygod"
 
 version := "3.0.2-SNAPSHOT"
 
@@ -43,7 +43,7 @@ pomExtra in Global := {
       <developer>
         <id>Mygod</id>
         <name>Mygod</name>
-        <url>https://mygod.tk</url>
+        <url>https://mygod.be</url>
       </developer>
     </developers>
 }
