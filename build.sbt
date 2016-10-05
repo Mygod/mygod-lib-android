@@ -18,7 +18,7 @@ scalacOptions ++= Seq("-target:jvm-1.7", "-Xexperimental")
 
 typedResources in Android := false
 
-proguardVersion in Android := "5.2.1"
+proguardVersion in Android := "5.3"
 
 libraryDependencies ++= Seq(
   "com.android.support" % "customtabs" % "24.2.1",
