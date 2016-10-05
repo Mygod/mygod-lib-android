@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.support.v7.preference.DialogPreference
 import android.util.AttributeSet
+import android.view.ContextThemeWrapper
 import android.widget.NumberPicker
 import be.mygod.R
 
 class NumberPickerPreference(private val context: Context, attrs: AttributeSet = null)
   extends DialogPreference(context, attrs) with SummaryPreference {
-  private[preference] val picker = new NumberPicker(context)
+  private[preference] val picker = new NumberPicker(new ContextThemeWrapper(context, R.style.NumberPickerStyle))
   private var value: Int = _
 
   {
