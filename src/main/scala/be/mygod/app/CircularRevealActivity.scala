@@ -18,7 +18,7 @@ object CircularRevealActivity {
     intent.putExtra(EXTRA_SPAWN_LOCATION_X, location._1).putExtra(EXTRA_SPAWN_LOCATION_Y, location._2)
 }
 
-trait CircularRevealActivity extends ActivityPlus with LocationObservedActivity {
+trait CircularRevealActivity extends LocationObservedActivity {
   import CircularRevealActivity._
 
   @TargetApi(21)
