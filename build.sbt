@@ -4,9 +4,9 @@ android.Plugin.androidBuildAar
 
 name := "mygod-lib-android"
 
-organization := "tk.mygod"
+organization := "be.mygod"
 
-version := "3.0.1"
+version := "4.0.0"
 
 scalaVersion := "2.11.8"
 
@@ -18,7 +18,7 @@ scalacOptions ++= Seq("-target:jvm-1.7", "-Xexperimental")
 
 typedResources in Android := false
 
-proguardVersion in Android := "5.2.1"
+proguardVersion in Android := "5.3"
 
 libraryDependencies ++= Seq(
   "com.android.support" % "customtabs" % "24.2.1",
@@ -43,7 +43,7 @@ pomExtra in Global := {
       <developer>
         <id>Mygod</id>
         <name>Mygod</name>
-        <url>https://mygod.tk</url>
+        <url>https://mygod.be</url>
       </developer>
     </developers>
 }
