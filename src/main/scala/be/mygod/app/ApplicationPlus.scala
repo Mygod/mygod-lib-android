@@ -2,6 +2,7 @@ package be.mygod.app
 
 import java.util.Locale
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.res.Configuration
 import android.os.LocaleList
@@ -10,7 +11,8 @@ import be.mygod.os.Build
 
 object ApplicationPlus {
   // The ones in Locale doesn't have script included
-  private final lazy val SIMPLIFIED_CHINESE = Locale.forLanguageTag("zh-Hans-CN")
+  private final lazy val SIMPLIFIED_CHINESE =
+    if (Build.version >= 21) Locale.forLanguageTag("zh-Hans-CN") else Locale.SIMPLIFIED_CHINESE
 }
 
 class ApplicationPlus extends Application with ContextPlus {
@@ -19,6 +21,7 @@ class ApplicationPlus extends Application with ContextPlus {
   private def checkChineseLocale(locale: Locale): Locale =
     if (locale.getLanguage == "zh" && locale.getCountry != "CN") SIMPLIFIED_CHINESE else null
 
+  @SuppressLint(Array("NewApi"))
   private def checkChineseLocale(config: Configuration): Unit = if (Build.version >= 24) {
     val localeList = config.getLocales
     val newList = new Array[Locale](localeList.size())
