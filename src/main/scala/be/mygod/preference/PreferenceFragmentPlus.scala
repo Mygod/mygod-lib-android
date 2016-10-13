@@ -20,7 +20,9 @@ abstract class PreferenceFragmentPlus extends PreferenceFragment with FragmentPl
     bundle.putString("key", key)
     fragment.setArguments(bundle)
     fragment.setTargetFragment(this, 0)
-    fragment.show(getFragmentManager, "android.support.v14.preference.PreferenceFragment.DIALOG")
+    getFragmentManager.beginTransaction()
+      .add(fragment, "android.support.v14.preference.PreferenceFragment.DIALOG")
+      .commitAllowingStateLoss()
   }
 
   override protected def onCreateAdapter(screen: PreferenceScreen) = new PreferenceGroupAdapter(screen)
