@@ -15,6 +15,7 @@ scalacOptions ++= "-target:jvm-1.7" :: "-Xexperimental" :: Nil
 proguardVersion := "5.3"
 proguardCache := Seq()
 
+pseudoLocalesEnabled := true
 typedResources := false
 
 libraryDependencies ++=
