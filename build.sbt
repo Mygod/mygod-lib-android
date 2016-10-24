@@ -1,30 +1,27 @@
-import android.Keys._
-
-android.Plugin.androidBuildAar
-
-name := "mygod-lib-android"
-
-organization := "be.mygod"
-
-version := "4.0.1-SNAPSHOT"
-
 scalaVersion := "2.11.8"
 
-platformTarget in Android := "android-24"
+enablePlugins(AndroidLib)
 
-javacOptions ++= Seq("-source", "1.7", "-target", "1.7")
+name := "mygod-lib-android"
+organization := "be.mygod"
+version := "4.0.1-SNAPSHOT"
 
-scalacOptions ++= Seq("-target:jvm-1.7", "-Xexperimental")
+platformTarget in Android := "android-25"
 
-typedResources in Android := false
+compileOrder := CompileOrder.JavaThenScala
+javacOptions ++= "-source" :: "1.7" :: "-target" :: "1.7" :: Nil
+scalacOptions ++= "-target:jvm-1.7" :: "-Xexperimental" :: Nil
 
-proguardVersion in Android := "5.3"
+proguardVersion := "5.3"
+proguardCache := Seq()
 
-libraryDependencies ++= Seq(
-  "com.android.support" % "customtabs" % "24.2.1",
-  "com.android.support" % "design" % "24.2.1",
-  "com.android.support" % "preference-v14" % "24.2.1"
-)
+typedResources := false
+
+libraryDependencies ++=
+  "com.android.support" % "customtabs" % "25.0.0" ::
+  "com.android.support" % "design" % "25.0.0" ::
+  "com.android.support" % "preference-v14" % "25.0.0" ::
+  Nil
 
 pomExtra in Global := {
   <url>https://github.com/Mygod/mygod-lib-android</url>
