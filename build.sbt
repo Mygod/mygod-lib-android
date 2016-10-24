@@ -4,7 +4,7 @@ enablePlugins(AndroidLib)
 
 name := "mygod-lib-android"
 organization := "be.mygod"
-version := "4.0.1-SNAPSHOT"
+version := "4.0.1"
 
 platformTarget in Android := "android-25"
 
@@ -12,7 +12,7 @@ compileOrder := CompileOrder.JavaThenScala
 javacOptions ++= "-source" :: "1.7" :: "-target" :: "1.7" :: Nil
 scalacOptions ++= "-target:jvm-1.7" :: "-Xexperimental" :: Nil
 
-proguardVersion := "5.3"
+proguardVersion := "5.3.1"
 proguardCache := Seq()
 
 pseudoLocalesEnabled := true
