@@ -4,7 +4,7 @@ enablePlugins(AndroidLib)
 
 name := "mygod-lib-android"
 organization := "be.mygod"
-version := "4.0.1"
+version := "4.0.2-SNAPSHOT"
 
 platformTarget in Android := "android-25"
 
