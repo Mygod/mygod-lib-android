@@ -15,9 +15,9 @@ class CircularReveal(context: Context, attrs: AttributeSet = null) extends Visib
   var stopper: View = _
   private val size = new Point()
   private lazy val wm = context.getSystemService(Context.WINDOW_SERVICE).asInstanceOf[WindowManager]
-  private def getEnclosingCircleRadius(spawnLocation: (Float, Float)) = math.hypot(
+  private def getEnclosingCircleRadius(spawnLocation: (Float, Float)) = (1.05 * math.hypot(
     math.max(spawnLocation._1, size.x - spawnLocation._1),
-    math.max(spawnLocation._2, size.y - spawnLocation._2)).toFloat
+    math.max(spawnLocation._2, size.y - spawnLocation._2))).toFloat
 
   override def onAppear(sceneRoot: ViewGroup, view: View,
                         startValues: TransitionValues, endValues: TransitionValues) = {
