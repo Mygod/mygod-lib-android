@@ -11,7 +11,7 @@ import be.mygod.R
  * @author mygod
  */
 final class SeekBarPreference(private val context: Context, attrs: AttributeSet = null)
-  extends DialogPreference(context, attrs) with SummaryPreference {
+  extends DialogPreference(context, attrs) with DialogPreferencePlus with SummaryPreference {
   private[preference] val seekBar = new SeekBar(context)
   private var min = 0F
   private var max = 1F
@@ -26,6 +26,8 @@ final class SeekBarPreference(private val context: Context, attrs: AttributeSet 
     setReset(a.getFloat(R.styleable.SeekBarPreference_reset, Float.NaN))
     a.recycle
   }
+
+  override def createDialog() = new SeekBarPreferenceDialogFragment()
 
   private[preference] def updateProgress {
     val i = (value - min) / (max - min)

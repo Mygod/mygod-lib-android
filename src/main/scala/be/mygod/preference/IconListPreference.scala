@@ -12,7 +12,10 @@ import be.mygod.R
 /**
  * @author Mygod
  */
-class IconListPreference(context: Context, attrs: AttributeSet = null) extends ListPreference(context, attrs) {
+class IconListPreference(context: Context, attrs: AttributeSet = null) extends ListPreference(context, attrs)
+  with DialogPreferencePlus {
+  override def createDialog() = new IconListPreferenceDialogFragment()
+
   private var mEntryIcons: Array[Drawable] = _
   def selectedEntry = getEntryValues.indexOf(getValue)
 
