@@ -1,5 +1,6 @@
 package be.mygod.app
 
+import android.app.TaskStackBuilder
 import android.support.annotation.DrawableRes
 import android.support.v7.widget.Toolbar
 import android.view.KeyEvent
@@ -23,11 +24,11 @@ trait ToolbarActivity extends LocationObservedActivity {
     toolbar.setNavigationIcon(navigationIcon)
     toolbar.setNavigationOnClickListener(stopper => {
       val intent = getParentActivityIntent
-      this match {
-        case cra: CircularRevealActivity =>
-          if (cra.transitionEnabled || intent == null) cra.finish(stopper) else navigateUpTo(intent)
-        case _ => if (intent == null) supportFinishAfterTransition() else navigateUpTo(intent)
-      }
+      // BUG from Android: http://stackoverflow.com/a/31350642/2245107
+      if (intent == null || !(isTaskRoot || shouldUpRecreateTask(intent))) this match {
+        case cra: CircularRevealActivity => cra.finish(stopper)
+        case _ => supportFinishAfterTransition()
+      } else TaskStackBuilder.create(this).addNextIntentWithParentStack(intent).startActivities()
     })
   }
 

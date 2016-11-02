@@ -7,13 +7,9 @@ import android.view.{View, ViewGroup}
 import be.mygod.os.Build
 import be.mygod.transition.CircularReveal
 
-/**
-  * @author Mygod
-  */
 object CircularRevealActivity {
   final val EXTRA_SPAWN_LOCATION_X = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_X"
   final val EXTRA_SPAWN_LOCATION_Y = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_Y"
-  private final val KEY_TRANSITION_ENABLED = "be.mygod.app.CircularRevealActivity.transitionEnabled"
 
   def putLocation(intent: Intent, location: (Float, Float)) =
     intent.putExtra(EXTRA_SPAWN_LOCATION_X, location._1).putExtra(EXTRA_SPAWN_LOCATION_Y, location._2)
@@ -24,7 +20,6 @@ trait CircularRevealActivity extends LocationObservedActivity {
 
   @TargetApi(21)
   private lazy val circularRevealTransition = new CircularReveal(this)
-  var transitionEnabled: Boolean = _
 
   @SuppressLint(Array("NewApi"))
   override protected def onCreate(savedInstanceState: Bundle) {
@@ -44,18 +39,10 @@ trait CircularRevealActivity extends LocationObservedActivity {
         val x = intent.getFloatExtra(EXTRA_SPAWN_LOCATION_X, Float.NaN)
         if (!x.isNaN) {
           val y = intent.getFloatExtra(EXTRA_SPAWN_LOCATION_Y, Float.NaN)
-          if (!y.isNaN) {
-            circularRevealTransition.spawnLocation = (x, y)
-            transitionEnabled = true
-          }
+          if (!y.isNaN) circularRevealTransition.spawnLocation = (x, y)
         }
-      } else transitionEnabled = savedInstanceState.getBoolean(KEY_TRANSITION_ENABLED)
+      }
     }
-  }
-
-  override def onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    outState.putBoolean(KEY_TRANSITION_ENABLED, transitionEnabled)
   }
 
   def finish(stopper: View) {
