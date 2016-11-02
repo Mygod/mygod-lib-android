@@ -21,11 +21,13 @@ trait ToolbarActivity extends LocationObservedActivity {
 
   def setNavigationIcon(@DrawableRes navigationIcon: Int = ToolbarActivity.BACK) {
     toolbar.setNavigationIcon(navigationIcon)
-    toolbar.setNavigationOnClickListener(stopper => this match {
-      case cra: CircularRevealActivity => cra.finish(stopper)
-      case _ =>
-        val intent = getParentActivityIntent
-        if (intent == null) supportFinishAfterTransition() else navigateUpTo(intent)
+    toolbar.setNavigationOnClickListener(stopper => {
+      val intent = getParentActivityIntent
+      this match {
+        case cra: CircularRevealActivity =>
+          if (cra.transitionEnabled || intent == null) cra.finish(stopper) else navigateUpTo(intent)
+        case _ => if (intent == null) supportFinishAfterTransition() else navigateUpTo(intent)
+      }
     })
   }
 
