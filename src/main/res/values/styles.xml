@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.MaterialBase" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--suppress NewApi -->
         <item name="android:navigationBarColor">@color/material_primary_700</item>
         <item name="colorAccent">@color/material_accent_200</item>
         <item name="colorButtonNormal">@color/material_accent_200</item>

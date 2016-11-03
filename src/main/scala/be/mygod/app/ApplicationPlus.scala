@@ -2,7 +2,6 @@ package be.mygod.app
 
 import java.util.Locale
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.res.Configuration
 import android.os.LocaleList
@@ -21,8 +20,6 @@ class ApplicationPlus extends Application with ContextPlus {
   private def checkChineseLocale(locale: Locale): Locale =
     if (locale.getLanguage == "zh" && locale.getCountry != "CN") SIMPLIFIED_CHINESE else null
 
-  @SuppressLint(Array("NewApi"))
-  //noinspection ScalaDeprecation
   private def checkChineseLocale(config: Configuration): Unit = if (Build.version >= 24) {
     val localeList = config.getLocales
     val newList = new Array[Locale](localeList.size())

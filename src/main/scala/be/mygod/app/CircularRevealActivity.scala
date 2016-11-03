@@ -1,6 +1,6 @@
 package be.mygod.app
 
-import android.annotation.{SuppressLint, TargetApi}
+import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Bundle
 import android.view.{View, ViewGroup}
@@ -21,7 +21,6 @@ trait CircularRevealActivity extends LocationObservedActivity {
   @TargetApi(21)
   private lazy val circularRevealTransition = new CircularReveal(this)
 
-  @SuppressLint(Array("NewApi"))
   override protected def onCreate(savedInstanceState: Bundle) {
     super.onCreate(savedInstanceState)
     val window = getWindow
