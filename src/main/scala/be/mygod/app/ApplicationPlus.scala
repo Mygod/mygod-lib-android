@@ -22,6 +22,7 @@ class ApplicationPlus extends Application with ContextPlus {
     if (locale.getLanguage == "zh" && locale.getCountry != "CN") SIMPLIFIED_CHINESE else null
 
   @SuppressLint(Array("NewApi"))
+  //noinspection ScalaDeprecation
   private def checkChineseLocale(config: Configuration): Unit = if (Build.version >= 24) {
     val localeList = config.getLocales
     val newList = new Array[Locale](localeList.size())
