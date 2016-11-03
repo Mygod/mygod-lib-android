@@ -49,4 +49,9 @@ trait CircularRevealActivity extends LocationObservedActivity {
     if (Build.version >= 21) circularRevealTransition.stopper = stopper
     supportFinishAfterTransition()
   }
+
+  override def navigateUp(stopper: View) {
+    if (Build.version >= 21) circularRevealTransition.stopper = stopper
+    super.navigateUp(stopper)
+  }
 }

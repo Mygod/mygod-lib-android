@@ -1,5 +1,6 @@
 package be.mygod.app
 
+import android.app.TaskStackBuilder
 import android.graphics.Rect
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
@@ -19,6 +20,16 @@ import be.mygod.content.ContextPlus
 trait ActivityPlus extends AppCompatActivity with ContextPlus {
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
     getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
+
+  def navigateUp() {
+    val intent = getParentActivityIntent
+    // BUG from Android: http://stackoverflow.com/a/31350642/2245107
+    if (intent != null && (isTaskRoot || shouldUpRecreateTask(intent)))
+      TaskStackBuilder.create(this).addNextIntentWithParentStack(intent).startActivities()
+    else supportFinishAfterTransition()
+  }
+
+  def navigateUp(stopper: View) = navigateUp()
 
   private lazy val customTabsIntent = new CustomTabsIntent.Builder()
     .setToolbarColor(ContextCompat.getColor(this, R.color.material_primary_500)).build
