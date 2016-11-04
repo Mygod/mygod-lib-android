@@ -1,6 +1,5 @@
 package be.mygod.content
 
-import android.annotation.SuppressLint
 import android.app.{Activity, PendingIntent}
 import android.content.{ClipData, ClipboardManager, Context, Intent}
 import android.graphics.drawable.Drawable
@@ -22,7 +21,6 @@ trait ContextPlus extends Context {
   implicit def getStringImplicit(id : Int): String = getString(id)
   implicit def getDrawableImplicit(id : Int): Drawable = ContextCompat.getDrawable(this, id)
   implicit def getUri(id : Int): Uri = getString(id)
-  @SuppressLint(Array("NewApi"))
   def systemService[T](implicit ct: ClassTag[T]) = {
     val name = if (Build.version >= 23) getSystemServiceName(ct.runtimeClass) else ct.runtimeClass.getSimpleName match {
       case "AccessibilityManager" => Context.ACCESSIBILITY_SERVICE

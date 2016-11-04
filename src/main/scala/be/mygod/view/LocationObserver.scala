@@ -8,6 +8,7 @@ import scala.collection.mutable
 
 /**
  * Usage; Set it as OnTouchListener and invoke get! No memory leaks!
+ *
  * @author Mygod
  */
 object LocationObserver extends OnTouchListener {
@@ -20,7 +21,7 @@ object LocationObserver extends OnTouchListener {
 
   def get(v: View) = {
     val option = coordinates.get(v)
-    if (option.isEmpty) (v.getWidth / 2F, v.getHeight / 2F) else option.get
+    if (option.isEmpty) (v.getWidth * .5F, v.getHeight * .5F) else option.get
   }
   def get(a: LocationObservedActivity): (Float, Float) = get(a.getWindow.getDecorView)
   def getOnScreen(v: View) = {

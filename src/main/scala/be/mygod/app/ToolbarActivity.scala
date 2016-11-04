@@ -21,12 +21,7 @@ trait ToolbarActivity extends LocationObservedActivity {
 
   def setNavigationIcon(@DrawableRes navigationIcon: Int = ToolbarActivity.BACK) {
     toolbar.setNavigationIcon(navigationIcon)
-    toolbar.setNavigationOnClickListener(stopper => this match {
-      case cra: CircularRevealActivity => cra.finish(stopper)
-      case _ =>
-        val intent = getParentActivityIntent
-        if (intent == null) supportFinishAfterTransition() else navigateUpTo(intent)
-    })
+    toolbar.setNavigationOnClickListener(navigateUp)
   }
 
   def toggleOverflowMenu = if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu

@@ -1,15 +1,12 @@
 package be.mygod.app
 
-import android.annotation.{SuppressLint, TargetApi}
+import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Bundle
 import android.view.{View, ViewGroup}
 import be.mygod.os.Build
 import be.mygod.transition.CircularReveal
 
-/**
-  * @author Mygod
-  */
 object CircularRevealActivity {
   final val EXTRA_SPAWN_LOCATION_X = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_X"
   final val EXTRA_SPAWN_LOCATION_Y = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_Y"
@@ -22,9 +19,8 @@ trait CircularRevealActivity extends LocationObservedActivity {
   import CircularRevealActivity._
 
   @TargetApi(21)
-  lazy val circularRevealTransition = new CircularReveal(this)
+  private lazy val circularRevealTransition = new CircularReveal(this)
 
-  @SuppressLint(Array("NewApi"))
   override protected def onCreate(savedInstanceState: Bundle) {
     super.onCreate(savedInstanceState)
     val window = getWindow
@@ -51,5 +47,10 @@ trait CircularRevealActivity extends LocationObservedActivity {
   def finish(stopper: View) {
     if (Build.version >= 21) circularRevealTransition.stopper = stopper
     supportFinishAfterTransition()
+  }
+
+  override def navigateUp(stopper: View) {
+    if (Build.version >= 21) circularRevealTransition.stopper = stopper
+    super.navigateUp(stopper)
   }
 }
