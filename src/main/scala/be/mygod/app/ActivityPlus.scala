@@ -29,7 +29,7 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
     else supportFinishAfterTransition()
   }
 
-  def navigateUp(stopper: View) = navigateUp()
+  def navigateUp(stopper: View): Unit = navigateUp()
 
   private lazy val customTabsIntent = new CustomTabsIntent.Builder()
     .setToolbarColor(ContextCompat.getColor(this, R.color.material_primary_500)).build
