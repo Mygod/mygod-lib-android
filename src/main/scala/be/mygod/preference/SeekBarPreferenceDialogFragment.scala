@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface.OnClickListener
 import android.support.v14.preference.PreferenceDialogFragment
 import android.view.ViewGroup
+import android.widget.SeekBar
 import be.mygod.R
 
 /**
@@ -20,7 +21,7 @@ class SeekBarPreferenceDialogFragment extends PreferenceDialogFragment {
     if (!reset.isNaN)
       builder.setNeutralButton(R.string.reset, ((dialog, which) => preference.setValue(reset)): OnClickListener)
   }
-  override protected def onCreateDialogView(context: Context) = {
+  override protected def onCreateDialogView(context: Context): SeekBar = {
     val parent = seekBar.getParent.asInstanceOf[ViewGroup]
     if (parent != null) parent.removeView(seekBar)
     seekBar
@@ -30,6 +31,6 @@ class SeekBarPreferenceDialogFragment extends PreferenceDialogFragment {
     if (positiveResult) {
       val value = seekBar.getProgress * (preference.getMax - min) / Int.MaxValue + min
       if (preference.callChangeListener(value)) preference.setValue(value)
-    } else preference.updateProgress  // reset the progress
+    } else preference.updateProgress()  // reset the progress
   }
 }

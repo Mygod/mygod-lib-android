@@ -19,8 +19,8 @@ import scala.reflect.ClassTag
  */
 trait FragmentPlus extends Fragment {
   def isFullscreen = false
-  override def onStart {
-    super.onStart
+  override def onStart() {
+    super.onStart()
     if (isFullscreen) {
       val view = getView
       if (!view.requestFocus) {
@@ -32,7 +32,7 @@ trait FragmentPlus extends Fragment {
   }
 
   def layout: Int
-  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle) =
+  override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View =
     inflater.inflate(layout, container, false)
 
   implicit def getStringImplicit(id : Int): String = getString(id)
@@ -40,14 +40,15 @@ trait FragmentPlus extends Fragment {
   implicit def getUri(id : Int): Uri = getString(id)
 
   def intentActivity[A <: Activity](implicit ct: ClassTag[A]) = new Intent(getActivity, ct.runtimeClass)
-  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) =
+  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]): PendingIntent =
     PendingIntent.getActivity(getActivity, 0, intentActivity[A], PendingIntent.FLAG_UPDATE_CURRENT)
-  def pendingIntentBroadcast(action: String) =
+  def pendingIntentBroadcast(action: String): PendingIntent =
     PendingIntent.getBroadcast(getActivity, 0, new Intent().setAction(action), PendingIntent.FLAG_UPDATE_CURRENT)
 
-  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(getActivity, text, duration)
-  def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
-    getActivity.getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
+  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT): Toast =
+    Toast.makeText(getActivity, text, duration)
+  def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View = getActivity.getWindow
+    .getDecorView.findViewById(android.R.id.content)): Snackbar = Snackbar.make(view, text, duration)
 
-  def runOnUiThread[T](f: => T) = getActivity.runOnUiThread(f)
+  def runOnUiThread[T](f: => T): Unit = getActivity.runOnUiThread(f)
 }

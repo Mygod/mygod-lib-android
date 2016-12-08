@@ -26,9 +26,9 @@ object UpdateManager {
       val uri = autoClose(new URL("https://mygod.be/product/update/%d/".format(activity.getPackageManager
         .getPackageInfo(activity.getPackageName, 0).versionCode)).openStream())(stream => IOUtils.readAllText(stream))
       if (dialog.isShowing) {
-        dialog.dismiss
+        dialog.dismiss()
         h.post(() => if (TextUtils.isEmpty(uri))
-          activity.makeSnackbar(activity.getString(R.string.no_updates_available)).show
+          activity.makeSnackbar(activity.getString(R.string.no_updates_available)).show()
         else new AlertDialog.Builder(activity).setTitle(R.string.update_available)
           .setPositiveButton(R.string.download,
             ((dialog, which) => activity.startActivity(new Intent(Intent.ACTION_VIEW, uri))): OnClickListener)
@@ -39,8 +39,8 @@ object UpdateManager {
     } catch {
       case e: Exception =>
         if (dialog.isShowing) {
-          dialog.dismiss
-          h.post(() => activity.makeToast(e.getMessage).show)
+          dialog.dismiss()
+          h.post(() => activity.makeToast(e.getMessage).show())
         }
     })
   }

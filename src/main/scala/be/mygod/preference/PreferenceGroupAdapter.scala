@@ -1,7 +1,7 @@
 package be.mygod.preference
 
 import java.lang.reflect.Field
-import java.util.List
+import java.util
 
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
@@ -37,9 +37,10 @@ object PreferenceGroupAdapter {
 class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
   import PreferenceGroupAdapter._
 
-  protected lazy val preferenceLayouts = preferenceLayoutsField.get(this).asInstanceOf[List[AnyRef]]
+  protected lazy val preferenceLayouts: util.List[AnyRef] =
+    preferenceLayoutsField.get(this).asInstanceOf[util.List[AnyRef]]
 
-  override def onCreateViewHolder(parent: ViewGroup, viewType: Int) = if (Build.version < 21) {
+  override def onCreateViewHolder(parent: ViewGroup, viewType: Int): PreferenceViewHolder = if (Build.version < 21) {
     val context = parent.getContext
     val inflater = LayoutInflater.from(context)
     val pl = preferenceLayouts.get(viewType)
@@ -49,7 +50,7 @@ class PreferenceGroupAdapter(group: PreferenceGroup) extends Old(group) {
       var background = array.getDrawable(R.styleable.BackgroundStyle_android_selectableItemBackground)
       if (background == null)
         background = ContextCompat.getDrawable(context, android.R.drawable.list_selector_background)
-      array.recycle
+      array.recycle()
       val (s, t, e, b) = (ViewCompat.getPaddingStart(view), view.getPaddingTop,
         ViewCompat.getPaddingEnd(view), view.getPaddingBottom)
       view.setBackground(background)

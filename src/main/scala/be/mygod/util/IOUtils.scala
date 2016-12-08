@@ -44,9 +44,9 @@ object IOUtils {
   def readAllText(file: String): String = readAllText(new FileInputStream(file))
   def readAllText(file: String, charset: Charset): String = readAllText(new FileInputStream(file), charset)
 
-  def writeAllText(stream: OutputStream, content: String) =
+  def writeAllText(stream: OutputStream, content: String): Unit =
     autoClose(new OutputStreamWriter(stream))(writer => writer.write(content))
-  def writeAllText(stream: OutputStream, content: String, charset: Charset) =
+  def writeAllText(stream: OutputStream, content: String, charset: Charset): Unit =
     autoClose(new OutputStreamWriter(stream, charset))(writer => writer.write(content))
   def writeAllText(file: String, text: String): Unit = writeAllText(new FileOutputStream(file), text)
   def writeAllText(file: String, text: String, charset: Charset): Unit =

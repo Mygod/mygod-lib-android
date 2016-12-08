@@ -17,7 +17,7 @@ class EditTextPreference(context: Context, attrs: AttributeSet = null) extends P
 
   override def createDialog() = new EditTextPreferenceDialogFragment()
 
-  override protected def getSummaryValue = {
+  override protected def getSummaryValue: String = {
     var text = getText
     if (text == null) text = ""
     val inputType = editText.getInputType
@@ -27,8 +27,8 @@ class EditTextPreference(context: Context, attrs: AttributeSet = null) extends P
       "\u2022" * text.length else text
   }
 
-  override def setText(text: String) = {
+  override def setText(text: String) {
     super.setText(text)
-    notifyChanged
+    notifyChanged()
   }
 }

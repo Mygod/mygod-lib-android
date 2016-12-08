@@ -24,40 +24,40 @@ final class SeekBarPreference(private val context: Context, attrs: AttributeSet 
     setMin(a.getFloat(R.styleable.SeekBarPreference_min, 0))
     setMax(a.getFloat(R.styleable.SeekBarPreference_max, 1))
     setReset(a.getFloat(R.styleable.SeekBarPreference_reset, Float.NaN))
-    a.recycle
+    a.recycle()
   }
 
   override def createDialog() = new SeekBarPreferenceDialogFragment()
 
-  private[preference] def updateProgress {
+  private[preference] def updateProgress() {
     val i = (value - min) / (max - min)
     seekBar.setProgress(if (i <= 0) 0 else if (i >= 1) Int.MaxValue else (i * Int.MaxValue).toInt)
   }
 
-  def getValue = value
-  def getMin = min
-  def getMax = max
-  def getReset = reset
+  def getValue: Float = value
+  def getMin: Float = min
+  def getMax: Float = max
+  def getReset: Float = reset
   def setValue(i: Float) {
     if (value == i) return
     value = i
-    updateProgress
+    updateProgress()
     persistFloat(value)
-    notifyChanged
+    notifyChanged()
   }
-  def setMin(value: Float) = {
+  def setMin(value: Float) {
     min = value
-    updateProgress
+    updateProgress()
   }
-  def setMax(value: Float) = {
+  def setMax(value: Float) {
     max = value
-    updateProgress
+    updateProgress()
   }
-  def setReset(value: Float) = reset = value
+  def setReset(value: Float): Unit = reset = value
 
   override protected def onGetDefaultValue(a: TypedArray, index: Int): AnyRef =
     a.getFloat(index, getMin).asInstanceOf[AnyRef]
-  override protected def onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any) =
+  override protected def onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any): Unit =
     setValue(if (restorePersistedValue) getPersistedFloat(getMin) else defaultValue.asInstanceOf[Float])
   override protected def getSummaryValue: AnyRef = getValue.asInstanceOf[AnyRef]
 }

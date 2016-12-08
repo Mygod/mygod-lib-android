@@ -4,5 +4,5 @@ import android.os.{Build => osBuild}
 
 object Build {
   lazy val version = osBuild.VERSION.SDK_INT
-  lazy val isChromeOS = osBuild.BRAND.contains("chromium")
+  lazy val isChromeOS: Boolean = osBuild.BRAND.contains("chromium")
 }

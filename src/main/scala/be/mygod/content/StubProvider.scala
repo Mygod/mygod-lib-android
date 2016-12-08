@@ -8,8 +8,8 @@ import be.mygod.util.MimeUtils
   * @author Mygod
   */
 class StubProvider extends ContentProvider {
-  def onCreate = true
-  def getType(uri: Uri) =
+  def onCreate() = true
+  def getType(uri: Uri): String =
     if (uri.getScheme == "file") MimeUtils.getMimeType(uri.toString) else getContext.getContentResolver.getType(uri)
   def query(uri: Uri, projection: Array[String], selection: String, selectionArgs: Array[String], sortOrder: String) =
     null

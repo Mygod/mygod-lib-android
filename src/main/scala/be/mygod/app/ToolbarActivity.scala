@@ -9,7 +9,8 @@ import be.mygod.R
  * @author Mygod
  */
 object ToolbarActivity {
-  final val BACK = R.drawable.abc_ic_ab_back_material
+  @DrawableRes
+  final val BACK: Int = R.drawable.abc_ic_ab_back_material
 }
 
 trait ToolbarActivity extends LocationObservedActivity {
@@ -24,9 +25,10 @@ trait ToolbarActivity extends LocationObservedActivity {
     toolbar.setNavigationOnClickListener(navigateUp)
   }
 
-  def toggleOverflowMenu = if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu
+  def toggleOverflowMenu: Boolean =
+    if (toolbar.isOverflowMenuShowing) toolbar.hideOverflowMenu else toolbar.showOverflowMenu
 
-  override def onKeyUp(keyCode: Int, event: KeyEvent) = keyCode match {
+  override def onKeyUp(keyCode: Int, event: KeyEvent): Boolean = keyCode match {
     case KeyEvent.KEYCODE_MENU => toggleOverflowMenu
     case _ => super.onKeyUp(keyCode, event)
   }

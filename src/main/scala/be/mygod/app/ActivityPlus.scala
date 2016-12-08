@@ -19,7 +19,7 @@ import be.mygod.content.ContextPlus
  */
 trait ActivityPlus extends AppCompatActivity with ContextPlus {
   def makeSnackbar(text: CharSequence, duration: Int = Snackbar.LENGTH_LONG, view: View =
-    getWindow.getDecorView.findViewById(android.R.id.content)) = Snackbar.make(view, text, duration)
+    getWindow.getDecorView.findViewById(android.R.id.content)): Snackbar = Snackbar.make(view, text, duration)
 
   def navigateUp() {
     val intent = getParentActivityIntent
@@ -33,10 +33,10 @@ trait ActivityPlus extends AppCompatActivity with ContextPlus {
 
   private lazy val customTabsIntent = new CustomTabsIntent.Builder()
     .setToolbarColor(ContextCompat.getColor(this, R.color.material_primary_500)).build
-  def launchUrl(uri: Uri) = customTabsIntent.launchUrl(this, uri)
+  def launchUrl(uri: Uri): Unit = customTabsIntent.launchUrl(this, uri)
 
   // Based on: http://stackoverflow.com/a/21026866/2245107
-  def positionToast(toast: Toast, view: View, offsetX: Int = 0, offsetY: Int = 0, above: Boolean = false) = {
+  def positionToast(toast: Toast, view: View, offsetX: Int = 0, offsetY: Int = 0, above: Boolean = false): Toast = {
     val window: Window = getWindow
     val rect = new Rect
     window.getDecorView.getWindowVisibleDisplayFrame(rect)

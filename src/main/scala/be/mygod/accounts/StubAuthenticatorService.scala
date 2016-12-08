@@ -2,6 +2,7 @@ package be.mygod.accounts
 
 import android.app.Service
 import android.content.Intent
+import android.os.IBinder
 
 /**
   * @author Mygod
@@ -9,10 +10,10 @@ import android.content.Intent
 class StubAuthenticatorService extends Service {
   private var authenticator: StubAuthenticator = _
 
-  override def onCreate {
-    super.onCreate
+  override def onCreate() {
+    super.onCreate()
     authenticator = new StubAuthenticator(this)
   }
 
-  def onBind(intent: Intent) = authenticator.getIBinder
+  def onBind(intent: Intent): IBinder = authenticator.getIBinder
 }

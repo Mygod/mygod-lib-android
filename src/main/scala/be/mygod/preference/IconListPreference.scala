@@ -17,11 +17,11 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
   override def createDialog() = new IconListPreferenceDialogFragment()
 
   private var mEntryIcons: Array[Drawable] = _
-  def selectedEntry = getEntryValues.indexOf(getValue)
+  def selectedEntry: Int = getEntryValues.indexOf(getValue)
 
   private var listener: OnPreferenceChangeListener = _
-  override def getOnPreferenceChangeListener = listener
-  override def setOnPreferenceChangeListener(listener: OnPreferenceChangeListener) = this.listener = listener
+  override def getOnPreferenceChangeListener: OnPreferenceChangeListener = listener
+  override def setOnPreferenceChangeListener(listener: OnPreferenceChangeListener): Unit = this.listener = listener
   super.setOnPreferenceChangeListener((preference, newValue) => {
     if (listener != null && !listener.onPreferenceChange(preference, newValue)) false else {
       setValue(newValue.toString)
@@ -34,22 +34,22 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
     val a: TypedArray = context.obtainStyledAttributes(attrs, R.styleable.IconListPreference)
     val entryIconsResId: Int = a.getResourceId(R.styleable.IconListPreference_entryIcons, -1)
     if (entryIconsResId != -1) setEntryIcons(entryIconsResId)
-    a.recycle
+    a.recycle()
   }
 
-  def getEntryIcon = mEntryIcons(selectedEntry)
-  def getEntryIcons = mEntryIcons
-  def setEntryIcons(entryIcons: Array[Drawable]) = mEntryIcons = entryIcons
+  def getEntryIcon: Drawable = mEntryIcons(selectedEntry)
+  def getEntryIcons: Array[Drawable] = mEntryIcons
+  def setEntryIcons(entryIcons: Array[Drawable]): Unit = mEntryIcons = entryIcons
 
   def setEntryIcons(@ArrayRes entryIconsResId: Int) {
     val icons_array = getContext.getResources.obtainTypedArray(entryIconsResId)
     val icon_ids_array = new Array[Drawable](icons_array.length)
     for (i <- 0 until icons_array.length) icon_ids_array(i) = icons_array.getDrawable(i)
     setEntryIcons(icon_ids_array)
-    icons_array.recycle
+    icons_array.recycle()
   }
 
-  def init {
+  def init() {
     val entryValues = getEntryValues
     if (entryValues == null) return
     if (mEntryIcons != null) setIcon(getEntryIcon)
@@ -57,6 +57,6 @@ class IconListPreference(context: Context, attrs: AttributeSet = null) extends L
 
   protected override def onSetInitialValue(restoreValue: Boolean, defaultValue: AnyRef) {
     super.onSetInitialValue(restoreValue, defaultValue)
-    init
+    init()
   }
 }

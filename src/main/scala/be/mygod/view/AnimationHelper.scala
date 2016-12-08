@@ -14,7 +14,7 @@ object AnimationHelper {
     to.setVisibility(View.VISIBLE)
     to.animate().alpha(1).setDuration(shortAnimTime)
     from.animate().alpha(0).setDuration(shortAnimTime).setListener(new AnimatorListenerAdapter {
-      override def onAnimationEnd(animation: Animator) = from.setVisibility(View.GONE)
+      override def onAnimationEnd(animation: Animator): Unit = from.setVisibility(View.GONE)
     })
   }
 }
