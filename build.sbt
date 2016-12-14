@@ -19,9 +19,9 @@ pseudoLocalesEnabled := true
 typedResources := false
 
 libraryDependencies ++=
-  "com.android.support" % "customtabs" % "25.0.1" ::
-  "com.android.support" % "design" % "25.0.1" ::
-  "com.android.support" % "preference-v14" % "25.0.1" ::
+  "com.android.support" % "customtabs" % "25.1.0" ::
+  "com.android.support" % "design" % "25.1.0" ::
+  "com.android.support" % "preference-v14" % "25.1.0" ::
   Nil
 
 pomExtra in Global := {
