@@ -18,10 +18,11 @@ proguardCache := Seq()
 pseudoLocalesEnabled := true
 typedResources := false
 
+val supportLibsVersion = "25.2.0"
 libraryDependencies ++=
-  "com.android.support" % "customtabs" % "25.1.0" ::
-  "com.android.support" % "design" % "25.1.0" ::
-  "com.android.support" % "preference-v14" % "25.1.0" ::
+  "com.android.support" % "customtabs" % supportLibsVersion ::
+  "com.android.support" % "design" % supportLibsVersion ::
+  "com.android.support" % "preference-v14" % supportLibsVersion ::
   Nil
 
 pomExtra in Global := {
