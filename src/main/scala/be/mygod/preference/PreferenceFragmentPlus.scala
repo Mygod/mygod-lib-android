@@ -8,8 +8,9 @@ import android.view.{LayoutInflater, View, ViewGroup}
 import be.mygod.app.FragmentPlus
 
 abstract class PreferenceFragmentPlus extends PreferenceFragment with FragmentPlus {
+  override def layout = 0  // not applicable
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View =
-    super.onCreateView(inflater, container, savedInstanceState)
+    super[PreferenceFragment].onCreateView(inflater, container, savedInstanceState)
 
   protected final def displayPreferenceDialog(key: String, fragment: DialogFragment, other: Bundle = null) {
     val bundle = new Bundle(1)
