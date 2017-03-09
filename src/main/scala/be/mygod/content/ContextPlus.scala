@@ -21,7 +21,7 @@ trait ContextPlus extends Context {
   implicit def getStringImplicit(id : Int): String = getString(id)
   implicit def getDrawableImplicit(id : Int): Drawable = ContextCompat.getDrawable(this, id)
   implicit def getUri(id : Int): Uri = getString(id)
-  def systemService[T](implicit ct: ClassTag[T]) = {
+  def systemService[T](implicit ct: ClassTag[T]): T = {
     val name = if (Build.version >= 23) getSystemServiceName(ct.runtimeClass) else ct.runtimeClass.getSimpleName match {
       case "AccessibilityManager" => Context.ACCESSIBILITY_SERVICE
       case "CaptioningManager" => Context.CAPTIONING_SERVICE
@@ -78,18 +78,18 @@ trait ContextPlus extends Context {
   }
 
   def intent[T](implicit ct: ClassTag[T]) = new Intent(this, ct.runtimeClass)
-  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]) = pendingActivity(intent[A])
+  def pendingIntent[A <: Activity](implicit ct: ClassTag[A]): PendingIntent = pendingActivity(intent[A])
 
-  def pendingActivity(intent: Intent) = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-  def pendingBroadcast(intent: Intent) = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+  def pendingActivity(intent: Intent): PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+  def pendingBroadcast(intent: Intent): PendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
   def pendingBroadcast(action: String): PendingIntent = pendingBroadcast(new Intent(action))
 
-  def share(text: String, subject: String = null) = if (Build.isChromeOS)
+  def share(text: String, subject: String = null): Unit = if (Build.isChromeOS)
     systemService[ClipboardManager].setPrimaryClip(ClipData.newPlainText(subject, Logcat.fetch)) else {
     val intent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
     if (subject != null) intent.putExtra(Intent.EXTRA_SUBJECT, subject)
     startActivity(Intent.createChooser(intent, R.string.abc_shareactionprovider_share_with))
   }
 
-  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration)
+  def makeToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT): Toast = Toast.makeText(this, text, duration)
 }

@@ -30,7 +30,7 @@ class IconListPreferenceDialogFragment extends ListPreferenceDialogFragment {
       .setAdapter(adapter, this).setPositiveButton(null, null)
   }
 
-  protected override def onDialogClosed(positiveResult: Boolean) = ()
+  protected override def onDialogClosed(positiveResult: Boolean): Unit = ()
   override def onClick(dialog: DialogInterface, which: Int) {
     if (which >= 0) {
       val value = preference.getEntryValues()(which).toString
@@ -38,18 +38,18 @@ class IconListPreferenceDialogFragment extends ListPreferenceDialogFragment {
       super.onClick(dialog, DialogInterface.BUTTON_POSITIVE)
     }
     else super.onClick(dialog, which)
-    dialog.dismiss
+    dialog.dismiss()
   }
 
   private class CheckedListAdapter extends BaseAdapter {
     private lazy val name = "select_dialog_singlechoice_" + (if (Build.version >= 21) "material" else "holo")
 
-    def getCount = {
+    def getCount: Int = {
       val entries = preference.getEntries
       if (entries == null) 0 else entries.length
     }
-    def getItem(position: Int) = preference.getEntries()(position)
-    def getItemId(position: Int) = position
+    def getItem(position: Int): CharSequence = preference.getEntries()(position)
+    def getItemId(position: Int): Long = position
 
     def getView(position: Int, convertView: View, parent: ViewGroup): View = {
       val result = if (convertView == null) LayoutInflater.from(parent.getContext)

@@ -8,8 +8,8 @@ abstract class StoppableFuture[T](finished: T => Unit = null) {
   private var stopped: Boolean = _
   def work: T
   def onFailure(exc: Exception) = throw exc
-  def isStopped = stopped
-  def stop = stopped = true
+  def isStopped: Boolean = stopped
+  def stop() = stopped = true
 
   Future {
     val result = work

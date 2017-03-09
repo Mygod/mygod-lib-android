@@ -36,10 +36,13 @@ class ApplicationPlus extends Application with ContextPlus {
       val newConfig = new Configuration(config)
       newConfig.setLocales(new LocaleList(newList.distinct: _*))
       val res = getResources
+      //noinspection ScalaDeprecation
       res.updateConfiguration(newConfig, res.getDisplayMetrics)
     }
   } else {
+    //noinspection ScalaDeprecation
     val newLocale = checkChineseLocale(config.locale)
+    //noinspection ScalaDeprecation
     if (config.locale != newLocale) {
       val newConfig = new Configuration(config)
       newConfig.locale = newLocale

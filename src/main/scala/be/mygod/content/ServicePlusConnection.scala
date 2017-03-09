@@ -10,7 +10,7 @@ import be.mygod.os.BinderPlus
   */
 class ServicePlusConnection[S <: ServicePlus] extends ServiceConnection {
   var service: Option[S] = _
-  def onServiceDisconnected(name: ComponentName) = service = None
-  def onServiceConnected(name: ComponentName, binder: IBinder) =
+  def onServiceDisconnected(name: ComponentName): Unit = service = None
+  def onServiceConnected(name: ComponentName, binder: IBinder): Unit =
     service = Some(binder.asInstanceOf[BinderPlus].service.asInstanceOf[S])
 }

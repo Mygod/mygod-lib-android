@@ -13,11 +13,11 @@ import android.view.ViewGroup.LayoutParams
   */
 class ViewPager(context: Context, attrs: AttributeSet) extends Base(context, attrs) {
   private class Adapter extends PagerAdapter {
-    def isViewFromObject(view: View, obj: scala.Any) = view == obj.asInstanceOf[View]
-    def getCount = getChildCount
+    def isViewFromObject(view: View, obj: scala.Any): Boolean = view == obj.asInstanceOf[View]
+    def getCount: Int = getChildCount
 
-    override def instantiateItem(collection: ViewGroup, position: Int) = collection.getChildAt(position)
-    override def destroyItem(collection: ViewGroup, position: Int, view: Any) =
+    override def instantiateItem(collection: ViewGroup, position: Int): View = collection.getChildAt(position)
+    override def destroyItem(collection: ViewGroup, position: Int, view: Any): Unit =
       collection.removeView(view.asInstanceOf[View])
   }
   private val adapter = new Adapter
@@ -25,11 +25,11 @@ class ViewPager(context: Context, attrs: AttributeSet) extends Base(context, att
 
   override def addView(child: View, index: Int, params: LayoutParams) {
     super.addView(child, index, params)
-    adapter.notifyDataSetChanged
+    adapter.notifyDataSetChanged()
   }
   override def removeView(child: View) {
     super.removeView(child)
-    adapter.notifyDataSetChanged
+    adapter.notifyDataSetChanged()
   }
 
   override def onInterceptTouchEvent(event: MotionEvent) = false

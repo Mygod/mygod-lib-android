@@ -5,6 +5,9 @@ import android.support.v7.preference.{EditTextPreference => Parent}
 import android.support.v7.widget.AppCompatEditText
 import android.text.InputType
 import android.util.AttributeSet
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import be.mygod.R
 
 /**
   * Fixed EditTextPreference + SummaryPreference with password support!
@@ -15,9 +18,18 @@ class EditTextPreference(context: Context, attrs: AttributeSet = null) extends P
   val editText = new AppCompatEditText(context, attrs)
   editText.setId(android.R.id.edit)
 
+  {
+    val arr = context.obtainStyledAttributes(Array(R.attr.dialogPreferredPadding))
+    val margin = arr.getDimensionPixelOffset(0, 0)
+    arr.recycle()
+    val params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    params.setMargins(margin, 0, margin, 0)
+    editText.setLayoutParams(params)
+  }
+
   override def createDialog() = new EditTextPreferenceDialogFragment()
 
-  override protected def getSummaryValue = {
+  override protected def getSummaryValue: String = {
     var text = getText
     if (text == null) text = ""
     val inputType = editText.getInputType
@@ -27,8 +39,8 @@ class EditTextPreference(context: Context, attrs: AttributeSet = null) extends P
       "\u2022" * text.length else text
   }
 
-  override def setText(text: String) = {
+  override def setText(text: String) {
     super.setText(text)
-    notifyChanged
+    notifyChanged()
   }
 }

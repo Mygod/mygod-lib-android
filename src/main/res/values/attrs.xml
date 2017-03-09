@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="max" format="integer|float" />
-    <attr name="min" format="integer|float" />
     <declare-styleable name="IconListPreference">
         <attr name="entryIcons" format="reference" />
     </declare-styleable>
     <declare-styleable name="NumberPickerPreference">
-        <attr name="max" />
-        <attr name="min" />
-    </declare-styleable>
-    <declare-styleable name="SeekBarPreference">
-        <attr name="max" />
-        <attr name="min" />
-        <attr name="reset" format="float" />
+        <attr name="max" format="integer"/>
+        <attr name="min" format="integer"/>
     </declare-styleable>
 </resources>

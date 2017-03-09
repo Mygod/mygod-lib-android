@@ -20,14 +20,14 @@ class CircularReveal(context: Context, attrs: AttributeSet = null) extends Visib
     math.max(spawnLocation._2, size.y - spawnLocation._2))).toFloat
 
   override def onAppear(sceneRoot: ViewGroup, view: View,
-                        startValues: TransitionValues, endValues: TransitionValues) = {
+                        startValues: TransitionValues, endValues: TransitionValues): NoPauseAnimator = {
     wm.getDefaultDisplay.getRealSize(size)
     val (x, y) = LocationObserver.getRelatedTo(spawnLocation, view)
     new NoPauseAnimator(ViewAnimationUtils
       .createCircularReveal(view, x.toInt, y.toInt, 0, getEnclosingCircleRadius(spawnLocation)))
   }
   override def onDisappear(sceneRoot: ViewGroup, view: View,
-                           startValues: TransitionValues, endValues: TransitionValues) = {
+                           startValues: TransitionValues, endValues: TransitionValues): NoPauseAnimator = {
     wm.getDefaultDisplay.getRealSize(size)
     val spawnLocation = if (stopper == null) (size.x * .5F, size.y.toFloat)
       else LocationObserver.getOnScreen(stopper)

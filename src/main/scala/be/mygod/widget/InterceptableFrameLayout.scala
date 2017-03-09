@@ -11,6 +11,6 @@ import android.widget.FrameLayout
 class InterceptableFrameLayout(context: Context, attrs: AttributeSet = null) extends FrameLayout(context, attrs) {
   var intercept = false
 
-  override def onInterceptHoverEvent(event: MotionEvent) = intercept || super.onInterceptHoverEvent(event)
-  override def onInterceptTouchEvent(event: MotionEvent) = intercept || super.onInterceptTouchEvent(event)
+  override def onInterceptHoverEvent(event: MotionEvent): Boolean = intercept || super.onInterceptHoverEvent(event)
+  override def onInterceptTouchEvent(event: MotionEvent): Boolean = intercept || super.onInterceptTouchEvent(event)
 }

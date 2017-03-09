@@ -11,7 +11,7 @@ object CircularRevealActivity {
   final val EXTRA_SPAWN_LOCATION_X = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_X"
   final val EXTRA_SPAWN_LOCATION_Y = "be.mygod.app.CircularRevealActivity.SPAWN_LOCATION_Y"
 
-  def putLocation(intent: Intent, location: (Float, Float)) =
+  def putLocation(intent: Intent, location: (Float, Float)): Intent =
     intent.putExtra(EXTRA_SPAWN_LOCATION_X, location._1).putExtra(EXTRA_SPAWN_LOCATION_Y, location._2)
 }
 

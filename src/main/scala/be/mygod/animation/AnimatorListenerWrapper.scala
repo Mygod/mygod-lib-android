@@ -9,8 +9,8 @@ import android.animation.Animator
   */
 final class AnimatorListenerWrapper(private val animator: Animator, private val listener: Animator.AnimatorListener)
   extends Animator.AnimatorListener {
-  def onAnimationStart(animation: Animator) = listener.onAnimationStart(animator)
-  def onAnimationRepeat(animation: Animator) = listener.onAnimationRepeat(animator)
-  def onAnimationCancel(animation: Animator) = listener.onAnimationCancel(animator)
-  def onAnimationEnd(animation: Animator) = listener.onAnimationEnd(animator)
+  def onAnimationStart(animation: Animator): Unit = listener.onAnimationStart(animator)
+  def onAnimationRepeat(animation: Animator): Unit = listener.onAnimationRepeat(animator)
+  def onAnimationCancel(animation: Animator): Unit = listener.onAnimationCancel(animator)
+  def onAnimationEnd(animation: Animator): Unit = listener.onAnimationEnd(animator)
 }
