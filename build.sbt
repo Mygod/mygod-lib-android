@@ -18,7 +18,7 @@ proguardCache := Seq()
 pseudoLocalesEnabled := true
 typedResources := false
 
-val supportLibsVersion = "25.2.0"
+val supportLibsVersion = "25.3.0"
 libraryDependencies ++=
   "com.android.support" % "customtabs" % supportLibsVersion ::
   "com.android.support" % "design" % supportLibsVersion ::
