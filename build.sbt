@@ -1,10 +1,10 @@
-scalaVersion := "2.11.8"
+scalaVersion := "2.11.9"
 
 enablePlugins(AndroidLib)
 
 name := "mygod-lib-android"
 organization := "be.mygod"
-version := "4.0.4"
+version := "4.0.5"
 
 platformTarget in Android := "android-25"
 
@@ -12,13 +12,13 @@ compileOrder := CompileOrder.JavaThenScala
 javacOptions ++= "-source" :: "1.7" :: "-target" :: "1.7" :: Nil
 scalacOptions ++= "-target:jvm-1.7" :: "-Xexperimental" :: Nil
 
-proguardVersion := "5.3.2"
+proguardVersion := "5.3.3"
 proguardCache := Seq()
 
 pseudoLocalesEnabled := true
 typedResources := false
 
-val supportLibsVersion = "25.2.0"
+val supportLibsVersion = "25.3.1"
 libraryDependencies ++=
   "com.android.support" % "customtabs" % supportLibsVersion ::
   "com.android.support" % "design" % supportLibsVersion ::
