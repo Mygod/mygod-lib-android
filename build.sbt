@@ -1,4 +1,4 @@
-scalaVersion := "2.11.9"
+scalaVersion := "2.11.11"
 
 enablePlugins(AndroidLib)
 
