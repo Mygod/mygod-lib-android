@@ -4,9 +4,9 @@ enablePlugins(AndroidLib)
 
 name := "mygod-lib-android"
 organization := "be.mygod"
-version := "4.0.6-SNAPSHOT"
+version := "4.1.0-SNAPSHOT"
 
-platformTarget in Android := "android-25"
+platformTarget in Android := "android-O"
 
 compileOrder := CompileOrder.JavaThenScala
 javacOptions ++= "-source" :: "1.7" :: "-target" :: "1.7" :: Nil
@@ -18,7 +18,7 @@ proguardCache := Seq()
 pseudoLocalesEnabled := true
 typedResources := false
 
-val supportLibsVersion = "25.3.1"
+val supportLibsVersion = "26.0.0-alpha1"
 libraryDependencies ++=
   "com.android.support" % "customtabs" % supportLibsVersion ::
   "com.android.support" % "design" % supportLibsVersion ::
